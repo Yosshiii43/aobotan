@@ -1,0 +1,18 @@
+/******************************
+セクション
+******************************/
+@use "../../foundation/forwards" as *;
+@use "sass:math";
+
+.c-section {
+  padding-block: rem(36);
+  padding-inline: rem(17);
+  @include mq("tab") {
+    padding-block: rem(42);
+    padding-inline: rem(60);
+  }
+  @include mq("pc") {
+    padding-block: rem(48);
+    padding-inline: clamp(3.75rem, -20.75rem + 38.28vw, 16rem);
+  }
+}

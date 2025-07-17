@@ -1,0 +1,71 @@
+/******************************
+ベース
+******************************/
+@use "forwards" as *;
+
+:root {
+  --header-h: 64px;
+}
+
+@include mq("pc") {
+  :root {
+    --header-h: 96px;
+  }
+}
+
+html, body {
+  overscroll-behavior: none;
+}
+
+html  {
+  font-size: $base-font-size;
+  scroll-padding-top: var(--header-h);//固定ヘッダーの高さ分ずらす
+}
+
+body  {
+  min-width: 320px;
+  width: 100%;
+  margin: 0;
+  background: $color-bg;
+  font-size: 1rem;
+  font-family: "Noto Sans JP", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+  color: $color-text;
+  line-height: 1.8;
+  overflow-wrap: anywhere;
+  word-break: normal;
+  line-break: strict;
+
+  &.is-scrollLock { overflow: hidden; }
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    vertical-align: middle;
+}
+
+h1, h2, h3, h4, h5, h6, p, figure{
+    margin: 0;
+    padding: 0;
+    font-size: 100%;
+}
+
+ul, ol {
+    list-style-type: none;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+*:focus {
+  scroll-margin-top: var(--header-h);
+}
+
+[id] {
+  scroll-margin-top: var(--header-h);
+}

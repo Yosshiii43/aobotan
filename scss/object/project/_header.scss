@@ -1,0 +1,114 @@
+/******************************
+ヘッダー
+******************************/
+@use "../../foundation/forwards" as *;
+@use "sass:math";
+
+.p-header {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: $z-header;
+  background-color: #fff;
+  height: var(--header-h); 
+  overflow: hidden;
+
+  .p-header__inner {
+    max-width: 1920px;
+    margin-inline: auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    @include mq("pc") {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;   // ← 中央列だけ “auto”
+      align-items: center;                   // 縦位置そろえ
+      gap: 0 24px;
+      height: 96px;      
+    }
+
+    h1,
+    .p-header__actions {
+      position: relative;
+      z-index: $z-headerTitle;
+    }
+
+    h1 {
+      height: 100%;
+      display: flex;
+      flex: 1 1 auto;
+      background-color: #fff;
+      justify-content: start;
+      @include mq("pc"){
+        justify-content: start;
+        align-items: center;
+      }
+      
+      > a {
+        display: inline-flex;
+        align-items: center;
+        width: 139px;
+        height: 64px;
+        margin-left: rem(16);
+        @include mq("pc") {
+          width: 227px;
+          height: 52px;
+          padding-block: rem(22);
+          margin-left: rem(20);
+        }
+
+        img {
+          width: 100%;
+          height: auto;
+          aspect-ratio: auto;
+          }
+      }
+    }
+
+    .p-header__actions {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      @include mq("pc") { 
+        justify-self: end;
+      }
+
+      > a[href="#request"] {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 4px;
+        width: 64px;
+        height: 64px;
+        background-color: $color-main;
+        color: $color-white;
+        font-size: 10px;
+        line-height: 1;
+        @include mq("pc") {
+          flex-direction: row;
+          gap: 7px;
+          width: auto;
+          height: 96px;
+          padding-left: pc-vw(43);
+          padding-right: pc-vw(43);
+          font-size: 1rem;
+          font-weight: 700;
+        }
+
+        > svg {
+          @include mq("pc") {
+            width: rem(32);
+            height: rem(32);
+          }
+        }
+      }
+    }
+
+    .p-nav {
+      @include mq("pc") {
+        justify-content: center;
+      }
+    }
+  }
+}

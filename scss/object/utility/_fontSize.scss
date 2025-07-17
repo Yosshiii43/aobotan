@@ -1,0 +1,10 @@
+/******************************
+フォントサイズ
+******************************/
+@use "../../foundation/forwards" as *;
+
+.u-fontSize--pc24{
+  @include mq("pc"){
+    font-size: rem(24);
+  }
+}

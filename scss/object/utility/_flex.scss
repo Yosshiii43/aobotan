@@ -1,0 +1,16 @@
+/******************************
+フレックス
+******************************/
+@use "../../foundation/forwards" as *;
+
+.u-flex--c {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.u-flex--sb {
+  display: flex;
+  justify-content:space-between;
+  align-items: center;
+}

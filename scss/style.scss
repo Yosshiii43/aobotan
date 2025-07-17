@@ -1,0 +1,30 @@
+////foundation
+@use "foundation/reset";
+@use "foundation/base";
+
+////layouts
+@use "layout/header" as lh;
+
+////object
+//component
+@use "object/component/hamburger";
+@use "object/component/button";
+@use "object/component/icon";
+@use "object/component/section";
+@use "object/component/secTitle";
+@use "object/component/fadeIn";
+@use "object/component/list";
+@use "object/component/form";
+@use "object/component/bg";
+
+//project
+@use "object/project/header" as ph;
+@use "object/project/nav";
+@use "object/project/footer" as pf;
+
+
+//utility
+@use "object/utility/hiddn";
+@use "object/utility/flex";
+@use "object/utility/fontSize";
+@use "object/utility/margin";

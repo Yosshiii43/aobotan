@@ -1,0 +1,86 @@
+/******************************
+グローバルナビ
+******************************/
+@use "../../foundation/forwards" as *;
+
+.p-nav{
+
+  // ─── Off‑canvas (モバイル既定) ─────────────────
+  @media(max-width: 1023px) {
+    position: fixed;
+    top : var(--header-h);
+    left: 0;
+    right:0;
+    height: calc(100vh - var(--header-h));
+    transform: translateY(calc(-100% - var(--header-h)));
+    transition: transform .35s ease;
+    overflow-y: auto;
+    background: $color-main;
+    z-index: $z-navPanel;
+
+    &.is-open { 
+      transform: translateY(0);
+    }
+
+    &__list {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+
+      .p-nav__item {
+        border-bottom: 1px solid $color-white;
+
+          .p-nav__link {
+            display: flex;
+            align-items: center;
+            gap: rem(12);
+            padding: rem(23.5) 0 rem(23.5) rem(16);
+            color: $color-white;
+            font-weight: 700;
+            line-height: 1;
+            text-decoration: none;
+            transition: opacity .2s;
+            &:hover { opacity: .7; }
+          }
+          &:first-of-type .p-nav__link{
+              padding-top: rem(24);
+            }
+      }
+      .p-nav__item-request .p-nav__link {
+        padding: rem(19.5) 0 rem(19.5) rem(16);
+      }
+    }
+  }
+
+  // ─── Desktop inline menu ─────────────────────
+  @include mq("pc") {
+    position: static;
+    height: 100%;
+    transform: none;
+    background-color: transparent;
+    padding: 0;
+
+    &__list {
+      display: flex;
+      flex-direction: row;
+      font-weight: 700;
+      column-gap: 28px;
+      color: $color-main;
+      height: 100%;
+
+      .p-nav__item {
+        &:last-child {
+          display: none;
+        }
+
+        .p-nav__link {
+          height: 100%;
+          padding: 0;
+          display: flex;
+          align-items: center;
+          color: $color-main;
+        }
+      }
+    }
+  }
+}

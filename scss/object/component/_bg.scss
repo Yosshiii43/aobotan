@@ -1,0 +1,9 @@
+/******************************
+バックグラウンドカラー
+******************************/
+@use "../../foundation/forwards" as *;
+@use "sass:math";
+
+.c-bg--gray {
+  background-color: $color-bg2;
+}

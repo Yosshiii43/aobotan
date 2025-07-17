@@ -1,0 +1,29 @@
+/******************************
+バリアブル
+******************************/
+@use "./mixin" as*;
+
+//color
+$color-text:  #333;
+$color-bg:    #fff;
+$color-bg2:   #F9F9F9;
+$color-white: #fff;
+$color-main:  #007FC6;
+$color-lightblue: #02D1FF;
+$color-accent: #F47500;
+$color-red: #f90000;
+
+//z-index設定
+$z-header : 1000;
+$z-headerTitle: 1100;
+$z-navPanel : 900;
+$z-hamburger : 1200;
+
+//header
+$header-h: 64px; //JSが走らない場合のフォールバック用
+$header-mode: fixed; // fixed or sticky
+
+//オリジナルのフォーカスリング
+$focus-color: #2684ff;
+$focus-width: 2px;
+$focus-offset: 3px;

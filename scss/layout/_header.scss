@@ -1,0 +1,24 @@
+/******************************
+ヘッダー
+******************************/
+@use "../foundation/forwards" as *;
+
+.l-header {
+  @if $header-mode == fixed {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: $z-header;
+    background: $color-bg;
+  } @else {
+    position: sticky;
+    top: 0;
+    z-index: $z-header;
+    background: $color-bg;
+  }
+}
+
+body {
+  @if $header-mode == fixed {
+    padding-top: var(--header-h);
+  }
+}

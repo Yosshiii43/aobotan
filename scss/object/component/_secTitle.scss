@@ -1,0 +1,15 @@
+/******************************
+セクションタイトル
+******************************/
+@use "../../foundation/forwards" as *;
+@use "sass:math";
+
+.c-secTitle {
+  font-size: clamp(1.5rem, 0.008rem + 3.11vw, 2rem);
+  font-weight: 700;
+  text-align: center;
+  line-height: 1.5;
+  @media (max-width: 320px) {
+    font-size: rem(22);
+  }
+}

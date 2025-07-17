@@ -1,0 +1,20 @@
+/******************************
+リスト
+******************************/
+@use "../../foundation/forwards" as *;
+
+.c-list--asterisk {
+  counter-reset: count;
+  list-style: none;
+  text-align: left;
+
+  li {
+    text-indent: -1.75em;
+    margin-left: 1.75em;
+  }
+  
+  li::before {
+    counter-increment: count;
+    content: "※"counter(count)" ";
+  }
+}

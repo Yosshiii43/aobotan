@@ -1,0 +1,51 @@
+/******************************
+mixin
+******************************/
+@use "sass:math";
+@use "sass:map";
+
+///pxからremを算出
+$base-font-size: 16;
+
+@function rem($px) {
+  @return math.div($px, $base-font-size) * 1rem;
+}
+
+/// Breakpoints  (min‑width ベース = SPファースト)
+$breakpoints: (
+  "tab": 768px,
+  "pc" : 1024px,
+
+  "min-md": 768px,
+  "min-lg": 992px,
+  "min-xl": 1200px,
+  "min-xxl": 1600px 
+);
+
+@mixin mq($key) {
+  $min: map.get($breakpoints, $key);
+
+  @media (min-width: $min) {
+    @content;
+  }
+}
+
+///pxからvwを算出
+$pcDesignSize: 1536;
+$tabDesignSize: 768;
+$spDesignSize: 375;
+
+//PCデザイン用
+@function pc-vw($pixelsVw) {
+    @return math.div($pixelsVw , $pcDesignSize) * 100vw;
+}
+
+//tabletデザイン用
+@function tab-vw($pixelsVw) {
+    @return math.div($pixelsVw , $tabDesignSize) * 100vw;
+}
+
+//SPデザイン用
+@function sp-vw($pixelsVw) {
+    @return math.div($pixelsVw , $spDesignSize) * 100vw;
+}

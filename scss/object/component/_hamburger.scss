@@ -1,0 +1,85 @@
+/******************************
+ハンバーガーメニュー
+******************************/
+@use "../../foundation/forwards" as *;
+
+.c-hamburger { 
+  --bar-w: 32px;
+  --bar-h: 1px;
+  --gap: 8px;
+
+  display: block;
+  width: 64px;
+  height: 64px;
+  background-color: $color-text;
+  position: relative;
+  z-index: $z-hamburger;
+
+  /* ─ 基本リセット ─ */
+  appearance: none;
+  padding   : 0;
+  border    : 0;
+  cursor    : pointer;
+
+  /* フォーカスリングをつける */
+    &:focus {
+      outline: $focus-width solid $focus-color;
+      outline-offset: $focus-offset;
+    }
+    &:focus-visible {
+      outline: $focus-width solid $focus-color;
+      outline-offset: $focus-offset;
+    }
+    @supports selector(:focus-visible) {
+      &:focus:not(:focus-visible) { outline: none; }
+    }
+  
+  /* 展開アニメーション*/
+  //閉じた状態
+  span {
+    position: absolute;
+    left: 50%;
+  }
+
+  &__bar {
+    width: var(--bar-w);
+    height: calc(var(--bar-h) * 2);
+    transform: translateX(-50%) scaleY(.5);
+    -webkit-transform: translateX(-50%) scaleY(.5);
+    -ms-transform: translateX(-50%) scaleY(.5);
+    background: $color-white;
+    transition: transform .3s ease, opacity .3s ease;
+    
+  &:nth-child(1){ top: 13px; }
+  &:nth-child(2){ top: 22px; }
+  &:nth-child(3){ top: 31px; }
+  }
+
+  &__text {
+    top: 40px;
+    font-size: 10px;
+    line-height: 1;
+    color: $color-white;
+    width: max-content;
+    transform: translateX(-50%);
+    -webkit-transform: translateX(-50%);
+    -ms-transform: translateX(-50%);
+  }
+
+  //開いた状態
+  &[aria-expanded="true"] {
+    .c-hamburger__bar:nth-child(1),
+    .c-hamburger__bar:nth-child(3){
+      top: 24px;
+      transform-origin:center; //支点を中央
+    }
+    .c-hamburger__bar:nth-child(1){ transform:translateX(-50%) rotate(45deg) scaleY(.5); }
+    .c-hamburger__bar:nth-child(2) { opacity: 0; }
+    .c-hamburger__bar:nth-child(3) { transform:translateX(-50%) rotate(-45deg) scaleY(.5); }
+  }
+
+  // PC では非表示
+  @include mq("pc") {
+    display: none;
+  }
+}
