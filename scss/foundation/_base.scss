@@ -4,12 +4,12 @@
 @use "forwards" as *;
 
 :root {
-  --header-h: 64px;
+  --header-h: 79px;
 }
 
 @include mq("pc") {
   :root {
-    --header-h: 96px;
+    --header-h: 100vh;
   }
 }
 

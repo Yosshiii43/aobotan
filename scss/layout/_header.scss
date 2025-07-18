@@ -12,4 +12,7 @@
 
 body {
   padding-top: var(--header-h);
+  @include mq("pc") {
+    padding-top: 0;
+  }
 }
