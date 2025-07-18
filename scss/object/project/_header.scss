@@ -11,10 +11,13 @@
     align-items: flex-start;
     justify-content: space-between;
 
-    .siteTitle {
+    .p-header__title {
       margin-block: rem(10);
       width: rem(98);
       height: rem(59);
+      position: relative;
+      z-index: $z-headerTitle;
+
       a {
         display: block;
         height: 100%;

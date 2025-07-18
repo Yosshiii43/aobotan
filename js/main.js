@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const header    = document.getElementById('js-header');
   const mqPC      = window.matchMedia('(min-width: 1024px)');
   const hamburger = document.getElementById('js-hamburger');
-  const nav       = document.getElementById('global-nav');
+  const nav       = document.getElementById('js-navWrapper');
   const body      = document.body;
   if (!nav) return;
 
