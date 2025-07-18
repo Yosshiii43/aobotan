@@ -5,4 +5,16 @@
 @use "sass:math";
 
 .p-header {
+  .p-header__inner {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+
+    .siteTitle {
+      margin-top: rem(10);
+      width: rem(98);
+      height: rem(59);
+    }
+  }
 }
