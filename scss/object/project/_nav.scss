@@ -43,6 +43,24 @@
             &:hover { opacity: .7; }
           }
       }
+
+      .p-nav__itemContact {
+        .p-nav__link{
+          line-height: 20px;
+          padding-block: rem(14);
+          &::before {
+            content: "";
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            background-image: url(../img/icon-mail01.svg);
+            background-size: contain;
+            background-position: center center;
+            background-repeat: no-repeat;
+            margin-inline: rem(-28) rem(8);
+          }
+        }
+      }
     }
     &__copyright{
       font-size: rem(12);
