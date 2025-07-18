@@ -8,13 +8,23 @@
   .p-header__inner {
     display: flex;
     flex-direction: row;
-    align-items: center;
+    align-items: flex-start;
     justify-content: space-between;
 
     .siteTitle {
       margin-top: rem(10);
       width: rem(98);
       height: rem(59);
+      a {
+        display: block;
+        height: 100%;
+
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: contain;
+        }
+      }
     }
   }
 }
