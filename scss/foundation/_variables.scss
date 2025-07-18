@@ -4,14 +4,13 @@
 @use "./mixin" as*;
 
 //color
-$color-text:  #333;
+$color-text:  #000;
 $color-bg:    #fff;
-$color-bg2:   #F9F9F9;
+$color-main:  #4282B8;
+$color-lightgray: #F8F8F8;
+$color-bluegray: #B1C6DC;
 $color-white: #fff;
-$color-main:  #007FC6;
-$color-lightblue: #02D1FF;
-$color-accent: #F47500;
-$color-red: #f90000;
+$color-red: #FE0000;
 
 //z-index設定
 $z-header : 1000;
@@ -20,7 +19,7 @@ $z-navPanel : 900;
 $z-hamburger : 1200;
 
 //header
-$header-h: 64px; //JSが走らない場合のフォールバック用
+$header-h: 69px; //JSが走らない場合のフォールバック用
 $header-mode: fixed; // fixed or sticky
 
 //オリジナルのフォーカスリング

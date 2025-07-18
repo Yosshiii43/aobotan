@@ -31,7 +31,7 @@ $breakpoints: (
 }
 
 ///pxからvwを算出
-$pcDesignSize: 1536;
+$pcDesignSize: 1440;
 $tabDesignSize: 768;
 $spDesignSize: 375;
 
@@ -49,3 +49,22 @@ $spDesignSize: 375;
 @function sp-vw($pixelsVw) {
     @return math.div($pixelsVw , $spDesignSize) * 100vw;
 }
+
+
+///Min-Max-Value Interpolation
+@function rclamp($min, $max, $minViewport, $maxViewport) {
+  $vwScale: ($max - $min) / ($maxViewport - $minViewport);  // vw単位でのスケールを計算
+  $baseOffset: $min - $minViewport * $vwScale;  // 基準となる最小値からのオフセットを計算
+
+  $minRem: $min / 16;  // 最小値をremに変換
+  $maxRem: $max / 16;  // 最大値をremに変換
+  $baseOffsetRem: $baseOffset / 16;  // オフセットをremに変換
+  $vwScaleRem: $vwScale * 100;  // vwスケールを調整
+
+  @return clamp(#{$minRem}rem, #{$baseOffsetRem}rem + #{$vwScaleRem}vw, #{$maxRem}rem);
+}
+
+// 使用例
+//.example {
+//  font-size: rclamp(24, 64, 375, 1200);
+//}

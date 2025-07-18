@@ -12,9 +12,4 @@
     text-indent: -1.75em;
     margin-left: 1.75em;
   }
-  
-  li::before {
-    counter-increment: count;
-    content: "※"counter(count)" ";
-  }
 }
