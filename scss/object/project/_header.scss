@@ -28,6 +28,10 @@
         width: rem(200);
         height: rem(121);
       }
+      > a {
+        display: block;
+        height: 100%;
+      }
     }
   }
 }
