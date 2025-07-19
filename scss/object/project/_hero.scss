@@ -1,0 +1,29 @@
+/******************************
+hero
+******************************/
+@use "../../foundation/forwards" as *;
+@use "sass:math";
+
+.p-hero {
+  position: relative;
+  &__bg {
+    display: none;
+    @include mq("tab") {
+      display: block;
+      width: pc-vw(727);
+      height: pc-vw(727);
+      margin: 0 0 0 auto;
+      background-color: $color-main;
+    }
+  }
+
+  &__body {
+    margin-top: rem(23);
+    margin-left: rem(10);
+    margin-bottom: rem(73);
+    width: 100%;
+    height: rem(589);
+    background-color: $color-lightgray;
+    border-radius: 10px 0px 0px 10px;
+  }
+}
