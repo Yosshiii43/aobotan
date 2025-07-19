@@ -73,6 +73,7 @@
   // ─── Desktop inline menu ─────────────────────
   @include mq("pc") {
     position: static;
+    width: 100%;
     height: 100%;
     transform: none;
     background-color: transparent;
@@ -81,23 +82,64 @@
     &__list {
       display: flex;
       flex-direction: column;
-      font-weight: 700;
-      column-gap: 28px;
       height: 100%;
 
-      .p-nav__item {
-        &:last-child {
-          display: none;
-        }
-
-        .p-nav__link {
+      > .p-nav__item {
+        > .p-nav__link {
           height: 100%;
-          padding: 0;
           display: flex;
           align-items: center;
-          color: $color-main;
+          justify-content: flex-start;
+          padding-block: rem(32) rem(31);
+          font-size: rem(20);
+          font-weight: 700;
+          line-height: 1;
+          border-bottom: 1px solid $color-bluegray;
+        }
+
+        &:first-of-type {
+          display: none;
         }
       }
+
+      .p-nav__itemContact {
+        .p-nav__link{
+          line-height: 24px;
+          padding-block: rem(30);
+          &::before {
+            content: "";
+            display: inline-block;
+            width: 24px;
+            height: 24px;
+            background-image: url(../img/icon-mail01.svg);
+            background-size: contain;
+            background-position: center center;
+            background-repeat: no-repeat;
+            margin-inline-end: rem(16);
+          }
+        }
+      }
+    }
+
+    &__sublist {
+      padding: rem(20) 0 rem(19) rem(17);
+      border-bottom: 1px solid $color-bluegray;
+      > .p-nav__subitem {
+        > .p-nav__link {
+          height: 100%;
+          display: flex;
+          align-items: center;
+          justify-content: flex-start;
+          padding-block: rem(12);
+          font-size: rem(14);
+          font-weight: 700;
+          line-height: 1;
+        }
+      }
+    }
+
+    &__copyright {
+      display: none;
     }
   }
 }
