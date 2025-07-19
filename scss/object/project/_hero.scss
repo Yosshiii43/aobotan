@@ -6,6 +6,9 @@ hero
 
 .p-hero {
   position: relative;
+  padding-top: rem(23);
+  padding-left: rem(10);
+  padding-bottom: rem(73);
   &__bg {
     display: none;
     @include mq("tab") {
@@ -18,12 +21,43 @@ hero
   }
 
   &__body {
-    margin-top: rem(23);
-    margin-left: rem(10);
-    margin-bottom: rem(73);
     width: 100%;
     height: rem(589);
     background-color: $color-lightgray;
     border-radius: 10px 0px 0px 10px;
   }
+
+  .p-hero__scroll {
+  position: absolute;
+  bottom: rem(108);
+  left: rem(19);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: rem(8);
+}
+  &__scroll span {
+    color: $color-main;
+    font-size: rem(10);
+    line-height: 1;
+    -webkit-text-stroke: 0.2px $color-main;
+  }
+  /* line animation */
+  &__scroll::before {
+    //animation: scroll 2s infinite;
+    background-color: $color-main;
+    top: rem(18);
+    content: "";
+    height: rem(52);
+    left: rem(22.5);
+    position: absolute;
+    width: 1px;
+  }
+  @keyframes scroll{
+    0%{transform:scale(1,0);transform-origin:0 0;}
+    50%{transform:scale(1,1);transform-origin:0 0;}
+    51%{transform:scale(1,1);transform-origin:0 100%;}
+    100%{transform:scale(1,0);transform-origin:0 100%;}
+  }
+
 }
