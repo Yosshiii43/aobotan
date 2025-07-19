@@ -100,7 +100,7 @@
           display: none;
         }
 
-        &.has-child {
+        /*&.has-child {
           > a {
             position: relative;
 
@@ -124,7 +124,7 @@
               right: 11.5px;
             }
           }
-        }
+        }*/
       }
 
       .p-nav__itemContact {
@@ -146,11 +146,42 @@
       }
     }
 
+    /*
     &__sublist {
-      padding: rem(20) 0 rem(19) rem(17);
+      padding: 0;
+      position: relative;
+      max-height: 0;
+      opacity: 0;
+      visibility: hidden;
+      overflow: hidden;
+      transform: translateY(-4px);
+      transition: 
+        max-height 320ms cubic-bezier(.16,.6,.24,1),
+        opacity    220ms ease,
+        transform  260ms cubic-bezier(.16,.6,.24,1),
+        visibility 0s linear 320ms;
+    }
+
+    &__sublistInner {
+      padding: rem(20) rem(8) rem(19) rem(17);
       border-bottom: 1px solid $color-bluegray;
-      > .p-nav__subitem {
-        > .p-nav__link {
+    }
+
+    
+    .has-child:hover    > .p-nav__sublist,
+    .has-child:focus-within > .p-nav__sublist,
+    .has-child.is-open  > .p-nav__sublist {
+      max-height: 300px;
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+      transition:
+        max-height 360ms cubic-bezier(.16,.6,.24,1),
+        opacity    240ms ease,
+        transform  300ms cubic-bezier(.16,.6,.24,1),
+        visibility 0s;
+
+        .p-nav__link {
           height: 100%;
           display: flex;
           align-items: center;
@@ -160,9 +191,147 @@
           font-weight: 700;
           line-height: 1;
         }
+    }
+
+    
+    .has-child.is-open > a::before,
+    .has-child:hover > a::before,
+    .has-child:focus-within > a::before {
+      transform: translateY(-50%) translateX(-50%) rotate(90deg);
+      opacity: 0;
+    }
+    .has-child.is-open > a::after,
+    .has-child:hover > a::after,
+    .has-child:focus-within > a::after {
+      transform: translateY(-50%) translateX(-50%) rotate(90deg);
+    }
+    
+    
+    .p-nav__item > .p-nav__link:focus-visible {
+      outline: 2px solid $color-main;
+      outline-offset: 2px;
+    }
+    .p-nav__subitem > .p-nav__link:focus-visible {
+      outline: 2px solid $color-main;
+      outline-offset: 2px;
+    }
+  */
+
+    /* ----- サブリスト（閉じ初期） ----- */
+    .p-nav__sublist {
+      /* アニメ対象 */
+      height: 0;
+      opacity: 0;
+      visibility: hidden;
+      overflow: hidden;
+      transform: translateY(-2px);
+      padding: 0;               // padding は内側へ移動済み
+      border: 0;                 // 枠線も内側へ
+      transition:
+        height     260ms cubic-bezier(.35,.65,.3,1),
+        opacity    180ms ease,
+        transform  220ms cubic-bezier(.35,.65,.3,1),
+        visibility 0s linear 260ms;
+      will-change: height, opacity, transform;
+
+      /* 内側余白＋ボーダー（元の padding / border をここへ） */
+      .p-nav__sublistInner {
+        padding: rem(20) rem(8) rem(19) rem(17);
+        border-bottom: 1px solid $color-bluegray;
+
+        /* 内側の ul (省略可) */
+        .p-nav__sublistBody {
+          margin: 0;
+          padding: 0;
+
+          .p-nav__subitem > .p-nav__link {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            padding-block: rem(12);
+            font-size: rem(14);
+            font-weight: 700;
+            line-height: 1;
+          }
+        }
       }
     }
 
+    /* 開いた“最終状態”（JS が is-open を付与し、height:auto へ移行後もクラスは残る） */
+    .has-child.is-open > .p-nav__sublist {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+      /* height は JS が transition 後に auto にセットするのでここで指定しない */
+      transition:
+        height     260ms cubic-bezier(.35,.65,.3,1),
+        opacity    200ms ease,
+        transform  220ms cubic-bezier(.35,.65,.3,1),
+        visibility 0s;
+    }
+
+      /* アニメ中ポインター抑止（任意） */
+    .has-child.is-animating > .p-nav__sublist {
+      pointer-events: none;
+    }
+
+    /* “＋→－” アイコン（前回の回転版を調整） */
+    .has-child > a {
+      position: relative;
+      padding-right: rem(32); // アイコン分余白
+    }
+
+    .has-child > a::before,
+    .has-child > a::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      right: rem(4);
+      width: 20px;
+      height: 2px;
+      background-color: $color-main;
+      transform-origin: center;
+      transition:
+        transform 240ms cubic-bezier(.35,.65,.3,1),
+        opacity   180ms ease 100ms,
+        width     240ms cubic-bezier(.35,.65,.3,1);
+    }
+
+    /* 横棒 */
+    .has-child > a::before {
+      transform: translateY(-50%) rotate(0deg);
+    }
+    /* 縦棒 (初期 90°) */
+    .has-child > a::after {
+      transform: translateY(-50%) rotate(90deg);
+    }
+
+    /* 開状態（ホバー + フォーカス + is-open のいずれでも） */
+    .has-child.is-open > a::after,
+    .has-child:hover > a::after,
+    .has-child:focus-within > a::after {
+      transform: translateY(-50%) rotate(0deg);
+    }
+    .has-child.is-open > a::before,
+    .has-child:hover > a::before,
+    .has-child:focus-within > a::before {
+      opacity: 0;
+      width: 0;
+      transition:
+        width   240ms cubic-bezier(.35,.65,.3,1) 100ms,
+        opacity 160ms ease 100ms;
+    }
+
+    /* 戻り（開閉解除時に速やかに復元） */
+    .has-child:not(.is-open):not(:hover):not(:focus-within) > a::before {
+      width: 20px;
+      opacity: 1;
+      transition:
+        transform 240ms cubic-bezier(.35,.65,.3,1),
+        opacity   120ms ease,
+        width     0s;
+    }
+    
     &__copyright {
       display: none;
     }
