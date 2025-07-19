@@ -158,6 +158,170 @@ document.addEventListener('DOMContentLoaded', () => {
   } else {
     closeMobileMenu();
   }
+
+  /* ─────────────────────────────────────
+     6. サブメニュー（実測 height アニメ） PC 専用
+  ───────────────────────────────────── */
+  const BREAKPOINT_PC = 1024;                 // 既に 1024px を使っているので定数化
+  const isPC = () => window.innerWidth >= BREAKPOINT_PC;
+
+  const parentItems = nav.querySelectorAll('.p-nav__item.has-child');
+
+  function animateOpen(li, trigger) {
+    if (!isPC()) return;
+    const panel = li.querySelector('.p-nav__sublist');
+    if (!panel || li.classList.contains('is-open') || li.classList.contains('is-animating')) return;
+
+    li.classList.add('is-open', 'is-animating');
+    trigger?.setAttribute('aria-expanded', 'true');
+
+    // 初期 height:0 → 実高へ
+    panel.style.visibility = 'visible';
+    panel.style.opacity = '1';
+    panel.style.transform = 'translateY(0)';
+    panel.style.height = panel.scrollHeight + 'px';
+
+    const onEnd = e => {
+      if (e.propertyName !== 'height') return;
+      panel.removeEventListener('transitionend', onEnd);
+      panel.style.height = 'auto';           // コンテンツ変化に追従
+      li.classList.remove('is-animating');
+    };
+    panel.addEventListener('transitionend', onEnd);
+  }
+
+  function animateClose(li, trigger) {
+    if (!isPC()) return;
+    const panel = li.querySelector('.p-nav__sublist');
+    if (!panel || !li.classList.contains('is-open') || li.classList.contains('is-animating')) return;
+
+    li.classList.add('is-animating');
+
+    // auto -> 固定値 -> 0
+    if (panel.style.height === '' || panel.style.height === 'auto') {
+      panel.style.height = panel.scrollHeight + 'px';
+      void panel.offsetWidth; // reflow
+    }
+    panel.style.height = '0px';
+    panel.style.opacity = '0';
+    panel.style.transform = 'translateY(-2px)';
+    trigger?.setAttribute('aria-expanded', 'false');
+
+    const onEnd = e => {
+      if (e.propertyName !== 'height') return;
+      panel.removeEventListener('transitionend', onEnd);
+      li.classList.remove('is-open', 'is-animating');
+      panel.style.visibility = 'hidden';
+      // 次回再オープン時は height:0 から再スタート
+    };
+    panel.addEventListener('transitionend', onEnd);
+  }
+
+  function closeAllSubmenus() {
+    parentItems.forEach(li => {
+      const trigger = li.querySelector(':scope > .p-nav__link');
+      animateClose(li, trigger);
+    });
+  }
+
+  parentItems.forEach(li => {
+    const trigger = li.querySelector(':scope > .p-nav__link');
+    const panel   = li.querySelector('.p-nav__sublist');
+    if (!trigger || !panel) return;
+
+    // フォーカスで開く
+    trigger.addEventListener('focus', () => animateOpen(li, trigger));
+
+    // 親リンクのキーボード
+    trigger.addEventListener('keydown', e => {
+      if (!isPC()) return;
+      if (e.key === 'ArrowDown') {
+        animateOpen(li, trigger);
+        const first = panel.querySelector('.p-nav__subitem .p-nav__link');
+        if (first) {
+          e.preventDefault();
+          first.focus();
+        }
+      } else if (e.key === 'Escape') {
+        animateClose(li, trigger);
+        trigger.focus();
+      }
+    });
+
+    // サブ内 Esc / ArrowUp
+    panel.addEventListener('keydown', e => {
+      if (!isPC()) return;
+      if (e.key === 'Escape') {
+        animateClose(li, trigger);
+        trigger.focus();
+      } else if (e.key === 'ArrowUp') {
+        const links = [...panel.querySelectorAll('.p-nav__subitem .p-nav__link')];
+        if (links.indexOf(document.activeElement) === 0) {
+          e.preventDefault();
+            trigger.focus();
+        }
+      }
+    });
+
+    // Hover 補助（PC）
+    let leaveTimer = null;
+    li.addEventListener('mouseenter', () => {
+      if (!isPC()) return;
+      if (leaveTimer) clearTimeout(leaveTimer);
+      animateOpen(li, trigger);
+    });
+    li.addEventListener('mouseleave', () => {
+      if (!isPC()) return;
+      leaveTimer = setTimeout(() => animateClose(li, trigger), 120);
+    });
+  });
+
+  // Nav 外へフォーカスが移ったら閉じる
+  document.addEventListener('focusin', e => {
+    if (isPC() && !nav.contains(e.target)) {
+      closeAllSubmenus();
+    }
+  });
+
+  // Esc 全体
+  document.addEventListener('keydown', e => {
+    if (isPC() && e.key === 'Escape') {
+      closeAllSubmenus();
+    }
+  });
+
+  // リサイズ時リセット（SP→PC, PC→SP）
+  window.addEventListener('resize', () => {
+    if (!isPC()) {
+      parentItems.forEach(li => {
+        const trigger = li.querySelector(':scope > .p-nav__link');
+        const panel   = li.querySelector('.p-nav__sublist');
+        li.classList.remove('is-open', 'is-animating');
+        trigger?.setAttribute('aria-expanded', 'false');
+        // インライン style リセット
+        if (panel) {
+          panel.style.height = 'auto';
+          panel.style.visibility = 'visible';
+          panel.style.opacity = '1';
+          panel.style.transform = 'none';
+        }
+      });
+    } else {
+      // PC に戻った瞬間は閉じた状態
+      parentItems.forEach(li => {
+        const trigger = li.querySelector('> .p-nav__link');
+        const panel   = li.querySelector('.p-nav__sublist');
+        if (panel) {
+          panel.style.height = '0';
+          panel.style.opacity = '0';
+          panel.style.visibility = 'hidden';
+          panel.style.transform = 'translateY(-2px)';
+        }
+        li.classList.remove('is-open', 'is-animating');
+        trigger?.setAttribute('aria-expanded', 'false');
+      });
+    }
+  });
 });
 
 /*************************************************************************
