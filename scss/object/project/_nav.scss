@@ -29,7 +29,6 @@
       list-style: none;
 
       .p-nav__item {
-
           .p-nav__link {
             display: flex;
             justify-content: center;
@@ -99,6 +98,32 @@
 
         &:first-of-type {
           display: none;
+        }
+
+        &.has-child {
+          > a {
+            position: relative;
+
+            &::before,
+            &::after {
+              position: absolute;
+              display: block;
+              content: "";
+              top: 50%;
+              right: 0;
+              background-color: $color-main;
+              transform: translateY(-50%);
+            }
+            &::before {
+              width: 24px;
+              height: 1px;
+            }
+            &::after {
+              width: 1px;
+              height: 24px;
+              right: 11.5px;
+            }
+          }
         }
       }
 
