@@ -80,10 +80,9 @@
 
     &__list {
       display: flex;
-      flex-direction: row;
+      flex-direction: column;
       font-weight: 700;
       column-gap: 28px;
-      color: $color-main;
       height: 100%;
 
       .p-nav__item {

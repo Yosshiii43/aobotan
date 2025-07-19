@@ -1,5 +1,5 @@
 /******************************
-ヘッダー
+l-header
 ******************************/
 @use "../foundation/forwards" as *;
 
@@ -8,6 +8,14 @@
   top: 0; left: 0; right: 0;
   z-index: $z-header;
   background: $color-bg;
+  @include mq("pc"){
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: rem(280);
+    height: 100%;
+  } 
 }
 
 body {

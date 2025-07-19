@@ -10,6 +10,11 @@
     flex-direction: row;
     align-items: flex-start;
     justify-content: space-between;
+    @include mq("pc"){
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+    }
 
     .p-header__title {
       margin-block: rem(10);

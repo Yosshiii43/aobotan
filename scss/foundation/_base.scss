@@ -5,11 +5,8 @@
 
 :root {
   --header-h: 79px;
-}
-
-@include mq("pc") {
-  :root {
-    --header-h: 100vh;
+  @include mq("pc") {
+    --header-h: 100%;
   }
 }
 
