@@ -281,57 +281,83 @@
       padding-right: rem(32); // アイコン分余白
     }
 
+    /* 共通ベース：正方形ヒットボックス  */
     .has-child > a::before,
     .has-child > a::after {
       content: "";
       position: absolute;
       top: 50%;
-      right: rem(4);
-      width: 20px;
-      height: 2px;
-      background-color: $color-main;
-      transform-origin: center;
-      transition:
-        transform 240ms cubic-bezier(.35,.65,.3,1),
-        opacity   180ms ease 100ms,
-        width     240ms cubic-bezier(.35,.65,.3,1);
+      right: 0;              /* 右端にぴったり */
+      width: 24px;
+      height: 24px;          /* 正方形 */
+      transform: translateY(-50%);
+      pointer-events: none;
     }
 
-    /* 横棒 */
-    .has-child > a::before {
-      transform: translateY(-50%) rotate(0deg);
-    }
-    /* 縦棒 (初期 90°) */
-    .has-child > a::after {
-      transform: translateY(-50%) rotate(90deg);
+    /* 実際の線は擬似要素の ::before / ::after の “内部” にさらに 2 本作る手もあるが、
+      ここでは before=横線, after=縦線 として background で線を引く代わりに
+      擬似要素自体を線にするやり方に変更する。→ なので再構成する。 */
+
+    /* 再構成：箱＋内部線用 2 本方式 */
+    .has-child > a {
+      &::before,
+      &::after {
+        background: none;
+      }
+
+      /* 縦線横線共通 */
+      &::before,
+      &::after {
+        content:"";
+        position:absolute;
+        top:50%;
+        right:0;
+        width:24px;
+        height:1px;
+        background-color:$color-main;
+      }
+
+      /* 横線 */
+      &::before {
+        transform:translateY(-50%);
+        transition:
+          opacity 160ms ease 100ms,
+          width   240ms cubic-bezier(.35,.65,.3,1) 100ms;
+      }
+
+      /* 縦線（回転で横線に） */
+      &::after {
+        /* 縦棒に見せる：中心を回転軸に 90deg */
+        transform:translateY(-50%) rotate(90deg);
+        transform-origin:50% 50%;
+        transition:
+          transform 240ms cubic-bezier(.35,.65,.3,1),
+          opacity   0s; /* 不透明度は使わないが揃え */
+      }
     }
 
-    /* 開状態（ホバー + フォーカス + is-open のいずれでも） */
-    .has-child.is-open > a::after,
-    .has-child:hover > a::after,
+    /* 開いた状態：縦線(after) を 0° に戻して横線化 → 横線(before) を消して 1 本だけに */
+    .has-child.is-open  > a::after,
+    .has-child:hover    > a::after,
     .has-child:focus-within > a::after {
-      transform: translateY(-50%) rotate(0deg);
-    }
-    .has-child.is-open > a::before,
-    .has-child:hover > a::before,
-    .has-child:focus-within > a::before {
-      opacity: 0;
-      width: 0;
-      transition:
-        width   240ms cubic-bezier(.35,.65,.3,1) 100ms,
-        opacity 160ms ease 100ms;
+      transform:translateY(-50%) rotate(0deg);
     }
 
-    /* 戻り（開閉解除時に速やかに復元） */
-    .has-child:not(.is-open):not(:hover):not(:focus-within) > a::before {
-      width: 20px;
-      opacity: 1;
-      transition:
-        transform 240ms cubic-bezier(.35,.65,.3,1),
-        opacity   120ms ease,
-        width     0s;
+    .has-child.is-open  > a::before,
+    .has-child:hover    > a::before,
+    .has-child:focus-within > a::before {
+      opacity:0;
     }
-    
+
+    /* 戻り（完全に閉じた状態へ復帰） */
+    .has-child:not(.is-open):not(:hover):not(:focus-within) > a::before {
+      opacity:1;
+      width:24px;
+      transition:
+        opacity 120ms ease,
+        width   0s; /* 即戻す */
+    }
+
     &__copyright {
       display: none;
     }
