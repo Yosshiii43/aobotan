@@ -7,14 +7,24 @@ hero
 .p-hero {
   position: relative;
   padding-top: rem(23);
-  padding-left: rem(10);
   padding-bottom: rem(73);
+  padding-left: rem(10);
+  @include mq("pc") {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1160 / (40 + 873 + 76);
+    padding-top: 0;
+    padding-bottom: rem(76);
+    padding-left: 0;
+  }
+
   &__bg {
     display: none;
-    @include mq("tab") {
+    @include mq("pc") {
       display: block;
-      width: pc-vw(727);
-      height: pc-vw(727);
+      width: 62.7%;
+      height: auto;
+      aspect-ratio: 1 /1;
       margin: 0 0 0 auto;
       background-color: $color-main;
     }
@@ -25,6 +35,15 @@ hero
     height: rem(589);
     background-color: $color-lightgray;
     border-radius: 10px 0px 0px 10px;
+    @include mq("pc") {
+      width: calc(100% - rem(40));
+      height: auto;
+      aspect-ratio: 1120 / 873;
+      border-radius: 50px;
+      position: absolute;
+      top: rem(40);
+      right: rem(40);
+    }
   }
 
   .p-hero__scroll {
