@@ -21,14 +21,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
   /* ヘッダー高さを CSS変数から取得 */
   const getHeaderHeight = () => {
-    const val = getComputedStyle(document.documentElement)
-                .getPropertyValue('--header-h').trim();
-    const px = parseInt(val, 10);
-    if (isNaN(px)) {
-      console.warn('⚠️ --header-h が無効です。デフォルト64pxを使用');
-      return 64;
-    }
-    return px;
+    // PCのときは高さ0として扱う（ヘッダーを引かない）
+    if (mqPC.matches) return 0;
+
+    const header = document.querySelector('#js-header'); // 適宜修正
+    return header ? header.offsetHeight : 0;
   };
 
   /* ─────────────────────────────────────
@@ -162,164 +159,241 @@ document.addEventListener('DOMContentLoaded', () => {
   /* ─────────────────────────────────────
      6. サブメニュー（実測 height アニメ） PC 専用
   ───────────────────────────────────── */
-  const BREAKPOINT_PC = 1024;                 // 既に 1024px を使っているので定数化
+  const BREAKPOINT_PC = 1024;
   const isPC = () => window.innerWidth >= BREAKPOINT_PC;
-
   const parentItems = nav.querySelectorAll('.p-nav__item.has-child');
 
-  function animateOpen(li, trigger) {
-    if (!isPC()) return;
-    const panel = li.querySelector('.p-nav__sublist');
-    if (!panel || li.classList.contains('is-open') || li.classList.contains('is-animating')) return;
+  let activeLi = null; // 現在 open / opening の LI
+  let transitionMap = new WeakMap(); // panel => listener (キャンセル用)
 
-    li.classList.add('is-open', 'is-animating');
-    trigger?.setAttribute('aria-expanded', 'true');
-
-    // 初期 height:0 → 実高へ
-    panel.style.visibility = 'visible';
-    panel.style.opacity = '1';
-    panel.style.transform = 'translateY(0)';
-    panel.style.height = panel.scrollHeight + 'px';
-
-    const onEnd = e => {
-      if (e.propertyName !== 'height') return;
-      panel.removeEventListener('transitionend', onEnd);
-      panel.style.height = 'auto';           // コンテンツ変化に追従
-      li.classList.remove('is-animating');
-    };
-    panel.addEventListener('transitionend', onEnd);
+  function setState(li, state) {
+    li.dataset.state = state; // デバッグしやすくする
   }
 
-  function animateClose(li, trigger) {
-    if (!isPC()) return;
-    const panel = li.querySelector('.p-nav__sublist');
-    if (!panel || !li.classList.contains('is-open') || li.classList.contains('is-animating')) return;
+  function cleanupTransition(panel) {
+    const listener = transitionMap.get(panel);
+    if (listener) {
+      panel.removeEventListener('transitionend', listener);
+      transitionMap.delete(panel);
+    }
+  }
 
-    li.classList.add('is-animating');
+  /* 強制的に閉じ状態へ（即座に height:0 へ遷移させアニメに任せる） */
+  function closePanel(li, instant = false) {
+    const trigger = li.querySelector(':scope > .p-nav__link');
+    const panel   = li.querySelector(':scope > .p-nav__sublist');
+    if (!panel) return;
 
-    // auto -> 固定値 -> 0
+    const state = li.dataset.state;
+    if (state === 'closed' || state === 'closing') return;
+
+    cleanupTransition(panel);
+
+    // height:auto なら現高さを固定
     if (panel.style.height === '' || panel.style.height === 'auto') {
       panel.style.height = panel.scrollHeight + 'px';
-      void panel.offsetWidth; // reflow
+      // reflow
+      void panel.offsetWidth;
     }
-    panel.style.height = '0px';
-    panel.style.opacity = '0';
-    panel.style.transform = 'translateY(-2px)';
+
+    setState(li, 'closing');
+    li.classList.add('is-animating');
+    li.classList.remove('is-open');
     trigger?.setAttribute('aria-expanded', 'false');
 
-    const onEnd = e => {
-      if (e.propertyName !== 'height') return;
-      panel.removeEventListener('transitionend', onEnd);
-      li.classList.remove('is-open', 'is-animating');
+    const doToZero = () => {
+      panel.style.height    = '0px';
+      panel.style.opacity   = '0';
+      panel.style.transform = 'translateY(-2px)';
+    };
+
+    if (instant) {
+      // アニメを使わず即閉じ（リサイズ / 全閉など）
+      panel.style.transition = 'none';
+      doToZero();
       panel.style.visibility = 'hidden';
-      // 次回再オープン時は height:0 から再スタート
+      panel.offsetWidth; // reflow
+      panel.style.transition = '';
+      li.classList.remove('is-animating');
+      setState(li, 'closed');
+      return;
+    }
+
+    requestAnimationFrame(doToZero);
+
+    const onEnd = (e) => {
+      if (e.propertyName !== 'height') return;
+      cleanupTransition(panel);
+      panel.style.visibility = 'hidden';
+      li.classList.remove('is-animating');
+      setState(li, 'closed');
+      if (activeLi === li) activeLi = null;
     };
     panel.addEventListener('transitionend', onEnd);
+    transitionMap.set(panel, onEnd);
   }
 
-  function closeAllSubmenus() {
-    parentItems.forEach(li => {
-      const trigger = li.querySelector(':scope > .p-nav__link');
-      animateClose(li, trigger);
-    });
-  }
+  /* 開く */
+  function openPanel(li) {
+    if (!isPC()) return;
+    if (li === activeLi && (li.dataset.state === 'open' || li.dataset.state === 'opening')) return;
 
-  parentItems.forEach(li => {
     const trigger = li.querySelector(':scope > .p-nav__link');
-    const panel   = li.querySelector('.p-nav__sublist');
+    const panel   = li.querySelector(':scope > .p-nav__sublist');
+    if (!panel) return;
+
+    // 他を全部閉じる
+    if (activeLi && activeLi !== li) {
+      closePanel(activeLi);
+    }
+
+    cleanupTransition(panel);
+
+    setState(li, 'opening');
+    li.classList.add('is-open', 'is-animating');
+    trigger?.setAttribute('aria-expanded', 'true');
+    activeLi = li;
+
+    // 初期値セット
+    panel.style.visibility = 'visible';
+    panel.style.opacity    = '1';
+    panel.style.transform  = 'translateY(0)';
+    panel.style.height     = '0px'; // まず0確定（再オープンの残骸防止）
+    // 1フレーム後に実高セット
+    requestAnimationFrame(() => {
+      const targetH = panel.scrollHeight;
+      panel.style.height = targetH + 'px';
+    });
+
+    const onEnd = (e) => {
+      if (e.propertyName !== 'height') return;
+      cleanupTransition(panel);
+      // 最終状態へ
+      if (li.dataset.state === 'opening') {
+        panel.style.height = 'auto';
+        li.classList.remove('is-animating');
+        setState(li, 'open');
+      }
+    };
+    panel.addEventListener('transitionend', onEnd);
+    transitionMap.set(panel, onEnd);
+  }
+
+  /* 全閉（instant=true で一気に） */
+  function closeAll(instant = false) {
+    parentItems.forEach(li => closePanel(li, instant));
+    activeLi = null;
+  }
+
+  /* イベント登録 */
+  parentItems.forEach(li => {
+    setState(li, 'closed');
+
+    const trigger = li.querySelector(':scope > .p-nav__link');
+    const panel   = li.querySelector(':scope > .p-nav__sublist');
     if (!trigger || !panel) return;
 
-    // フォーカスで開く
-    trigger.addEventListener('focus', () => animateOpen(li, trigger));
+    /* フォーカスで開く */
+    trigger.addEventListener('focus', () => openPanel(li));
 
-    // 親リンクのキーボード
+    /* 親リンクキーボード */
     trigger.addEventListener('keydown', e => {
       if (!isPC()) return;
       if (e.key === 'ArrowDown') {
-        animateOpen(li, trigger);
+        openPanel(li);
         const first = panel.querySelector('.p-nav__subitem .p-nav__link');
         if (first) {
           e.preventDefault();
           first.focus();
         }
       } else if (e.key === 'Escape') {
-        animateClose(li, trigger);
+        closePanel(li);
         trigger.focus();
       }
     });
 
-    // サブ内 Esc / ArrowUp
+    /* サブ内部 */
     panel.addEventListener('keydown', e => {
       if (!isPC()) return;
       if (e.key === 'Escape') {
-        animateClose(li, trigger);
+        closePanel(li);
         trigger.focus();
       } else if (e.key === 'ArrowUp') {
         const links = [...panel.querySelectorAll('.p-nav__subitem .p-nav__link')];
         if (links.indexOf(document.activeElement) === 0) {
           e.preventDefault();
-            trigger.focus();
+          trigger.focus();
         }
       }
     });
 
-    // Hover 補助（PC）
-    let leaveTimer = null;
-    li.addEventListener('mouseenter', () => {
+      li.addEventListener('focusout', e => {
+        if (!isPC()) return;
+        if (!li.classList.contains('is-open')) return;
+
+        // 次のフォーカス先確定を待ってから判定
+        setTimeout(() => {
+          const now = document.activeElement;
+          if (li.contains(now)) return;           // まだ li 内にいる
+          if (!nav.contains(now)) {
+            // nav 外 → document の focusin ハンドラが全閉するので任意
+            closePanel(li);
+            return;
+          }
+          // nav 内の別要素（他の親でない）へ移ったので閉じる
+          closePanel(li);
+        }, 0);
+      });
+
+    /* Hover: pointerenter / pointerleave */
+    li.addEventListener('pointerenter', () => {
       if (!isPC()) return;
-      if (leaveTimer) clearTimeout(leaveTimer);
-      animateOpen(li, trigger);
+      openPanel(li);
     });
-    li.addEventListener('mouseleave', () => {
+
+    li.addEventListener('pointerleave', (e) => {
       if (!isPC()) return;
-      leaveTimer = setTimeout(() => animateClose(li, trigger), 120);
+      // すぐ他 LI に入るならその LI の pointerenter で openPanel → こちらは閉じるだけ
+      // 少し猶予欲しければ setTimeout 追加
+      closePanel(li);
     });
   });
 
-  // Nav 外へフォーカスが移ったら閉じる
+  /* Nav 外へフォーカス移動で全閉 */
   document.addEventListener('focusin', e => {
     if (isPC() && !nav.contains(e.target)) {
-      closeAllSubmenus();
+      closeAll();
     }
   });
 
-  // Esc 全体
+  /* Esc グローバル */
   document.addEventListener('keydown', e => {
     if (isPC() && e.key === 'Escape') {
-      closeAllSubmenus();
+      closeAll();
     }
   });
 
-  // リサイズ時リセット（SP→PC, PC→SP）
+  /* リサイズ */
   window.addEventListener('resize', () => {
     if (!isPC()) {
+      // SP: サブは常時展開
       parentItems.forEach(li => {
         const trigger = li.querySelector(':scope > .p-nav__link');
-        const panel   = li.querySelector('.p-nav__sublist');
-        li.classList.remove('is-open', 'is-animating');
-        trigger?.setAttribute('aria-expanded', 'false');
-        // インライン style リセット
+        const panel   = li.querySelector(':scope > .p-nav__sublist');
+        cleanupTransition(panel);
+        li.classList.remove('is-open','is-animating');
+        setState(li, 'open'); // SPでは開き扱い
+        trigger?.setAttribute('aria-expanded', 'false'); // SPは視覚開なので任意
         if (panel) {
-          panel.style.height = 'auto';
+          panel.style.height     = 'auto';
           panel.style.visibility = 'visible';
-          panel.style.opacity = '1';
-          panel.style.transform = 'none';
+          panel.style.opacity    = '1';
+          panel.style.transform  = 'none';
         }
       });
+      activeLi = null;
     } else {
-      // PC に戻った瞬間は閉じた状態
-      parentItems.forEach(li => {
-        const trigger = li.querySelector('> .p-nav__link');
-        const panel   = li.querySelector('.p-nav__sublist');
-        if (panel) {
-          panel.style.height = '0';
-          panel.style.opacity = '0';
-          panel.style.visibility = 'hidden';
-          panel.style.transform = 'translateY(-2px)';
-        }
-        li.classList.remove('is-open', 'is-animating');
-        trigger?.setAttribute('aria-expanded', 'false');
-      });
+      closeAll(true); // instant
     }
   });
 });

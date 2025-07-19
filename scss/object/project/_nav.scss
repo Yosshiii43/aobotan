@@ -99,32 +99,6 @@
         &:first-of-type {
           display: none;
         }
-
-        /*&.has-child {
-          > a {
-            position: relative;
-
-            &::before,
-            &::after {
-              position: absolute;
-              display: block;
-              content: "";
-              top: 50%;
-              right: 0;
-              background-color: $color-main;
-              transform: translateY(-50%);
-            }
-            &::before {
-              width: 24px;
-              height: 1px;
-            }
-            &::after {
-              width: 1px;
-              height: 24px;
-              right: 11.5px;
-            }
-          }
-        }*/
       }
 
       .p-nav__itemContact {
@@ -146,77 +120,6 @@
       }
     }
 
-    /*
-    &__sublist {
-      padding: 0;
-      position: relative;
-      max-height: 0;
-      opacity: 0;
-      visibility: hidden;
-      overflow: hidden;
-      transform: translateY(-4px);
-      transition: 
-        max-height 320ms cubic-bezier(.16,.6,.24,1),
-        opacity    220ms ease,
-        transform  260ms cubic-bezier(.16,.6,.24,1),
-        visibility 0s linear 320ms;
-    }
-
-    &__sublistInner {
-      padding: rem(20) rem(8) rem(19) rem(17);
-      border-bottom: 1px solid $color-bluegray;
-    }
-
-    
-    .has-child:hover    > .p-nav__sublist,
-    .has-child:focus-within > .p-nav__sublist,
-    .has-child.is-open  > .p-nav__sublist {
-      max-height: 300px;
-      opacity: 1;
-      visibility: visible;
-      transform: translateY(0);
-      transition:
-        max-height 360ms cubic-bezier(.16,.6,.24,1),
-        opacity    240ms ease,
-        transform  300ms cubic-bezier(.16,.6,.24,1),
-        visibility 0s;
-
-        .p-nav__link {
-          height: 100%;
-          display: flex;
-          align-items: center;
-          justify-content: flex-start;
-          padding-block: rem(12);
-          font-size: rem(14);
-          font-weight: 700;
-          line-height: 1;
-        }
-    }
-
-    
-    .has-child.is-open > a::before,
-    .has-child:hover > a::before,
-    .has-child:focus-within > a::before {
-      transform: translateY(-50%) translateX(-50%) rotate(90deg);
-      opacity: 0;
-    }
-    .has-child.is-open > a::after,
-    .has-child:hover > a::after,
-    .has-child:focus-within > a::after {
-      transform: translateY(-50%) translateX(-50%) rotate(90deg);
-    }
-    
-    
-    .p-nav__item > .p-nav__link:focus-visible {
-      outline: 2px solid $color-main;
-      outline-offset: 2px;
-    }
-    .p-nav__subitem > .p-nav__link:focus-visible {
-      outline: 2px solid $color-main;
-      outline-offset: 2px;
-    }
-  */
-
     /* ----- サブリスト（閉じ初期） ----- */
     .p-nav__sublist {
       /* アニメ対象 */
@@ -225,8 +128,8 @@
       visibility: hidden;
       overflow: hidden;
       transform: translateY(-2px);
-      padding: 0;               // padding は内側へ移動済み
-      border: 0;                 // 枠線も内側へ
+      padding: 0;
+      border: 0;
       transition:
         height     260ms cubic-bezier(.35,.65,.3,1),
         opacity    180ms ease,
@@ -234,12 +137,10 @@
         visibility 0s linear 260ms;
       will-change: height, opacity, transform;
 
-      /* 内側余白＋ボーダー（元の padding / border をここへ） */
       .p-nav__sublistInner {
         padding: rem(20) rem(8) rem(19) rem(17);
         border-bottom: 1px solid $color-bluegray;
 
-        /* 内側の ul (省略可) */
         .p-nav__sublistBody {
           margin: 0;
           padding: 0;
@@ -257,12 +158,11 @@
       }
     }
 
-    /* 開いた“最終状態”（JS が is-open を付与し、height:auto へ移行後もクラスは残る） */
+    /* 開いた“最終状態” */
     .has-child.is-open > .p-nav__sublist {
       opacity: 1;
       visibility: visible;
       transform: translateY(0);
-      /* height は JS が transition 後に auto にセットするのでここで指定しない */
       transition:
         height     260ms cubic-bezier(.35,.65,.3,1),
         opacity    200ms ease,
@@ -270,92 +170,63 @@
         visibility 0s;
     }
 
-      /* アニメ中ポインター抑止（任意） */
+    /* アニメ中ポインター抑止 */
     .has-child.is-animating > .p-nav__sublist {
       pointer-events: none;
     }
-
-    /* “＋→－” アイコン（前回の回転版を調整） */
     .has-child > a {
       position: relative;
-      padding-right: rem(32); // アイコン分余白
+      padding-right: rem(32);
     }
 
-    /* 共通ベース：正方形ヒットボックス  */
+    /* "+","-"アイコン */
     .has-child > a::before,
     .has-child > a::after {
-      content: "";
-      position: absolute;
-      top: 50%;
-      right: 0;              /* 右端にぴったり */
-      width: 24px;
-      height: 24px;          /* 正方形 */
-      transform: translateY(-50%);
-      pointer-events: none;
+      content:"";
+      position:absolute;
+      top:50%;
+      right: 0;
+      width:24px;
+      height:1px;
+      background:$color-main;
+      transform-origin:50% 50%;
+      transition:
+        transform 240ms cubic-bezier(.35,.65,.3,1),
+        opacity   160ms ease 100ms,
+        width     240ms cubic-bezier(.35,.65,.3,1) 100ms;
     }
 
-    /* 実際の線は擬似要素の ::before / ::after の “内部” にさらに 2 本作る手もあるが、
-      ここでは before=横線, after=縦線 として background で線を引く代わりに
-      擬似要素自体を線にするやり方に変更する。→ なので再構成する。 */
-
-    /* 再構成：箱＋内部線用 2 本方式 */
-    .has-child > a {
-      &::before,
-      &::after {
-        background: none;
-      }
-
-      /* 縦線横線共通 */
-      &::before,
-      &::after {
-        content:"";
-        position:absolute;
-        top:50%;
-        right:0;
-        width:24px;
-        height:1px;
-        background-color:$color-main;
-      }
-
-      /* 横線 */
-      &::before {
-        transform:translateY(-50%);
-        transition:
-          opacity 160ms ease 100ms,
-          width   240ms cubic-bezier(.35,.65,.3,1) 100ms;
-      }
-
-      /* 縦線（回転で横線に） */
-      &::after {
-        /* 縦棒に見せる：中心を回転軸に 90deg */
-        transform:translateY(-50%) rotate(90deg);
-        transform-origin:50% 50%;
-        transition:
-          transform 240ms cubic-bezier(.35,.65,.3,1),
-          opacity   0s; /* 不透明度は使わないが揃え */
-      }
+    /* 横線 */
+    .has-child > a::before {
+      transform:translateY(-50%) rotate(0deg);
     }
 
-    /* 開いた状態：縦線(after) を 0° に戻して横線化 → 横線(before) を消して 1 本だけに */
-    .has-child.is-open  > a::after,
-    .has-child:hover    > a::after,
+    /* 縦線 */
+    .has-child > a::after {
+      transform:translateY(-50%) rotate(90deg);
+    }
+
+    /* 開状態 */
+    .has-child.is-open    > a::after,
+    .has-child:hover      > a::after,
     .has-child:focus-within > a::after {
       transform:translateY(-50%) rotate(0deg);
     }
 
-    .has-child.is-open  > a::before,
-    .has-child:hover    > a::before,
+    .has-child.is-open    > a::before,
+    .has-child:hover      > a::before,
     .has-child:focus-within > a::before {
       opacity:0;
+      width:0;
     }
 
-    /* 戻り（完全に閉じた状態へ復帰） */
+    /* 閉じ復帰（遅延なし） */
     .has-child:not(.is-open):not(:hover):not(:focus-within) > a::before {
       opacity:1;
       width:24px;
       transition:
         opacity 120ms ease,
-        width   0s; /* 即戻す */
+        width   0s;
     }
 
     &__copyright {

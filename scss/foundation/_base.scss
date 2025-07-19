@@ -6,7 +6,7 @@
 :root {
   --header-h: 79px;
   @include mq("pc") {
-    --header-h: 100%;
+    --header-h: 0px;
   }
 }
 
@@ -64,4 +64,7 @@ a {
 
 [id] {
   scroll-margin-top: var(--header-h);
+  @include mq("pc") {
+    scroll-margin-top:0;
+  }
 }
