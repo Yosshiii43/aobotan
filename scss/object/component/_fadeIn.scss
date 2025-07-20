@@ -16,3 +16,40 @@
   transform: translateX(0);
 
 }
+
+//時間差でフェードイン（スクロール無し）
+.c-fadeInTime2000ms{
+  animation-name: fadeIn2000ms;
+  animation-delay: 2s;
+  animation-duration: 1.5s;
+  animation-fill-mode: forwards;
+  transform: translateY(50px);
+  opacity: 0;
+}
+
+@keyframes fadeIn2000ms {
+    0% {
+    }
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.c-fadeInTime2500ms{
+  animation-name: fadeIn2500ms;
+  animation-delay: 2.5s;
+  animation-duration: 1.5s;
+  animation-fill-mode: forwards;
+  transform: translateY(50px);
+  opacity: 0;
+}
+
+@keyframes fadeIn2500ms {
+    0% {
+    }
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
