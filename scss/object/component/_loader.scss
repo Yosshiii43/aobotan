@@ -1,5 +1,5 @@
 /******************************
-Loader
+ローディング画面
 ******************************/
 @use "../../foundation/forwards" as *;
 
@@ -7,27 +7,19 @@ Loader
   position: fixed;
   inset: 0;
   z-index: $z-loader;
-  display: grid;
-  place-items: center;
-  width: 100%;
-  height: 100vh;           // iOS 誤差が気になるなら下に min-height 追加
-  min-height: 100dvh;      // 対応ブラウザでアドレスバー除外
-  background-color: $color-lightgray;
-  overflow: hidden;
-  /* 退場用トランジション（JSで .is-hidden を付与） */
-  transition: opacity .6s ease;
-  &.is-hidden {
-    opacity: 0;
-    visibility: hidden;
-    pointer-events: none;
-  }
+  background: $color-lightgray;
+  display: block;
+  animation: slideOut .6s cubic-bezier(.55,.06,.68,.19) forwards;
+  animation-delay: 1.35s; // マスク1.2s + 余韻0.15s
+  will-change: transform;
 }
 
 .c-loader__inner {
-  position: relative;
+  position: absolute;
+  inset: 0;
+  margin: auto;
   width: 80px;
-  aspect-ratio: 80 / 95;      // = 16:19
-  display: block;
+  aspect-ratio: 68 / 79;
 
   img {
     width: 100%;
@@ -35,40 +27,40 @@ Loader
     display: block;
   }
 
-  /* マスクアニメ */
   &::before {
     content: "";
     position: absolute;
     inset: 0;
-    transform: translateX(0);
     background: $color-lightgray;
+    transform: translateX(0);
     animation: loader-mask 1.2s ease forwards;
+    will-change: transform;
   }
 }
 
-/* 退場アニメ（フェード + 少し上方向へ）: JS で遅延実行してもよい */
-.c-loader__inner.is-out {
-  animation: loader-out .6s ease forwards;
+@keyframes loader-mask {
+  0%,65% { transform: translateX(0); }
+  100%   { transform: translateX(100%); }
 }
 
-/* Keyframes */
-@keyframes loader-mask {
+@keyframes slideOut {
   0%   { transform: translateX(0); }
-  70%  { transform: translateX(0); }
   100% { transform: translateX(100%); }
 }
 
-@keyframes loader-out {
-  0%   { opacity: 1; transform: translateY(0); }
-  100% { opacity: 0; transform: translateY(-16px); }
+.c-loader.is-hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translateX(100%);
 }
 
-/* Motion reduction */
+/* 動きを減らす設定 */
 @media (prefers-reduced-motion: reduce) {
-  .c-loader__inner::before,
-  .c-loader__inner,
-  .c-loader {
+  .c-loader,
+  .c-loader__inner::before {
     animation: none !important;
-    transition: none !important;
+    transform: none !important;
   }
+  .c-loader { opacity: 0; visibility: hidden; }
 }
