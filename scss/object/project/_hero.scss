@@ -113,6 +113,49 @@ hero
           left: math.div(902, 1120) * 100%;
         }
       }
+
+      .p-hero__catchCopy {
+        position: absolute;
+        top: math.div(408, 589) * 100%;
+        left: math.div(9, 365) * 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        gap: sp-vw(21);
+        width: fit-content;
+        @include mq("pc") {
+          top: math.div(633, 873) * 100%;
+          left: math.div(467, 1120) * 100%;
+          gap: pc-vw(21)
+        }
+
+        &Primary {
+          background-color: $color-white;
+          padding: sp-vw(14) sp-vw(13);
+          border-radius: 10px;
+          width: fit-content;
+          @include mq("pc") {
+            padding: pc-vw(14);
+          }
+
+          p {
+            font-size: sp-vw(24);
+            font-weight: 700;
+            line-height: 1;
+            @include mq("pc") {
+              font-size: pc-vw(64);
+            }
+          }
+        }
+        &Secondary {
+          font-size: sp-vw(12);
+          font-weight: 700;
+          line-height: 2;
+          @include mq("pc") {
+            font-size: pc-vw(16);
+          }
+        }
+      }
     }
   }
 
