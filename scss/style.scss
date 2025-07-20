@@ -9,6 +9,7 @@
 
 ////object
 //component
+@use "object/component/loader";
 @use "object/component/hamburger";
 @use "object/component/button";
 @use "object/component/section";

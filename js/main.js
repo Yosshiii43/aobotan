@@ -399,6 +399,42 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 /*************************************************************************
+ * ローディングアニメーション
+ *************************************************************************/
+(function() {
+  const KEY       = 'loaderShown_v1';      // バージョン付け
+  const loader    = document.getElementById('logo_loader');
+  const inner     = loader?.querySelector('.c-loader__inner');
+  if (!loader || !inner) return;
+
+  // 2回目以降: 即非表示
+  if (sessionStorage.getItem(KEY)) {
+    loader.classList.add('is-hidden');
+    return;
+  }
+
+  // 初回: マスク終了後に退場アニメ → 親フェードアウト
+  const MASK_DURATION = 1200; // SCSSの 1.2s と揃える
+  const OUT_DELAY     = 150;  // 少し呼吸
+  const OUT_DURATION  = 600;  // SCSSの .6s
+  const TOTAL         = MASK_DURATION + OUT_DELAY + OUT_DURATION;
+
+  // タイムラインで制御（単純さ優先）
+  setTimeout(() => {
+    inner.classList.add('is-out');          // 退場アニメ開始
+  }, MASK_DURATION + OUT_DELAY);
+
+  setTimeout(() => {
+    loader.classList.add('is-hidden');      // 親フェード
+    sessionStorage.setItem(KEY, '1');
+  }, TOTAL);
+
+  // 念のため: ページが極端に遅い/早い場合の保険（load後すぐ非表示したくなることは稀だが）
+  // window.addEventListener('load', () => { ... 追加ロジック入れてもOK });
+
+})();
+
+/*************************************************************************
  * フェードイン
  *************************************************************************/
 document.addEventListener('DOMContentLoaded', () => {
