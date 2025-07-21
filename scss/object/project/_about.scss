@@ -11,6 +11,9 @@ Top about
     display: flex;
     flex-direction: column-reverse;
     gap: rem(126);
+    @include mq("pc") {
+      gap: rem(71);
+    }
 
     .p-about__body {
       margin-inline: rem(20);
