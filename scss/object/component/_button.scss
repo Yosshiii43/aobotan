@@ -9,7 +9,7 @@
 /* ----------------- Variants ----------------- */
 .c-button--a {
   display: inline-block;
-  padding: rem(22) rem(82);
+  padding: rem(21) rem(81);
   font-size: rem(16);
   color: $color-text;
   font-weight: 700;
@@ -34,7 +34,7 @@
   &:hover {
     color: $color-white;
     background-color: $color-main;
-    border: none;
+    border-color: $color-main;
     &::after {
       background-color: $color-white;
     }
