@@ -1,0 +1,19 @@
+/******************************
+Top about
+******************************/
+@use "../../foundation/forwards" as *;
+@use "sass:math";
+
+.p-about {
+  position: relative;
+
+  &__inner {
+    display: flex;
+    flex-direction: column-reverse;
+    gap: rem(126);
+
+    .p-about__head {
+      background-color: $color-lightgray;
+    }
+  }
+}
