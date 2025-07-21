@@ -1,9 +1,17 @@
 /*************************************************************************
  * swiper
  *************************************************************************/
-const initSwiper = () => {
-  const mySwiper = new Swiper('.p-about .swiper', {
+let mySwiper = null;
+let currentBreakpoint = window.innerWidth >= 1024 ? 'pc' : 'sp';
 
+const initSwiper = () => {
+
+  // すでにSwiperが存在していたら破棄
+  if (mySwiper !== null) {
+    mySwiper.destroy(true, true);
+  }
+
+  mySwiper = new Swiper('.p-about .swiper', {
     slidesPerView: 'auto',
     spaceBetween: 16,
     loop: true,
@@ -24,10 +32,17 @@ const initSwiper = () => {
     },
   });
 };
-window.addEventListener('load', function(){
-  initSwiper(); // ページ読み込み後に初期化
+
+//初期化
+window.addEventListener('load', () =>{
+  initSwiper();
 });
 
-window.addEventListener('resize', function() {
-  initSwiper();
-})
+// ブレークポイントを跨いだときだけ再初期化
+window.addEventListener('resize', () => {
+  const newBreakpoint = window.innerWidth >= 1024 ? 'pc' : 'sp';
+  if (newBreakpoint !== currentBreakpoint) {
+    currentBreakpoint = newBreakpoint;
+    initSwiper();
+  }
+});
