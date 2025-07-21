@@ -19,7 +19,7 @@ Top about
       }
 
       .p-about__text {
-        margin-block: rem(40) rem(32);
+        margin-block: rem(40) rem(31);
         font-size: rem(14);
       @include mq("pc") {
         margin-block: rem(40);
@@ -30,6 +30,41 @@ Top about
 
     .p-about__head {
       background-color: $color-lightgray;
+      padding-block: rem(16) rem(58);
+      @include mq("pc") {
+        padding-block: rem(63) rem(63);
+      }
+
+      .swiper {
+        overflow: hidden;
+        &-wrapper {
+          transition-timing-function: linear !important;
+
+          .swiper-slide {
+            width: max-content;
+
+            .item {
+              width: max-content;
+
+              img {
+                width: rem(200);
+                height: auto;
+                aspect-ratio: 1 / 1;
+                @include mq("pc") {
+                  width: rem(360);
+                }
+              }
+            }
+
+            .swiper-slide :first-of-type .item{
+                margin-left: 16px;
+                @include mq("pc") {
+                  margin-left: 46px;
+                }
+              }
+          }
+        }
+      }
     }
   }
 }

@@ -1,0 +1,17 @@
+/******************************
+swiper
+******************************/
+@use "../../foundation/forwards" as *;
+@use "sass:math";
+
+.c-swiper {
+  overflow: visible;
+
+  .swiper-wrapper {
+    transition-timing-function: linear !important;
+
+    .swiper-slide {
+      width: max-content;
+    }
+  }
+}
