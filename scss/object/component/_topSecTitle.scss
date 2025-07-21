@@ -9,31 +9,22 @@
   flex-direction: column;
   align-items: flex-start;
   justify-content: center;
-  gap: rem(16);
-  @include mq("pc") {
-    gap: rem(20);
-  }
+  gap: rclamp(16, 20, 375, 1440);
 
   &__text{
-    font-size: rem(20);
+    font-size: rclamp(20, 24, 375, 1440);
     font-weight: 700;
     line-height: 1;
-    @include mq("pc") {
-      font-size: rem(24);
-    }
   }
   &__deco{
     -webkit-text-stroke-width: 1px;
     -webkit-text-stroke-color: $color-main;
     color: $color-white;
     font-family: Kanit;
-    font-size: rem(72);
+    font-size: rclamp(72, 128, 375, 1440);
     font-style: normal;
     font-weight: 700;
     line-height: 1;
     text-transform: uppercase;
-    @include mq("pc") {
-      font-size: rem(128);
-    }
   }
 }
