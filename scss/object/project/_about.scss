@@ -12,6 +12,22 @@ Top about
     flex-direction: column-reverse;
     gap: rem(126);
 
+    .p-about__body {
+      margin-inline: rem(20);
+      @include mq("pc") {
+        margin-inline: 0;
+      }
+
+      .p-about__text {
+        margin-block: rem(40) rem(32);
+        font-size: rem(14);
+      @include mq("pc") {
+        margin-block: rem(40);
+        font-size: rem(16);
+      }
+      }
+    }
+
     .p-about__head {
       background-color: $color-lightgray;
     }
