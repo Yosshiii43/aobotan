@@ -4,7 +4,7 @@ Top about
 @use "../../foundation/forwards" as *;
 @use "sass:math";
 
-.p-about {
+.p-topAbout {
   position: relative;
 
   &__inner {
@@ -15,13 +15,13 @@ Top about
       gap: rem(71);
     }
 
-    .p-about__body {
+    .p-topAbout__body {
       margin-inline: rem(20);
       @include mq("pc") {
         margin-inline: 0;
       }
 
-      .p-about__text {
+      .p-topAbout__text {
         margin-block: rem(40) rem(31);
         font-size: rem(14);
       @include mq("pc") {
@@ -32,7 +32,7 @@ Top about
       }
     }
 
-    .p-about__head {
+    .p-topAbout__head {
       background-color: $color-lightgray;
       padding-block: rem(16) rem(58);
       @include mq("pc") {

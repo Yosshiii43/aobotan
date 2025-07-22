@@ -11,7 +11,7 @@ const initSwiper = () => {
     mySwiper.destroy(true, true);
   }
 
-  mySwiper = new Swiper('.p-about .swiper', {
+  mySwiper = new Swiper('.p-topAbout .swiper', {
     slidesPerView: 'auto',
     spaceBetween: 16,
     loop: true,
