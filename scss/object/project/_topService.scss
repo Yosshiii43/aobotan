@@ -131,11 +131,15 @@ Top service
     top: rem(4);
     right: rem(20);
     width: rem(69);
+    top: rclamp(4, 178, 375, 1440);
+    right: rclamp(20, 178, 375, 1440);
+    width: rclamp(69, 124, 375, 1440);
     height: auto;
+    /*
     @include mq("pc") {
       top: rem(178);
       right: rem(178);
       width: rem(124);
-    }
+    }*/
   }
 }
