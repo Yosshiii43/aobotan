@@ -16,24 +16,35 @@ Top service
     width: 100vw;
     margin-left: calc(-1 * (100vw - rclamp(275, 968, 375, 1440))); // ← ★ここ
     padding-inline: 20px;
-    padding-block: rem(24)  rem(91);
+    padding-block: rem(26)  rem(91);
     margin-block: rem(52) rem(55);
     box-sizing: border-box;
     @include mq("pc") {
-      padding-inline: rem(280) rem(155);
+      padding-inline: rem(280) rem(158);
+      padding-block: rem(49) rem(100);
+      margin-block: rem(85) rem(55);
     }
 
     .p-topService__title {
       margin-bottom: rem(24);
+      @include mq("pc") {
+        margin-bottom: rem(64);
+      }
     }
     .p-topService__content{
       display: flex;
       flex-direction: column-reverse;
-      gap: rem(24);
+      gap: rem(22);
+      margin-bottom: rem(50);
       @include mq("pc") {
         flex-direction: row-reverse;
+        align-items: flex-end;
         gap: rem(56);
       }
+      &:last-of-type {
+        margin-bottom: 0;
+      }
+
       .p-topService__contentBody {
         .p-topService__nam {
           display: none;
@@ -52,9 +63,10 @@ Top service
           flex-direction: row-reverse;
           align-items: center;
           justify-content: space-between;
-          margin-bottom: rem(16);
+          margin-bottom: rem(15);
           @include mq("pc") {
             flex-direction: row;
+            margin-bottom: rem(48);
           }
 
           span:first-child {
@@ -78,6 +90,9 @@ Top service
         
         .p-topService__contentText {
           margin-bottom: rem(28);
+          @include mq("pc") {
+            width: rem(430);
+          }
         }
       }
 
@@ -85,7 +100,9 @@ Top service
         @include mq("pc") {
           width: pc-vw(516);
           height: auto;
-          aspect-ratio: auto;
+          aspect-ratio: 335 / 301;
+          object-fit: cover;
+          position: relative;
         }
       }
     }
