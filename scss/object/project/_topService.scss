@@ -40,16 +40,24 @@ Top service
         flex-direction: row-reverse;
         align-items: flex-end;
         gap: rem(56);
+        margin-bottom: rem(92);
       }
       &:last-of-type {
         margin-bottom: 0;
+      }
+      &:nth-last-child(2) {
+        @include mq("pc") {
+          flex-direction: row;
+          margin-left: rem(3);
+        }
       }
 
       .p-topService__contentBody {
         .p-topService__nam {
           display: none;
           @include mq("pc") {
-            display: block;
+            display: flex;
+            justify-content: flex-start;
             color: $color-bluegray;
             font-family: Kanit;
             font-size: rem(168);
@@ -58,6 +66,11 @@ Top service
             margin-left: calc(-1 * (rem(21) + rem(56)));
           }
         }
+        .p-topService__nam--r {
+          justify-content: flex-end;
+          margin-right: calc(-1 * rem(76));
+        }
+        
         .p-topService__contentTitle {
           display: flex;
           flex-direction: row-reverse;
