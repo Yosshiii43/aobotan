@@ -32,36 +32,62 @@ Top service
       gap: rem(24);
       @include mq("pc") {
         flex-direction: row-reverse;
-        gap: -21px;
+        gap: rem(56);
       }
-
-      .p-topService__contentTitle {
-        display: flex;
-        flex-direction: row-reverse;
-        align-items: center;
-        justify-content: space-between;
-        margin-bottom: rem(16);
-
-        span:first-child {
-          color: $color-bluegray;
-          font-family: Kanit;
-          font-size: rem(48);
-          font-weight: 700;
-          line-height: 1;
+      .p-topService__contentBody {
+        .p-topService__nam {
+          display: none;
+          @include mq("pc") {
+            display: block;
+            color: $color-bluegray;
+            font-family: Kanit;
+            font-size: rem(168);
+            font-weight: 700;
+            line-height: 1;
+            margin-left: calc(-1 * (rem(21) + rem(56)));
+          }
         }
-        span:last-child {
-          font-size: rem(24);
-          font-weight: 700;
-          line-height: 1;
-          padding: rem(10) rem(16);
-          background-color: $color-white;
+        .p-topService__contentTitle {
+          display: flex;
+          flex-direction: row-reverse;
+          align-items: center;
+          justify-content: space-between;
+          margin-bottom: rem(16);
+          @include mq("pc") {
+            flex-direction: row;
+          }
+
+          span:first-child {
+            color: $color-bluegray;
+            font-family: Kanit;
+            font-size: rem(48);
+            font-weight: 700;
+            line-height: 1;
+            @include mq("pc") {
+              display: none;
+            }
+          }
+          span:last-child {
+            font-size: rem(24);
+            font-weight: 700;
+            line-height: 1;
+            padding: rem(10) rem(16);
+            background-color: $color-white;
+          }
+        }
+        
+        .p-topService__contentText {
+          margin-bottom: rem(28);
         }
       }
-      
-      .p-topService__contentText {
-        margin-bottom: rem(28);
-      }
 
+      .p-topService__contentImg {
+        @include mq("pc") {
+          width: pc-vw(516);
+          height: auto;
+          aspect-ratio: auto;
+        }
+      }
     }
   }
 }
