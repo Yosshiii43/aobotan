@@ -4,134 +4,233 @@ Top service
 @use "../../foundation/forwards" as *;
 @use "sass:math";
 
+/* 変数（Sass側） */
+$pc-main-offset-px : 280px;           // main の左オフセット(px)
+$pc-main-offset-rem: rem(280);        // rem版を使いたい所用
+
 .p-topService {
+  /* ========== SP初期値 ========== */
+  --main-offset    : 0px;    /* main 左余白 (SP=0) */
+  --bg-left-gap    : 100px;  /* 背景 左余白 */
+  --bg-top-gap     : 52px;   /* 背景 上余白 */
+  --bg-bottom-gap  : 55px;   /* 背景 下余白 */
+  --inner-pad-l    : 20px;   /* インナー 左余白 */
+  --inner-pad-r    : 20px;   /* インナー 右余白 */
+
+  --content-gap    : #{rem(22)};  /* SP用 コンテンツ間gap */
+  --content-gap-pc : #{rem(56)};  /* PC用 コンテンツ間gap */
+  --img-track      : clamp(280px, 33vw, 516px); /* 画像列の幅(PC用) */
+
   position: relative;
-  padding-block: rem(52) rem(55);
-  @include mq("pc") {
-    padding-block: rem(85) rem(55);
-  }
-  &__bg {
-    width: rclamp(275, 968, 375, 1440);
-    background-color: $color-lightgray;
+  isolation: isolate;
+  padding-block: var(--bg-top-gap) var(--bg-bottom-gap);
+
+  /* ===== 背景帯：はみ出さない formula =====
+     left:  main-offset + bg-left-gap
+     width: 100vw - (main-offset + bg-left-gap)
+     => left + width = 100vw なので絶対に横スクロールしない */
+  &::before {
+    content: "";
+    position: absolute;
+    top: var(--bg-top-gap);
+    bottom: var(--bg-bottom-gap);
+
+    /* 親(.p-topService) 基準で “背景の左余白” だけズラす */
+    left : var(--bg-left-gap);
+    /* 右端はビューポート右端に合わせたいので main-offset をここでだけ引く */
+    width: calc(100vw - var(--main-offset) - var(--bg-left-gap));
+
+    background: $color-lightgray;
     border-radius: 50px 0 0 50px;
-    margin-left: auto;
-    margin-right: 0;
-    position: relative;
+    z-index: -1;
+  }
 
-    .p-topService__inner {
-      width: 100vw;
-      margin-left: calc(-1 * (100vw - rclamp(275, 968, 375, 1440))); // ← ★ここ
-      padding-inline: 20px;
-      padding-block: rem(26)  rem(91);
-      box-sizing: border-box;
+  @include mq("pc") {
+    --main-offset  : #{rem(280)};
+    --bg-left-gap  : 192px;
+    --bg-top-gap   : 85px;
+    --bg-bottom-gap: 55px;
+    --num-hide: 21px;   // 潜り込ませたい量
+    --num-gap : 56px;   // 数字と本文の見た目上の間隔
+
+    &::before {
+      left : var(--bg-left-gap);
+      width: calc(100vw - var(--main-offset) - var(--bg-left-gap));
+    }
+  }
+
+  /* ===== インナー ===== */
+  &__inner {
+    padding-left : var(--inner-pad-l);
+    padding-right: var(--inner-pad-r);
+    box-sizing   : border-box;
+    position     : relative;
+    z-index      : 1;
+
+    @include mq("pc") {
+      /* PCで padding を上書き */
+      padding-left : 0;
+      padding-right: 158px; /* 指定値 */
+    }
+  }
+
+  /* ===== タイトル ===== */
+  &__title {
+    margin-bottom: rem(24);
+
+    @include mq("pc") {
+      margin-bottom: rem(64);
+    }
+  }
+
+  /* ===== コンテンツ行 ===== */
+  &__content {
+    /* SP: 縦積み（画像下・本文上） */
+    display: flex;
+    flex-direction: column-reverse;
+    gap: var(--content-gap);
+    margin-bottom: rem(50);
+    > * { min-width: 0; } /* テキストのオーバーフロー対策 */
+
+    &:last-of-type { margin-bottom: 0; }
+
+    @include mq("pc") {
+      display:grid;
+      grid-template-areas: "img body";
+      grid-template-columns: var(--img-track) minmax(0, 1fr);
+      column-gap: rem(56);
+      margin-bottom: rem(92);
+      width: min(
+        calc((100vw - var(--main-offset)) * 0.8638), /* 1002/1160 */
+        1002px
+      );
+    }
+
+    /* 2番目逆配置用（HTML側で付与） */
+    &.is-reverse {
       @include mq("pc") {
-        padding-inline: rem(280) rem(158);
-        padding-block: rem(49) rem(100);
-      }
-
-      .p-topService__title {
-        margin-bottom: rem(24);
-        @include mq("pc") {
-          margin-bottom: rem(64);
-        }
-      }
-      .p-topService__content{
-        display: flex;
-        flex-direction: column-reverse;
-        gap: rem(22);
-        margin-bottom: rem(50);
-        @include mq("pc") {
-          flex-direction: row-reverse;
-          align-items: flex-end;
-          gap: rem(56);
-          margin-bottom: rem(92);
-        }
-        &:last-of-type {
-          margin-bottom: 0;
-        }
-        &:nth-last-child(2) {
-          @include mq("pc") {
-            flex-direction: row;
-            margin-left: rem(3);
-          }
-        }
-
-        .p-topService__contentBody {
-          .p-topService__nam {
-            display: none;
-            @include mq("pc") {
-              display: flex;
-              justify-content: flex-start;
-              color: $color-bluegray;
-              font-family: Kanit;
-              font-size: rem(168);
-              font-weight: 700;
-              line-height: 1;
-              margin-left: calc(-1 * (rem(21) + rem(56)));
-            }
-          }
-          .p-topService__nam--r {
-            justify-content: flex-end;
-            margin-right: calc(-1 * rem(76));
-          }
-
-          .p-topService__contentTitle {
-            display: flex;
-            flex-direction: row-reverse;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: rem(15);
-            @include mq("pc") {
-              flex-direction: row;
-              margin-bottom: rem(48);
-            }
-
-            span:first-child {
-              color: $color-bluegray;
-              font-family: Kanit;
-              font-size: rem(48);
-              font-weight: 700;
-              line-height: 1;
-              @include mq("pc") {
-                display: none;
-              }
-            }
-            span:last-child {
-              font-size: rem(24);
-              font-weight: 700;
-              line-height: 1;
-              padding: rem(10) rem(16);
-              background-color: $color-white;
-            }
-          }
-          
-          .p-topService__contentText {
-            margin-bottom: rem(28);
-            @include mq("pc") {
-              width: rem(430);
-            }
-          }
-        }
-
-        .p-topService__contentImg {
-          @include mq("pc") {
-            width: pc-vw(516);
-            height: auto;
-            aspect-ratio: 335 / 301;
-            object-fit: cover;
-            position: relative;
-          }
-        }
+        grid-template-areas: "body img";
+        grid-template-columns: minmax(0, 1fr) var(--img-track);
       }
     }
   }
 
+  /* ===== 本文ブロック ===== */
+  &__contentBody {
+    grid-area: body;
+    position: relative;
+
+    /* 見出し（数字+タイトル） */
+    .p-topService__contentTitle {
+      display: flex;
+      flex-direction: row-reverse;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: rem(15);
+
+      span:first-child {
+        color: $color-bluegray;
+        font-family: Kanit;
+        font-size: rem(48);
+        font-weight: 700;
+        line-height: 1;
+      }
+      span:last-child {
+        font-size: rem(24);
+        font-weight: 700;
+        line-height: 1;
+        padding: rem(10) rem(16);
+        background-color: $color-white;
+      }
+
+      @include mq("pc") {
+        flex-direction: row;
+        margin-bottom: rem(48);
+
+        span:first-child { display: none; }
+        /* span:last-child は同じ */
+      }
+    }
+
+    /* 本文テキスト */
+    .p-topService__contentText {
+      margin-bottom: rem(28);
+      max-width: 100%; /* 固定幅禁止 */
+
+      @include mq("pc") {
+        /* どうしても上限を持たせたいなら clamp */
+        max-width: clamp(280px, 45vw, 430px);
+      }
+    }
+
+    .c-button--a {
+      /* 既存 component をそのまま */
+    }
+  }
+
+  /* ===== 画像 ===== */
+  .p-topService__imgWrap {
+    position: relative;
+    grid-area: img; /* 画像列に入る */
+    z-index: 2;     /* 画像自体はここで */
+  }
+
+  .p-topService__contentImg {
+    grid-area: img;
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+
+    @include mq("pc") {
+      width: 100%;
+      height: auto;
+      object-fit: cover;
+      aspect-ratio: 335 / 301;
+      position: relative;
+      z-index: 2;
+      /* 幅は grid 列で制御するのでここで指定不要 */
+    }
+  }
+
+  /* でかい番号 */
+  .p-topService__nam {
+    display: none;
+
+    @include mq("pc") {
+      display: flex;
+      width: fit-content;
+      position: absolute;
+      z-index: 1;                    /* 画像より下 */
+      top: 0;
+      left: 100%;
+      transform: translateX(calc( -1 * var(--num-hide)));
+      font-family: Kanit;
+      font-size: rclamp(98, 168, 1024, 1440);
+      font-weight: 700;
+      line-height: 1;
+      color: $color-bluegray;
+      font-family: Kanit;
+      white-space: nowrap;
+    }
+  }
+  .p-topService__nam--r {
+    @include mq("pc") {
+      inset-inline-start: auto;
+      inset-inline-end: 0;
+      right: 100%;
+      transform: translateX(var(--num-hide));
+    }
+  }
+
+  /* ===== イラスト ===== */
   &__catch {
     position: absolute;
     top: rem(4);
     right: rem(20);
     width: rclamp(69, 124, 375, 1440);
     height: auto;
+    z-index: 2;
+
     @include mq("pc") {
       top: rem(178);
       right: rem(178);
