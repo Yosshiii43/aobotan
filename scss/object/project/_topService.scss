@@ -15,7 +15,11 @@ Top service
 
   --content-gap    : #{rem(22)};  /* SP用 コンテンツ間gap */
   --content-gap-pc : #{rem(56)};  /* PC用 コンテンツ間gap */
-  --img-track      : clamp(280px, 33vw, 516px); /* 画像列の幅(PC用) */
+  --img-track: clamp(             /* PC用画像幅 */
+    280px,
+    calc(280px + (516 - 280) * ((100vw - 1024px) / (1440 - 1024))),
+    516px
+  );
 
   position: relative;
   isolation: isolate;
