@@ -126,6 +126,9 @@ Top service
   &__contentBody {
     grid-area: body;
     position: relative;
+    @include mq("pc") {
+      padding-top: rclamp(98, 168, 1024, 1440);
+    }
 
     /* 見出し（数字+タイトル） */
     .p-topService__contentTitle {
