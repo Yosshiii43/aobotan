@@ -4,10 +4,6 @@ Top service
 @use "../../foundation/forwards" as *;
 @use "sass:math";
 
-/* 変数（Sass側） */
-$pc-main-offset-px : 280px;           // main の左オフセット(px)
-$pc-main-offset-rem: rem(280);        // rem版を使いたい所用
-
 .p-topService {
   /* ========== SP初期値 ========== */
   --main-offset    : 0px;    /* main 左余白 (SP=0) */
@@ -50,8 +46,11 @@ $pc-main-offset-rem: rem(280);        // rem版を使いたい所用
     --bg-left-gap  : 192px;
     --bg-top-gap   : 85px;
     --bg-bottom-gap: 55px;
-    --num-hide: 21px;   // 潜り込ませたい量
-    --num-gap : 56px;   // 数字と本文の見た目上の間隔
+    --num-hide: clamp(
+      10px,
+      calc(10px + (21 - 10) * ((100vw - 1024px) / (1440 - 1024))),
+      21px
+    );
 
     &::before {
       left : var(--bg-left-gap);
@@ -71,6 +70,7 @@ $pc-main-offset-rem: rem(280);        // rem版を使いたい所用
       /* PCで padding を上書き */
       padding-left : 0;
       padding-right: 158px; /* 指定値 */
+      padding-right: rclamp(30, 158, 375, 1440);
     }
   }
 
@@ -98,7 +98,7 @@ $pc-main-offset-rem: rem(280);        // rem版を使いたい所用
       display:grid;
       grid-template-areas: "img body";
       grid-template-columns: var(--img-track) minmax(0, 1fr);
-      column-gap: rem(56);
+      column-gap: rclamp(22, 56, 1024, 1440);
       margin-bottom: rem(92);
       width: min(
         calc((100vw - var(--main-offset)) * 0.8638), /* 1002/1160 */
