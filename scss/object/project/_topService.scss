@@ -16,13 +16,52 @@ Top service
     width: 100vw;
     margin-left: calc(-1 * (100vw - rclamp(275, 968, 375, 1440))); // ← ★ここ
     padding-inline: 20px;
+    padding-block: rem(24)  rem(91);
+    margin-block: rem(52) rem(55);
     box-sizing: border-box;
     @include mq("pc") {
       padding-inline: rem(280) rem(155);
     }
 
     .p-topService__title {
-      padding-block: rem(26) rem(24);
+      margin-bottom: rem(24);
+    }
+    .p-topService__content{
+      display: flex;
+      flex-direction: column-reverse;
+      gap: rem(24);
+      @include mq("pc") {
+        flex-direction: row-reverse;
+        gap: -21px;
+      }
+
+      .p-topService__contentTitle {
+        display: flex;
+        flex-direction: row-reverse;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: rem(16);
+
+        span:first-child {
+          color: $color-bluegray;
+          font-family: Kanit;
+          font-size: rem(48);
+          font-weight: 700;
+          line-height: 1;
+        }
+        span:last-child {
+          font-size: rem(24);
+          font-weight: 700;
+          line-height: 1;
+          padding: rem(10) rem(16);
+          background-color: $color-white;
+        }
+      }
+      
+      .p-topService__contentText {
+        margin-bottom: rem(28);
+      }
+
     }
   }
 }
