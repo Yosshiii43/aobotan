@@ -12,14 +12,8 @@ Top service
   --bg-bottom-gap  : 55px;   /* 背景 下余白 */
   --inner-pad-l    : 20px;   /* インナー 左余白 */
   --inner-pad-r    : 20px;   /* インナー 右余白 */
-
   --content-gap    : #{rem(22)};  /* SP用 コンテンツ間gap */
   --content-gap-pc : #{rem(56)};  /* PC用 コンテンツ間gap */
-  --img-track: clamp(             /* PC用画像幅 */
-    280px,
-    calc(280px + (516 - 280) * ((100vw - 1024px) / (1440 - 1024))),
-    516px
-  );
 
   position: relative;
   isolation: isolate;
@@ -55,6 +49,16 @@ Top service
       calc(10px + (21 - 10) * ((100vw - 1024px) / (1440 - 1024))),
       21px
     );
+    --right-gap : clamp(
+      30px, 
+      calc(30px + (158 - 30) * ((100vw - 1024px) / (1440 - 1024))), 
+      158px
+    );
+    --img-track : clamp(
+      280px, 
+      calc(280px + (516 - 280) * ((100vw - 1024px) / (1440 - 1024))), 
+      516px
+    );
 
     &::before {
       left : var(--bg-left-gap);
@@ -64,8 +68,10 @@ Top service
 
   /* ===== インナー ===== */
   &__inner {
-    padding-left : var(--inner-pad-l);
-    padding-right: var(--inner-pad-r);
+    //padding-left : var(--inner-pad-l);
+    //padding-right: var(--inner-pad-r);
+    padding-left : 0;
+    padding-right: var(--right-gap);
     box-sizing   : border-box;
     position     : relative;
     z-index      : 1;
@@ -102,12 +108,9 @@ Top service
       display:grid;
       grid-template-areas: "img body";
       grid-template-columns: var(--img-track) minmax(0, 1fr);
-      column-gap: rclamp(22, 56, 1024, 1440);
+      column-gap: var(--content-gap-pc);
       margin-bottom: rem(92);
-      width: min(
-        calc((100vw - var(--main-offset)) * 0.8638), /* 1002/1160 */
-        1002px
-      );
+      width: min(calc(100vw - var(--main-offset) - var(--right-gap)), 1002px);
     }
 
     /* 2番目逆配置用（HTML側で付与） */
