@@ -5,117 +5,119 @@ Top service
 @use "sass:math";
 
 .p-topService {
-  width: rclamp(275, 968, 375, 1440);
-  background-color: $color-lightgray;
-  border-radius: 50px 0 0 50px;
-  margin-left: auto;
-  margin-right: 0;
-  position: relative;
+  &__bg {
+    width: rclamp(275, 968, 375, 1440);
+    background-color: $color-lightgray;
+    border-radius: 50px 0 0 50px;
+    margin-left: auto;
+    margin-right: 0;
+    position: relative;
 
-  &__inner {
-    width: 100vw;
-    margin-left: calc(-1 * (100vw - rclamp(275, 968, 375, 1440))); // ← ★ここ
-    padding-inline: 20px;
-    padding-block: rem(26)  rem(91);
-    margin-block: rem(52) rem(55);
-    box-sizing: border-box;
-    @include mq("pc") {
-      padding-inline: rem(280) rem(158);
-      padding-block: rem(49) rem(100);
-      margin-block: rem(85) rem(55);
-    }
+    .p-topService__inner {
+      width: 100vw;
+      margin-left: calc(-1 * (100vw - rclamp(275, 968, 375, 1440))); // ← ★ここ
+      padding-inline: 20px;
+      padding-block: rem(26)  rem(91);
+      margin-block: rem(52) rem(55);
+      box-sizing: border-box;
+      @include mq("pc") {
+        padding-inline: rem(280) rem(158);
+        padding-block: rem(49) rem(100);
+        margin-block: rem(85) rem(55);
+      }
 
-    .p-topService__title {
-      margin-bottom: rem(24);
-      @include mq("pc") {
-        margin-bottom: rem(64);
-      }
-    }
-    .p-topService__content{
-      display: flex;
-      flex-direction: column-reverse;
-      gap: rem(22);
-      margin-bottom: rem(50);
-      @include mq("pc") {
-        flex-direction: row-reverse;
-        align-items: flex-end;
-        gap: rem(56);
-        margin-bottom: rem(92);
-      }
-      &:last-of-type {
-        margin-bottom: 0;
-      }
-      &:nth-last-child(2) {
+      .p-topService__title {
+        margin-bottom: rem(24);
         @include mq("pc") {
-          flex-direction: row;
-          margin-left: rem(3);
+          margin-bottom: rem(64);
         }
       }
-
-      .p-topService__contentBody {
-        .p-topService__nam {
-          display: none;
-          @include mq("pc") {
-            display: flex;
-            justify-content: flex-start;
-            color: $color-bluegray;
-            font-family: Kanit;
-            font-size: rem(168);
-            font-weight: 700;
-            line-height: 1;
-            margin-left: calc(-1 * (rem(21) + rem(56)));
-          }
-        }
-        .p-topService__nam--r {
-          justify-content: flex-end;
-          margin-right: calc(-1 * rem(76));
-        }
-        
-        .p-topService__contentTitle {
-          display: flex;
+      .p-topService__content{
+        display: flex;
+        flex-direction: column-reverse;
+        gap: rem(22);
+        margin-bottom: rem(50);
+        @include mq("pc") {
           flex-direction: row-reverse;
-          align-items: center;
-          justify-content: space-between;
-          margin-bottom: rem(15);
+          align-items: flex-end;
+          gap: rem(56);
+          margin-bottom: rem(92);
+        }
+        &:last-of-type {
+          margin-bottom: 0;
+        }
+        &:nth-last-child(2) {
           @include mq("pc") {
             flex-direction: row;
-            margin-bottom: rem(48);
+            margin-left: rem(3);
           }
+        }
 
-          span:first-child {
-            color: $color-bluegray;
-            font-family: Kanit;
-            font-size: rem(48);
-            font-weight: 700;
-            line-height: 1;
+        .p-topService__contentBody {
+          .p-topService__nam {
+            display: none;
             @include mq("pc") {
-              display: none;
+              display: flex;
+              justify-content: flex-start;
+              color: $color-bluegray;
+              font-family: Kanit;
+              font-size: rem(168);
+              font-weight: 700;
+              line-height: 1;
+              margin-left: calc(-1 * (rem(21) + rem(56)));
             }
           }
-          span:last-child {
-            font-size: rem(24);
-            font-weight: 700;
-            line-height: 1;
-            padding: rem(10) rem(16);
-            background-color: $color-white;
+          .p-topService__nam--r {
+            justify-content: flex-end;
+            margin-right: calc(-1 * rem(76));
           }
-        }
-        
-        .p-topService__contentText {
-          margin-bottom: rem(28);
-          @include mq("pc") {
-            width: rem(430);
-          }
-        }
-      }
 
-      .p-topService__contentImg {
-        @include mq("pc") {
-          width: pc-vw(516);
-          height: auto;
-          aspect-ratio: 335 / 301;
-          object-fit: cover;
-          position: relative;
+          .p-topService__contentTitle {
+            display: flex;
+            flex-direction: row-reverse;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: rem(15);
+            @include mq("pc") {
+              flex-direction: row;
+              margin-bottom: rem(48);
+            }
+
+            span:first-child {
+              color: $color-bluegray;
+              font-family: Kanit;
+              font-size: rem(48);
+              font-weight: 700;
+              line-height: 1;
+              @include mq("pc") {
+                display: none;
+              }
+            }
+            span:last-child {
+              font-size: rem(24);
+              font-weight: 700;
+              line-height: 1;
+              padding: rem(10) rem(16);
+              background-color: $color-white;
+            }
+          }
+          
+          .p-topService__contentText {
+            margin-bottom: rem(28);
+            @include mq("pc") {
+              width: rem(430);
+            }
+          }
+        }
+
+        .p-topService__contentImg {
+          @include mq("pc") {
+            width: pc-vw(516);
+            height: auto;
+            aspect-ratio: 335 / 301;
+            object-fit: cover;
+            position: relative;
+          }
         }
       }
     }
