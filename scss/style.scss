@@ -4,7 +4,8 @@
 
 ////layouts
 //@use "layout/header" as lh;
-//@use "layout/main" as lm;
+@use "layout/shell";
+@use "layout/main" as lm;
 @use "layout/aside";
 @use "layout/footer" as lf;
 @use "layout/inner";

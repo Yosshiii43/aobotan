@@ -4,44 +4,72 @@ hero
 @use "../../foundation/forwards" as *;
 @use "sass:math";
 
+@mixin hero-desktop(){
+  padding-top: 0;
+  padding-bottom: rem(76);
+
+  .p-hero__bg{
+    display: block;
+    position: absolute;
+    top: calc(-1 * rem(40));
+    right: 0;
+    width: pc-vw(727);
+    aspect-ratio: 1 / 1;
+    background-color: $color-main;
+    z-index: 0;
+  }
+
+  .p-hero__body{
+    margin-top: rem(40);
+    margin-right: rem(40);
+    width: calc(100% - rem(40));
+    height: auto;
+    aspect-ratio: 1120 / 873;
+    border-radius: 50px;
+  }
+
+  /* 画像・テキスト位置のPC用 */
+  .p-hero__img01{ width: math.div(195,1120)*100%; top: math.div(65.01,873)*100%; left: math.div(71,1120)*100%; }
+  .p-hero__img02{ width: math.div(255.92,1120)*100%; top: math.div(64,873)*100%;   left: math.div(809.04,1120)*100%; }
+  .p-hero__img03{ width: math.div(206,1120)*100%; top: math.div(319,873)*100%;     left: math.div(457,1120)*100%; }
+  .p-hero__img04{ width: math.div(314,1120)*100%; top: math.div(406,873)*100%;     left: math.div(87,1120)*100%; }
+  .p-hero__img05{ width: math.div(162,1120)*100%; top: math.div(390,873)*100%;     left: math.div(902,1120)*100%; }
+
+  .p-hero__catchCopy{
+    bottom: rem(63);
+    right: math.div(113,1120) * 100%;
+    gap:  pc-vw(21);
+
+    &Primary{ padding: pc-vw(14); }
+    &Primary p{ font-size: pc-vw(64); }
+    &Secondary{ font-size: rem(16); }
+  }
+
+  .p-hero__scroll{
+    bottom: rem(140);
+    left: rem(18);
+
+    &::before{ height: rem(112); }
+  }
+}
+
 .p-hero {
   position: relative;
   padding-top: rem(23);
   padding-bottom: rem(73);
 
-  @include mq("pc") {
-    padding-top: 0;
-    padding-bottom: rem(76);
-    /* width/height はそのままでも良いが、aspect-ratio を残すなら下記 */
-    aspect-ratio: 1160 / (40 + 873 + 76);
-  }
-
   &__bg {
     display: none;
-    @include mq("pc") {
-      display: block;
-      width: pc-vw(727);
-      aspect-ratio: 1 / 1;
-      margin: 0 0 0 auto;
-      background-color: $color-main;
-    }
   }
 
   &__body {
+    position: relative;
     width: 100%;
     height: sp-vw(589);
     background-color: $color-lightgray;
     border-radius: 10px 0 0 10px;
-
-    @include mq("pc") {
-      width: calc(100% - var(--inner-pr)); // 右余白分を差し引くときは変数で
-      height: auto;
-      aspect-ratio: 1120 / 873;
-      border-radius: 50px;
-      position: absolute;
-      top: rem(40);
-      right: var(--inner-pr); // 右は 40px 可変
-    }
+    z-index: 1;
+    z-index: 1;  // bg の上
 
     &Inner {
       position: relative;
@@ -64,84 +92,51 @@ hero
     height: auto;
     top: math.div(10, 589) * 100%;
     left: math.div(16, 365) * 100%;
-    @include mq("pc") {
-      width: math.div(195, 1120) * 100%;
-      top: math.div(65.01, 873) * 100%;
-      left: math.div(71, 1120) * 100%;
-    }
   }
   .p-hero__img02 {
     width: math.div(134, 365) * 100%;
     height: auto;
     top: math.div(31, 589) * 100%;
     left: math.div(219, 365) * 100%;
-    @include mq("pc") {
-      width: math.div(255.92, 1120) * 100%;
-      top: math.div(64, 873) * 100%;
-      left: math.div(809.04, 1120) * 100%;
-    }
   }
   .p-hero__img03 {
     width: math.div(82, 365) * 100%;
     height: auto;
     top: math.div(235.01, 589) * 100%;
     left: math.div(142, 365) * 100%;
-    @include mq("pc") {
-      width: math.div(206, 1120) * 100%;
-      top: math.div(319, 873) * 100%;
-      left: math.div(457, 1120) * 100%;
-    }
   }
   .p-hero__img04 {
     width: math.div(110, 365) * 100%;
     height: auto;
     top: math.div(231, 589) * 100%;
     left: math.div(18, 365) * 100%;
-    @include mq("pc") {
-      width: math.div(314, 1120) * 100%;
-      top: math.div(406, 873) * 100%;
-      left: math.div(87, 1120) * 100%;
-    }
   }
   .p-hero__img05 {
     width: math.div(88, 365) * 100%;
     height: auto;
     top: math.div(271, 589) * 100%;
     left: math.div(265, 365) * 100%;
-    @include mq("pc") {
-      width: math.div(162, 1120) * 100%;
-      top: math.div(390, 873) * 100%;
-      left: math.div(902, 1120) * 100%;
-    }
   }
 
 .p-hero__catchCopy {
     position: absolute;
-    top: math.div(408, 589) * 100%;
-    left: math.div(9, 365) * 100%;
+    bottom: rem(60);
+    right: math.div(8, 365) * 100%;
     display: flex;
     flex-direction: column;
     gap: sp-vw(21);
     width: fit-content;
-
-    @include mq("pc") {
-      top: math.div(633, 873) * 100%;
-      left: math.div(467, 1120) * 100%;
-      gap: pc-vw(21);
-    }
 
     &Primary {
       background-color: $color-white;
       padding: sp-vw(14) sp-vw(13);
       border-radius: 10px;
       width: fit-content;
-      @include mq("pc") { padding: pc-vw(14); }
 
       p {
         font-size: sp-vw(24);
         font-weight: 700;
         line-height: 1;
-        @include mq("pc") { font-size: pc-vw(64); }
       }
     }
 
@@ -149,23 +144,18 @@ hero
       font-size: sp-vw(12);
       font-weight: 700;
       line-height: 2;
-      @include mq("pc") { font-size: pc-vw(16); }
     }
   }
 
   &__scroll {
     position: absolute;
+    z-index: 3; // bodyの上
     bottom: rem(108);
     left: rem(19);
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: rem(8);
-
-    @include mq("pc") {
-      bottom: rem(140);
-      left: rem(18);
-    }
 
     span {
       color: $color-main;
@@ -183,7 +173,6 @@ hero
       left: rem(22.5);
       position: absolute;
       width: 1px;
-      @include mq("pc") { height: rem(112); }
     }
   }
 
@@ -192,5 +181,18 @@ hero
     50%{transform:scale(1,1);transform-origin:0 0;}
     51%{transform:scale(1,1);transform-origin:0 100%;}
     100%{transform:scale(1,0);transform-origin:0 100%;}
+  }
+
+  /* フォールバック（コンテナ未対応ブラウザ用） */
+  @include mq("pc"){
+    @include hero-desktop();
+  }
+}
+
+@supports (container-type: inline-size) {
+  @container main (min-width: 768px) {
+    .p-hero{
+      @include hero-desktop();
+    }
   }
 }
