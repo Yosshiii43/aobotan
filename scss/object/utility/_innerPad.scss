@@ -1,0 +1,6 @@
+/******************************
+padding調整
+******************************/
+@use "../../foundation/forwards" as *;
+
+.u-noInnerPad { --inner-pl: 0; --inner-pr: 0; }
