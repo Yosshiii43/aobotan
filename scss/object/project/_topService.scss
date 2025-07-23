@@ -170,7 +170,7 @@ Top service
       }
       @include mq("pc") {
         flex-direction: row;
-        margin-bottom: rem(48);
+        margin-bottom: rclamp(16, 48, 1024, 1440);
 
         span:first-child { display: none; }
         /* span:last-child は同じ */
@@ -250,16 +250,18 @@ Top service
   /* ===== イラスト ===== */
   &__catch {
     position: absolute;
-    top: rem(4);
-    right: rem(20);
+    //top: rem(4);
+    //right: rem(20);
+    top: rclamp(4, 178, 375, 1440);
+    right: rclamp(20, 178, 375, 1440);
     width: rclamp(69, 124, 375, 1440);
     height: auto;
     z-index: 2;
 
     @include mq("pc") {
-      top: rem(178);
-      right: rem(178);
-      width: rem(124);
+      //top: rem(178);
+      //right: rem(178);
+      //width: rem(124);
     }
   }
 }
