@@ -1,0 +1,29 @@
+/******************************
+l-aside
+******************************/
+@use "../foundation/forwards" as *;
+
+/* SP 基本（上部固定バー） */
+.l-aside {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: $z-header;
+  background: $color-bg;
+}
+
+/* PC は左サイド */
+@include mq("pc"){
+  .l-aside {
+    position: sticky;             // or static
+    top: 0;                       // stickyなら必要
+    align-self: start;
+    grid-row: 1 / -1;   /* 全行に跨らせる */
+  } 
+}
+
+body {
+  padding-top: var(--header-h); // SPでヘッダー高さぶん押し下げ
+}
+@include mq("pc") {
+  body { padding-top: 0; }      // PCはサイドなので不要
+}

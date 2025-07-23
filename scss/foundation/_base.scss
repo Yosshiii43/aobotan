@@ -4,6 +4,10 @@
 @use "forwards" as *;
 
 :root {
+  /* layput vars */
+  --aside-w: 0px;      /* SP時 */
+  --gap-x : 0px;       /* 列間ギャップが必要なら */
+
   /* header vars */
   --header-h: 79px;
 
@@ -15,6 +19,10 @@
 
 @include mq("pc") {
   :root {
+    /* layput vars */
+    --aside-w: 280px;  /* PC時の縦ヘッダー幅 */
+    --gap-x : 0px;
+
     /* header vars */
     --header-h: 0px;  /* 縦ヘッダーで高さ不要 */
 
