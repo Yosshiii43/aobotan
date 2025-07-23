@@ -1,0 +1,12 @@
+/******************************
+l-inner 汎用インナー
+******************************/
+@use "../foundation/forwards" as *;
+
+.l-inner {
+  width: min(100%, var(--inner-max));
+  margin-inline: auto;
+  padding-left:  var(--inner-pl);
+  padding-right: var(--inner-pr);
+  box-sizing: border-box;
+}
