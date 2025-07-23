@@ -8,14 +8,12 @@ hero
   position: relative;
   padding-top: rem(23);
   padding-bottom: rem(73);
-  padding-left: sp-vw(10);
+
   @include mq("pc") {
-    width: 100%;
-    height: auto;
-    aspect-ratio: 1160 / (40 + 873 + 76);
     padding-top: 0;
     padding-bottom: rem(76);
-    padding-left: 0;
+    /* width/height はそのままでも良いが、aspect-ratio を残すなら下記 */
+    aspect-ratio: 1160 / (40 + 873 + 76);
   }
 
   &__bg {
@@ -23,8 +21,7 @@ hero
     @include mq("pc") {
       display: block;
       width: pc-vw(727);
-      height: auto;
-      aspect-ratio: 1 /1;
+      aspect-ratio: 1 / 1;
       margin: 0 0 0 auto;
       background-color: $color-main;
     }
@@ -34,169 +31,166 @@ hero
     width: 100%;
     height: sp-vw(589);
     background-color: $color-lightgray;
-    border-radius: 10px 0px 0px 10px;
+    border-radius: 10px 0 0 10px;
+
     @include mq("pc") {
-      width: calc(100% - rem(40));
+      width: calc(100% - var(--inner-pr)); // 右余白分を差し引くときは変数で
       height: auto;
       aspect-ratio: 1120 / 873;
       border-radius: 50px;
       position: absolute;
       top: rem(40);
-      right: rem(40);
+      right: var(--inner-pr); // 右は 40px 可変
     }
 
-    .p-hero__bodyInner {
+    &Inner {
       position: relative;
       width: 100%;
       height: 100%;
-
-      .p-hero__img {
-        position: absolute;
-        
-        img {
-          width: 100%;
-          height: 100%;
-        }
-      }
-      .p-hero__img01 {
-        width: math.div(103, 365) * 100%;
-        height: auto;
-        top: math.div(10, 589) * 100%;
-        left: math.div(16, 365) * 100%;
-        @include mq("pc") {
-          width: math.div(195, 1120) * 100%;
-          top: math.div(65.01, 873) * 100%;
-          left: math.div(71, 1120) * 100%;
-        }
-      }
-      .p-hero__img02 {
-        width: math.div(134, 365) * 100%;
-        height: auto;
-        top: math.div(31, 589) * 100%;
-        left: math.div(219, 365) * 100%;
-        @include mq("pc") {
-          width: math.div(255.92, 1120) * 100%;
-          top: math.div(64, 873) * 100%;
-          left: math.div(809.04, 1120) * 100%;
-        }
-      }
-      .p-hero__img03 {
-        width: math.div(82, 365) * 100%;
-        height: auto;
-        top: math.div(235.01, 589) * 100%;
-        left: math.div(142, 365) * 100%;
-        @include mq("pc") {
-          width: math.div(206, 1120) * 100%;
-          top: math.div(319, 873) * 100%;
-          left: math.div(457, 1120) * 100%;
-        }
-      }
-      .p-hero__img04 {
-        width: math.div(110, 365) * 100%;
-        height: auto;
-        top: math.div(231, 589) * 100%;
-        left: math.div(18, 365) * 100%;
-        @include mq("pc") {
-          width: math.div(314, 1120) * 100%;
-          top: math.div(406, 873) * 100%;
-          left: math.div(87, 1120) * 100%;
-        }
-      }
-      .p-hero__img05 {
-        width: math.div(88, 365) * 100%;
-        height: auto;
-        top: math.div(271, 589) * 100%;
-        left: math.div(265, 365) * 100%;
-        @include mq("pc") {
-          width: math.div(162, 1120) * 100%;
-          top: math.div(390, 873) * 100%;
-          left: math.div(902, 1120) * 100%;
-        }
-      }
-
-      .p-hero__catchCopy {
-        position: absolute;
-        top: math.div(408, 589) * 100%;
-        left: math.div(9, 365) * 100%;
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-start;
-        gap: sp-vw(21);
-        width: fit-content;
-        @include mq("pc") {
-          top: math.div(633, 873) * 100%;
-          left: math.div(467, 1120) * 100%;
-          gap: pc-vw(21)
-        }
-
-        &Primary {
-          background-color: $color-white;
-          padding: sp-vw(14) sp-vw(13);
-          border-radius: 10px;
-          width: fit-content;
-          @include mq("pc") {
-            padding: pc-vw(14);
-          }
-
-          p {
-            font-size: sp-vw(24);
-            font-weight: 700;
-            line-height: 1;
-            @include mq("pc") {
-              font-size: pc-vw(64);
-            }
-          }
-        }
-        &Secondary {
-          font-size: sp-vw(12);
-          font-weight: 700;
-          line-height: 2;
-          @include mq("pc") {
-            font-size: pc-vw(16);
-          }
-        }
-      }
     }
   }
 
-  .p-hero__scroll {
-  position: absolute;
-  bottom: rem(108);
-  left: rem(19);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: rem(8);
-  @include mq("pc") {
-    bottom: rem(140);
-    left: rem(18);
-  }
-}
-  &__scroll span {
-    color: $color-main;
-    font-size: rem(10);
-    line-height: 1;
-    -webkit-text-stroke: 0.2px $color-main;
-  }
-  /* line animation */
-  &__scroll::before {
-    animation: scroll 2s infinite;
-    background-color: $color-main;
-    top: rem(18);
-    content: "";
-    height: rem(52);
-    left: rem(22.5);
+  .p-hero__img {
     position: absolute;
-    width: 1px;
-    @include mq("pc") {
-      height: rem(112);
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
     }
   }
-  @keyframes scroll{
+  .p-hero__img01 {
+    width: math.div(103, 365) * 100%;
+    height: auto;
+    top: math.div(10, 589) * 100%;
+    left: math.div(16, 365) * 100%;
+    @include mq("pc") {
+      width: math.div(195, 1120) * 100%;
+      top: math.div(65.01, 873) * 100%;
+      left: math.div(71, 1120) * 100%;
+    }
+  }
+  .p-hero__img02 {
+    width: math.div(134, 365) * 100%;
+    height: auto;
+    top: math.div(31, 589) * 100%;
+    left: math.div(219, 365) * 100%;
+    @include mq("pc") {
+      width: math.div(255.92, 1120) * 100%;
+      top: math.div(64, 873) * 100%;
+      left: math.div(809.04, 1120) * 100%;
+    }
+  }
+  .p-hero__img03 {
+    width: math.div(82, 365) * 100%;
+    height: auto;
+    top: math.div(235.01, 589) * 100%;
+    left: math.div(142, 365) * 100%;
+    @include mq("pc") {
+      width: math.div(206, 1120) * 100%;
+      top: math.div(319, 873) * 100%;
+      left: math.div(457, 1120) * 100%;
+    }
+  }
+  .p-hero__img04 {
+    width: math.div(110, 365) * 100%;
+    height: auto;
+    top: math.div(231, 589) * 100%;
+    left: math.div(18, 365) * 100%;
+    @include mq("pc") {
+      width: math.div(314, 1120) * 100%;
+      top: math.div(406, 873) * 100%;
+      left: math.div(87, 1120) * 100%;
+    }
+  }
+  .p-hero__img05 {
+    width: math.div(88, 365) * 100%;
+    height: auto;
+    top: math.div(271, 589) * 100%;
+    left: math.div(265, 365) * 100%;
+    @include mq("pc") {
+      width: math.div(162, 1120) * 100%;
+      top: math.div(390, 873) * 100%;
+      left: math.div(902, 1120) * 100%;
+    }
+  }
+
+.p-hero__catchCopy {
+    position: absolute;
+    top: math.div(408, 589) * 100%;
+    left: math.div(9, 365) * 100%;
+    display: flex;
+    flex-direction: column;
+    gap: sp-vw(21);
+    width: fit-content;
+
+    @include mq("pc") {
+      top: math.div(633, 873) * 100%;
+      left: math.div(467, 1120) * 100%;
+      gap: pc-vw(21);
+    }
+
+    &Primary {
+      background-color: $color-white;
+      padding: sp-vw(14) sp-vw(13);
+      border-radius: 10px;
+      width: fit-content;
+      @include mq("pc") { padding: pc-vw(14); }
+
+      p {
+        font-size: sp-vw(24);
+        font-weight: 700;
+        line-height: 1;
+        @include mq("pc") { font-size: pc-vw(64); }
+      }
+    }
+
+    &Secondary {
+      font-size: sp-vw(12);
+      font-weight: 700;
+      line-height: 2;
+      @include mq("pc") { font-size: pc-vw(16); }
+    }
+  }
+
+  &__scroll {
+    position: absolute;
+    bottom: rem(108);
+    left: rem(19);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: rem(8);
+
+    @include mq("pc") {
+      bottom: rem(140);
+      left: rem(18);
+    }
+
+    span {
+      color: $color-main;
+      font-size: rem(10);
+      line-height: 1;
+      -webkit-text-stroke: 0.2px $color-main;
+    }
+
+    &::before {
+      animation: scroll 2s infinite;
+      background-color: $color-main;
+      top: rem(18);
+      content: "";
+      height: rem(52);
+      left: rem(22.5);
+      position: absolute;
+      width: 1px;
+      @include mq("pc") { height: rem(112); }
+    }
+  }
+
+  @keyframes scroll {
     0%{transform:scale(1,0);transform-origin:0 0;}
     50%{transform:scale(1,1);transform-origin:0 0;}
     51%{transform:scale(1,1);transform-origin:0 100%;}
     100%{transform:scale(1,0);transform-origin:0 100%;}
   }
-
 }

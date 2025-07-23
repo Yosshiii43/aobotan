@@ -13,7 +13,7 @@ fullbleed（背景画面端まで）
   inset-block: 0;
   left: calc(50% - 50vw);
   width: 100vw;
-  background: var(--bleed-bg, #eee);
+  background: var(--bleed-bg, transparent);
   z-index: -1;
   border-radius: var(--bleed-radius, 0);
 }
