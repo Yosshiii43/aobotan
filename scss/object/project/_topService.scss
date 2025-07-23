@@ -12,6 +12,9 @@ Top service
   --bg-bottom-gap  : 55px;   /* 背景 下余白 */
   --inner-pad-l    : 20px;   /* インナー 左余白 */
   --inner-pad-r    : 20px;   /* インナー 右余白 */
+  --inner-pad-t    : 26px;   /* インナー 上余白 */
+  --inner-pad-b    : 91px;   /* インナー 下余白 */
+
   --content-gap    : #{rem(22)};  /* SP用 コンテンツ間gap */
   --content-gap-pc : #{rem(56)};  /* PC用 コンテンツ間gap */
 
@@ -44,6 +47,8 @@ Top service
     --bg-left-gap  : 192px;
     --bg-top-gap   : 85px;
     --bg-bottom-gap: 55px;
+    --inner-pad-t    : 49px;   /* インナー 上余白 */
+    --inner-pad-b    : 100px;   /* インナー 下余白 */
     --num-hide: clamp(
       10px,
       calc(10px + (21 - 10) * ((100vw - 1024px) / (1440 - 1024))),
@@ -68,19 +73,19 @@ Top service
 
   /* ===== インナー ===== */
   &__inner {
-    //padding-left : var(--inner-pad-l);
-    //padding-right: var(--inner-pad-r);
-    padding-left : 0;
-    padding-right: var(--right-gap);
+    padding-left : var(--inner-pad-l);
+    padding-right: var(--inner-pad-r);
+    padding-top : var(--inner-pad-t);
+    padding-bottom: var(--inner-pad-b);
     box-sizing   : border-box;
     position     : relative;
     z-index      : 1;
 
     @include mq("pc") {
-      /* PCで padding を上書き */
       padding-left : 0;
-      padding-right: 158px; /* 指定値 */
-      padding-right: rclamp(30, 158, 375, 1440);
+      padding-right: var(--right-gap);
+      padding-top : var(--inner-pad-t);
+      padding-bottom: var(--inner-pad-b);
     }
   }
 
@@ -95,7 +100,7 @@ Top service
 
   /* ===== コンテンツ行 ===== */
   &__content {
-    /* SP: 縦積み（画像下・本文上） */
+    /* SP: 縦積み（画像上・本文下） */
     display: flex;
     flex-direction: column-reverse;
     gap: var(--content-gap);
@@ -111,6 +116,9 @@ Top service
       column-gap: var(--content-gap-pc);
       margin-bottom: rem(92);
       width: min(calc(100vw - var(--main-offset) - var(--right-gap)), 1002px);
+    }
+    @include mq("min-xxl") {
+      width: min(calc(100vw - var(--main-offset) - var(--right-gap)), 1400px);
     }
 
     /* 2番目逆配置用（HTML側で付与） */
@@ -152,7 +160,14 @@ Top service
         padding: rem(10) rem(16);
         background-color: $color-white;
       }
-
+      @media (max-width: 374px) {
+        span:first-child {
+          font-size: rem(36);
+        }
+        span:last-child {
+          font-size: rem(20);
+        }
+      }
       @include mq("pc") {
         flex-direction: row;
         margin-bottom: rem(48);
@@ -166,11 +181,11 @@ Top service
     .p-topService__contentText {
       margin-bottom: rem(28);
       max-width: 100%; /* 固定幅禁止 */
-
+      /*
       @include mq("pc") {
-        /* どうしても上限を持たせたいなら clamp */
+        // どうしても上限を持たせたいなら clamp 
         max-width: clamp(280px, 45vw, 430px);
-      }
+      }*/
     }
 
     .c-button--a {
