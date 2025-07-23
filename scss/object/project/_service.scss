@@ -1,0 +1,11 @@
+/******************************
+page-service
+******************************/
+@use "../../foundation/forwards" as *;
+@use "sass:math";
+
+.p-pageService {
+  @include mq("pc") {
+    --inner-pr: 200px;
+  }
+}
