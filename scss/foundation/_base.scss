@@ -4,9 +4,23 @@
 @use "forwards" as *;
 
 :root {
+  /* header vars */
   --header-h: 79px;
-  @include mq("pc") {
-    --header-h: 0px;
+
+  /* spacing vars */
+  --inner-pl: 20px;   /* SP既定 左padding */
+  --inner-pr: 20px;   /* SP既定 右padding */
+  --inner-max: 1400px; /* PC画面幅大の時用（仮） */
+}
+
+@include mq("pc") {
+  :root {
+    /* header vars */
+    --header-h: 0px;  /* 縦ヘッダーで高さ不要 */
+
+    /* spacing vars */
+    --inner-pl: 0px;
+    --inner-pr: 40px; /* トップ基準の右余白 */
   }
 }
 
