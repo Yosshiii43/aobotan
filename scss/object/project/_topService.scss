@@ -40,11 +40,8 @@ Top service
   }
 
   /* ===== インナー ===== */
-  &__inner {
+  .l-inner {
     padding: var(--inner-pad-t) var(--inner-pad-r) var(--inner-pad-b) var(--inner-pad-l);
-    box-sizing: border-box;
-    position : relative;
-    z-index  : 1;
   }
 
   /* ===== タイトル ===== */
@@ -65,6 +62,7 @@ Top service
     /* 2番目逆配置用 */
     &.is-reverse {
       /* SP はそのまま。PCで grid の向きを反転させる */
+      margin-left: rem(3);
     }
   }
 
