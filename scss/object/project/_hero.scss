@@ -21,6 +21,7 @@ hero
 
   .p-hero__body{
     margin-top: rem(40);
+    margin-left: 0;
     margin-right: rem(40);
     width: calc(100% - rem(40));
     height: auto;
@@ -64,11 +65,11 @@ hero
 
   &__body {
     position: relative;
-    width: 100%;
+    width: calc(100% - rem(10));
     height: sp-vw(589);
+    margin-left: rem(10);
     background-color: $color-lightgray;
     border-radius: 10px 0 0 10px;
-    z-index: 1;
     z-index: 1;  // bg の上
 
     &Inner {
