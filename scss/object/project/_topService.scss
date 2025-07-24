@@ -5,140 +5,73 @@ Top service
 @use "sass:math";
 
 .p-topService {
-  /* ========== SP初期値 ========== */
-  --main-offset    : 0px;    /* main 左余白 (SP=0) */
-  --bg-left-gap    : 100px;  /* 背景 左余白 */
-  --bg-top-gap     : 52px;   /* 背景 上余白 */
-  --bg-bottom-gap  : 55px;   /* 背景 下余白 */
-  --inner-pad-l    : 20px;   /* インナー 左余白 */
-  --inner-pad-r    : 20px;   /* インナー 右余白 */
-  --inner-pad-t    : 26px;   /* インナー 上余白 */
-  --inner-pad-b    : 91px;   /* インナー 下余白 */
+  /* ===== SP 初期値 ===== */
+  --bg-left-gap   : 100px;   /* 背景 左余白 */
+  --bg-top-gap    : 52px;    /* 背景 上余白 */
+  --bg-bottom-gap : 55px;    /* 背景 下余白 */
+  --inner-pad-l   : 20px;    /* インナー 左余白 */
+  --inner-pad-r   : 20px;    /* インナー 右余白 */
+  --inner-pad-t   : 26px;    /* インナー 上余白 */
+  --inner-pad-b   : 91px;    /* インナー 下余白 */
 
-  --content-gap    : #{rem(22)};  /* SP用 コンテンツ間gap */
-  --content-gap-pc : #{rem(56)};  /* PC用 コンテンツ間gap */
+  --content-gap   : #{rem(22)};
+  --content-gap-pc: #{rem(56)};
+
+  /* PC で上書きしたい可変値（フォールバック用の初期化） */
+  --right-gap : 40px;   /* 後でPCで clamp に置き換える */
+  --img-track : 280px;  /* 後でPCで clamp に置き換える */
+  --num-hide  : 10px;   /* 後でPCで clamp に置き換える */
 
   position: relative;
   isolation: isolate;
   padding-block: var(--bg-top-gap) var(--bg-bottom-gap);
 
-  /* ===== 背景帯：はみ出さない formula =====
-     left:  main-offset + bg-left-gap
-     width: 100vw - (main-offset + bg-left-gap)
-     => left + width = 100vw なので絶対に横スクロールしない */
+  /* ===== 背景帯 ===== */
   &::before {
     content: "";
     position: absolute;
     top: var(--bg-top-gap);
     bottom: var(--bg-bottom-gap);
-
-    /* 親(.p-topService) 基準で “背景の左余白” だけズラす */
     left : var(--bg-left-gap);
-    /* 右端はビューポート右端に合わせたいので main-offset をここでだけ引く */
-    width: calc(100vw - var(--main-offset) - var(--bg-left-gap));
-
+    width: calc(100% - var(--bg-left-gap));
     background: $color-lightgray;
     border-radius: 50px 0 0 50px;
     z-index: -1;
   }
 
-  @include mq("pc") {
-    --main-offset  : #{rem(280)};
-    --bg-left-gap  : 192px;
-    --bg-top-gap   : 85px;
-    --bg-bottom-gap: 55px;
-    --inner-pad-t    : 49px;   /* インナー 上余白 */
-    --inner-pad-b    : 100px;   /* インナー 下余白 */
-    --num-hide: clamp(
-      10px,
-      calc(10px + (21 - 10) * ((100vw - 1024px) / (1440 - 1024))),
-      21px
-    );
-    --right-gap : clamp(
-      30px, 
-      calc(30px + (158 - 30) * ((100vw - 1024px) / (1440 - 1024))), 
-      158px
-    );
-    --img-track : clamp(
-      280px, 
-      calc(280px + (516 - 280) * ((100vw - 1024px) / (1440 - 1024))), 
-      516px
-    );
-
-    &::before {
-      left : var(--bg-left-gap);
-      width: calc(100vw - var(--main-offset) - var(--bg-left-gap));
-    }
-  }
-
   /* ===== インナー ===== */
   &__inner {
-    padding-left : var(--inner-pad-l);
-    padding-right: var(--inner-pad-r);
-    padding-top : var(--inner-pad-t);
-    padding-bottom: var(--inner-pad-b);
-    box-sizing   : border-box;
-    position     : relative;
-    z-index      : 1;
-
-    @include mq("pc") {
-      padding-left : 0;
-      padding-right: var(--right-gap);
-      padding-top : var(--inner-pad-t);
-      padding-bottom: var(--inner-pad-b);
-    }
+    padding: var(--inner-pad-t) var(--inner-pad-r) var(--inner-pad-b) var(--inner-pad-l);
+    box-sizing: border-box;
+    position : relative;
+    z-index  : 1;
   }
 
   /* ===== タイトル ===== */
   &__title {
     margin-bottom: rem(24);
-
-    @include mq("pc") {
-      margin-bottom: rem(64);
-    }
   }
 
   /* ===== コンテンツ行 ===== */
   &__content {
-    /* SP: 縦積み（画像上・本文下） */
     display: flex;
     flex-direction: column-reverse;
     gap: var(--content-gap);
     margin-bottom: rem(50);
-    > * { min-width: 0; } /* テキストのオーバーフロー対策 */
+    > * { min-width: 0; }
 
     &:last-of-type { margin-bottom: 0; }
 
-    @include mq("pc") {
-      display:grid;
-      grid-template-areas: "img body";
-      grid-template-columns: var(--img-track) minmax(0, 1fr);
-      column-gap: var(--content-gap-pc);
-      margin-bottom: rem(92);
-      width: min(calc(100vw - var(--main-offset) - var(--right-gap)), 1002px);
-    }
-    @include mq("min-xxl") {
-      width: min(calc(100vw - var(--main-offset) - var(--right-gap)), 1400px);
-    }
-
-    /* 2番目逆配置用（HTML側で付与） */
+    /* 2番目逆配置用 */
     &.is-reverse {
-      @include mq("pc") {
-        grid-template-areas: "body img";
-        grid-template-columns: minmax(0, 1fr) var(--img-track);
-      }
+      /* SP はそのまま。PCで grid の向きを反転させる */
     }
   }
 
   /* ===== 本文ブロック ===== */
   &__contentBody {
-    grid-area: body;
     position: relative;
-    @include mq("pc") {
-      padding-top: rclamp(98, 168, 1024, 1440);
-    }
 
-    /* 見出し（数字+タイトル） */
     .p-topService__contentTitle {
       display: flex;
       flex-direction: row-reverse;
@@ -160,108 +93,190 @@ Top service
         padding: rem(10) rem(16);
         background-color: $color-white;
       }
-      @media (max-width: 374px) {
-        span:first-child {
-          font-size: rem(36);
-        }
-        span:last-child {
-          font-size: rem(20);
-        }
-      }
-      @include mq("pc") {
-        flex-direction: row;
-        margin-bottom: rclamp(16, 48, 1024, 1440);
 
-        span:first-child { display: none; }
-        /* span:last-child は同じ */
+      @media (max-width: 374px) {
+        span:first-child { font-size: rem(36); }
+        span:last-child  { font-size: rem(20); }
       }
     }
 
-    /* 本文テキスト */
     .p-topService__contentText {
       margin-bottom: rem(28);
-      max-width: 100%; /* 固定幅禁止 */
-      /*
-      @include mq("pc") {
-        // どうしても上限を持たせたいなら clamp 
-        max-width: clamp(280px, 45vw, 430px);
-      }*/
-    }
-
-    .c-button--a {
-      /* 既存 component をそのまま */
+      max-width: 100%;
     }
   }
 
   /* ===== 画像 ===== */
   .p-topService__imgWrap {
     position: relative;
-    grid-area: img; /* 画像列に入る */
-    z-index: 2;     /* 画像自体はここで */
+    z-index: 2;
   }
-
   .p-topService__contentImg {
-    grid-area: img;
     width: 100%;
     height: auto;
     object-fit: cover;
-
-    @include mq("pc") {
-      width: 100%;
-      height: auto;
-      object-fit: cover;
-      aspect-ratio: 335 / 301;
-      position: relative;
-      z-index: 2;
-      /* 幅は grid 列で制御するのでここで指定不要 */
-    }
   }
 
   /* でかい番号 */
   .p-topService__nam {
     display: none;
+  }
 
-    @include mq("pc") {
+  /* ===== イラスト ===== */
+  &__catch {
+    position: absolute;
+    top:  rclamp(4, 178, 375, 1440);
+    right:rclamp(20, 178, 375, 1440);
+    width:rclamp(69, 124, 375, 1440);
+    height:auto;
+    z-index:2;
+  }
+
+  /* =========================
+     フォールバック：@media(pc)
+     ========================= */
+  @include mq("pc") {
+    --bg-left-gap   : 192px;
+    --bg-top-gap    : 85px;
+    --bg-bottom-gap : 55px;
+    --inner-pad-l   : 0;
+    --inner-pad-r   : 158px; /* 右余白は clamp にしたいなら @container で上書き */
+    --inner-pad-t   : 49px;
+    --inner-pad-b   : 100px;
+
+    --right-gap : 158px;
+    --img-track : 516px;
+    --num-hide  : 21px;
+
+    &__title {
+      margin-bottom: rem(64);
+    }
+
+    &__content {
+      display:grid;
+      grid-template-areas: "img body";
+      grid-template-columns: var(--img-track) minmax(0, 1fr);
+      column-gap: var(--content-gap-pc);
+      margin-bottom: rem(92);
+      width: 100%;
+      max-width: 1200px;
+      margin-inline: auto;
+
+      &.is-reverse {
+        grid-template-areas: "body img";
+        grid-template-columns: minmax(0, 1fr) var(--img-track);
+      }
+    }
+
+    &__contentBody {
+      grid-area: body;
+      padding-top: rclamp(98, 168, 1024, 1440);
+
+      .p-topService__contentTitle {
+        flex-direction: row;
+        margin-bottom: rclamp(16, 48, 1024, 1440);
+        span:first-child { display: none; }
+      }
+    }
+
+    .p-topService__imgWrap { grid-area: img; }
+
+    .p-topService__contentImg {
+      aspect-ratio: 335 / 301;
+    }
+
+    .p-topService__nam {
       display: flex;
-      width: fit-content;
       position: absolute;
-      z-index: 1;                    /* 画像より下 */
+      z-index: 1;
       top: 0;
       left: 100%;
-      transform: translateX(calc( -1 * var(--num-hide)));
+      transform: translateX(calc(-1 * var(--num-hide)));
       font-family: Kanit;
       font-size: rclamp(98, 168, 1024, 1440);
       font-weight: 700;
       line-height: 1;
       color: $color-bluegray;
-      font-family: Kanit;
       white-space: nowrap;
     }
-  }
-  .p-topService__nam--r {
-    @include mq("pc") {
+    .p-topService__nam--r {
       inset-inline-start: auto;
       inset-inline-end: 0;
       right: 100%;
       transform: translateX(var(--num-hide));
     }
   }
+}
 
-  /* ===== イラスト ===== */
-  &__catch {
-    position: absolute;
-    //top: rem(4);
-    //right: rem(20);
-    top: rclamp(4, 178, 375, 1440);
-    right: rclamp(20, 178, 375, 1440);
-    width: rclamp(69, 124, 375, 1440);
-    height: auto;
-    z-index: 2;
+/* =========================
+   コンテナクエリ版（本命）
+   ========================= */
+   
+@supports (container-type: inline-size) {
+  .use-cq {
+    @container main (min-width: 1024px) {
+      .p-topService {
+        //PC用の値を container 幅ベースの clamp/cqw に差し替え
+        --inner-pad-l: 0;
+        --inner-pad-r: clamp(30px, 12cqw, 158px);
+        --bg-left-gap: clamp(100px, 13cqw, 192px);
 
-    @include mq("pc") {
-      //top: rem(178);
-      //right: rem(178);
-      //width: rem(124);
+        --content-gap-pc: clamp(22px, 4cqw, 56px);
+
+        --img-track: clamp(280px, 33cqw, 516px);
+        --num-hide : clamp(10px, 1.6cqw, 21px);
+
+        &__title {
+          margin-bottom: clamp(24px, 5cqw, 64px);
+        }
+
+        &__content {
+          display:grid;
+          grid-template-areas: "img body";
+          grid-template-columns: var(--img-track) minmax(0, 1fr);
+          column-gap: var(--content-gap-pc);
+          margin-bottom: clamp(50px, 7cqw, 92px);
+
+          width: min(
+            calc(100% - var(--inner-pad-r)),
+            1002px
+          );
+
+          &.is-reverse {
+            grid-template-areas: "body img";
+            grid-template-columns: minmax(0, 1fr) var(--img-track);
+          }
+        }
+
+        &__contentBody {
+          grid-area: body;
+          padding-top: clamp(98px, 12cqw, 168px);
+
+          .p-topService__contentTitle {
+            flex-direction: row;
+            margin-bottom: clamp(16px, 4cqw, 48px);
+            span:first-child { display:none; }
+          }
+        }
+
+        .p-topService__imgWrap { grid-area: img; }
+
+        .p-topService__nam {
+          display:flex;
+          position:absolute;
+          z-index:1;
+          top:0;
+          left:100%;
+          transform: translateX(calc(-1 * var(--num-hide)));
+          font-size: clamp(98px, 14cqw, 168px);
+        }
+        .p-topService__nam--r {
+          inset-inline-start:auto;
+          inset-inline-end:0;
+          right:100%;
+          transform: translateX(var(--num-hide));
+        }
+      }
     }
   }
 }
