@@ -11,7 +11,7 @@ $base-font-size: 16;
   @return math.div($px, $base-font-size) * 1rem;
 }
 
-/// Breakpoints  (min‑width ベース = SPファースト)
+/// メディアクエリ (min‑width ベース = SPファースト)
 $breakpoints: (
   "tab": 768px,
   "pc" : 1024px,
@@ -27,6 +27,17 @@ $breakpoints: (
 
   @media (min-width: $min) {
     @content;
+  }
+}
+
+///コンテナクエリ
+$CQ_PC: 744px; // = 1024 - 280（固定）
+
+@mixin cq-pc($cq: $CQ_PC) {
+  @supports (container-type: inline-size) {
+    @container main (min-width: #{$cq}) {
+      @content;
+    }
   }
 }
 
