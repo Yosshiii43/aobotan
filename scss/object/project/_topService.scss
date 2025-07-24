@@ -4,13 +4,156 @@ Top service
 @use "../../foundation/forwards" as *;
 @use "sass:math";
 
+@mixin service-desktop-static() {
+  --bg-left-gap   : 192px;
+  --bg-top-gap    : 85px;
+  --bg-bottom-gap : 55px;
+  --inner-pad-t   : 49px;
+  --inner-pad-b   : 100px;
+
+  --right-gap : 158px;
+  --num-hide  : 21px;
+
+  .p-topService__title {
+    margin-bottom: rem(64);
+  }
+
+  .p-topService__content {
+    display:grid;
+    grid-template-areas: "img body";
+    grid-template-columns: minmax(280px, 516fr) minmax(0, 489fr);
+    column-gap: var(--content-gap-pc);
+    margin-bottom: rem(92);
+    width: 100%;
+    max-width: rem(1005);
+
+    &.is-reverse {
+      grid-template-areas: "body img";
+      grid-template-columns: minmax(0, 489fr) minmax(280px, 516fr);
+    }
+  }
+
+  .p-topService__contentBody {
+    grid-area: body;
+    padding-top: rclamp(98, 168, 1024, 1440);
+
+    .p-topService__contentTitle {
+      flex-direction: row;
+      margin-bottom: rclamp(16, 48, 1024, 1440);
+      span:first-child { display: none; }
+    }
+  }
+
+  .p-topService__imgWrap { 
+    grid-area: img; 
+    position: relative;
+    z-index: 0;
+  }
+
+  .p-topService__contentImg {
+    aspect-ratio: 335 / 301;
+    position: relative;
+    z-index: 2;
+  }
+
+  .p-topService__nam {
+    display: flex;
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    left: 100%;
+    transform: translateX(calc(-1 * var(--num-hide)));
+    font-family: Kanit;
+    font-size: rclamp(98, 168, 1024, 1440);
+    font-weight: 700;
+    line-height: 1;
+    color: $color-bluegray;
+    white-space: nowrap;
+  }
+  .p-topService__nam--r {
+    left:auto; right:100%;
+    transform: translateX(var(--num-hide));
+  }
+}
+
+@mixin service-desktop-fluid() {
+  --bg-left-gap   : clamp(100px, 13cqw, 192px);
+  --bg-top-gap    : 85px;
+  --bg-bottom-gap : 55px;
+  --inner-pad-t   : 49px;
+  --inner-pad-b   : 100px;
+
+  --right-gap : var(--inner-pad-r);
+  --num-hide  : clamp(10px, 1.6cqw, 21px);
+  --content-gap-pc: clamp(22px, 4cqw, 56px);
+
+  .p-topService__title {
+    margin-bottom: clamp(24px, 5cqw, 64px);
+  }
+
+  .p-topService__content {
+    display:grid;
+    grid-template-areas: "img body";
+    grid-template-columns: minmax(280px, 516fr) minmax(0, 489fr);
+    column-gap: var(--content-gap-pc);
+    margin-bottom: clamp(50px, 7cqw, 92px);
+    width: 100%;
+    max-width: rem(1005);
+
+    &.is-reverse {
+      grid-template-areas: "body img";
+      grid-template-columns: minmax(0, 489fr) minmax(280px, 516fr);
+    }
+  }
+
+  .p-topService__contentBody {
+    grid-area: body;
+    padding-top: clamp(98px, 12cqw, 168px);
+
+    .p-topService__contentTitle {
+      flex-direction: row;
+      margin-bottom: clamp(16px, 4cqw, 48px);
+      span:first-child { display: none; }
+    }
+  }
+
+  .p-topService__imgWrap { 
+    grid-area: img; 
+    position: relative;
+    z-index: 0;
+  }
+
+  .p-topService__contentImg {
+    aspect-ratio: 335 / 301;
+    position: relative;
+    z-index: 2;
+  }
+
+  .p-topService__nam {
+    display: flex;
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    left: 100%;
+    transform: translateX(calc(-1 * var(--num-hide)));
+    font-family: Kanit;
+    font-size: rclamp(98, 168, 1024, 1440);
+    font-weight: 700;
+    line-height: 1;
+    color: $color-bluegray;
+    white-space: nowrap;
+  }
+  .p-topService__nam--r {
+    left:auto; right:100%;
+    transform: translateX(var(--num-hide));
+  }
+}
+
 .p-topService {
   /* ===== SP 初期値 ===== */
   --bg-left-gap   : 100px;   /* 背景 左余白 */
   --bg-top-gap    : 52px;    /* 背景 上余白 */
   --bg-bottom-gap : 55px;    /* 背景 下余白 */
-  --inner-pad-l   : 20px;    /* インナー 左余白 */
-  --inner-pad-r   : 20px;    /* インナー 右余白 */
   --inner-pad-t   : 26px;    /* インナー 上余白 */
   --inner-pad-b   : 91px;    /* インナー 下余白 */
 
@@ -19,7 +162,6 @@ Top service
 
   /* PC で上書きしたい可変値（フォールバック用の初期化） */
   --right-gap : 40px;   /* 後でPCで clamp に置き換える */
-  --img-track : 280px;  /* 後でPCで clamp に置き換える */
   --num-hide  : 10px;   /* 後でPCで clamp に置き換える */
 
   position: relative;
@@ -41,7 +183,7 @@ Top service
 
   /* ===== インナー ===== */
   .l-inner {
-    padding: var(--inner-pad-t) var(--inner-pad-r) var(--inner-pad-b) var(--inner-pad-l);
+    padding-block: var(--inner-pad-t) var(--inner-pad-b);
   }
 
   /* ===== タイトル ===== */
@@ -61,7 +203,6 @@ Top service
 
     /* 2番目逆配置用 */
     &.is-reverse {
-      /* SP はそのまま。PCで grid の向きを反転させる */
       margin-left: rem(3);
     }
   }
@@ -130,157 +271,15 @@ Top service
     z-index:2;
   }
 
-  /* =========================
-     フォールバック：@media(pc)
-     ========================= */
-  @include mq("pc") {
-    --bg-left-gap   : 192px;
-    --bg-top-gap    : 85px;
-    --bg-bottom-gap : 55px;
-    --inner-pad-l   : 0;
-    --inner-pad-r   : 158px; /* 右余白は clamp にしたいなら @container で上書き */
-    --inner-pad-t   : 49px;
-    --inner-pad-b   : 100px;
-
-    --right-gap : 158px;
-    --img-track : 516px;
-    --num-hide  : 21px;
-
-    &__title {
-      margin-bottom: rem(64);
-    }
-
-    &__content {
-      display:grid;
-      grid-template-areas: "img body";
-      grid-template-columns: var(--img-track) minmax(0, 1fr);
-      column-gap: var(--content-gap-pc);
-      margin-bottom: rem(92);
-      width: 100%;
-      max-width: 1400px;
-      margin-inline: auto;
-
-      &.is-reverse {
-        grid-template-areas: "body img";
-        grid-template-columns: minmax(0, 1fr) var(--img-track);
-      }
-    }
-
-    &__contentBody {
-      grid-area: body;
-      padding-top: rclamp(98, 168, 1024, 1440);
-
-      .p-topService__contentTitle {
-        flex-direction: row;
-        margin-bottom: rclamp(16, 48, 1024, 1440);
-        span:first-child { display: none; }
-      }
-    }
-
-    .p-topService__imgWrap { 
-      grid-area: img; 
-      position: relative;
-      z-index: 0;
-    }
-
-    .p-topService__contentImg {
-      aspect-ratio: 335 / 301;
-      position: relative;
-      z-index: 2;
-    }
-
-    .p-topService__nam {
-      display: flex;
-      position: absolute;
-      z-index: 1;
-      top: 0;
-      left: 100%;
-      transform: translateX(calc(-1 * var(--num-hide)));
-      font-family: Kanit;
-      font-size: rclamp(98, 168, 1024, 1440);
-      font-weight: 700;
-      line-height: 1;
-      color: $color-bluegray;
-      white-space: nowrap;
-    }
-    .p-topService__nam--r {
-      inset-inline-start: auto;
-      inset-inline-end: 0;
-      right: 100%;
-      transform: translateX(var(--num-hide));
-    }
+  /* フォールバック（コンテナ未対応ブラウザ用） */
+  
+  @include mq("tab") {
+    @include service-desktop-static();
   }
 }
 
-/* =========================
-   コンテナクエリ版（本命）
-   ========================= */
-   
 @supports (container-type: inline-size) {
-  .use-cq {
-    @container main (min-width: 1024px) {
-      .p-topService {
-        //PC用の値を container 幅ベースの clamp/cqw に差し替え
-        --inner-pad-l: 0;
-        --inner-pad-r: clamp(30px, 12cqw, 158px);
-        --bg-left-gap: clamp(100px, 13cqw, 192px);
-
-        --content-gap-pc: clamp(22px, 4cqw, 56px);
-
-        --img-track: clamp(280px, 33cqw, 516px);
-        --num-hide : clamp(10px, 1.6cqw, 21px);
-
-        &__title {
-          margin-bottom: clamp(24px, 5cqw, 64px);
-        }
-
-        &__content {
-          display:grid;
-          grid-template-areas: "img body";
-          grid-template-columns: var(--img-track) minmax(0, 1fr);
-          column-gap: var(--content-gap-pc);
-          margin-bottom: clamp(50px, 7cqw, 92px);
-
-          width: min(
-            calc(100% - var(--inner-pad-r)),
-            1002px
-          );
-
-          &.is-reverse {
-            grid-template-areas: "body img";
-            grid-template-columns: minmax(0, 1fr) var(--img-track);
-          }
-        }
-
-        &__contentBody {
-          grid-area: body;
-          padding-top: clamp(98px, 12cqw, 168px);
-
-          .p-topService__contentTitle {
-            flex-direction: row;
-            margin-bottom: clamp(16px, 4cqw, 48px);
-            span:first-child { display:none; }
-          }
-        }
-
-        .p-topService__imgWrap { grid-area: img; }
-
-        .p-topService__nam {
-          display:flex;
-          position:absolute;
-          z-index:1;
-          top:0;
-          left:100%;
-          transform: translateX(calc(-1 * var(--num-hide)));
-          font-size: clamp(98px, 14cqw, 168px);
-        }
-        .p-topService__nam--r {
-          inset-inline-start:auto;
-          inset-inline-end:0;
-          right:100%;
-          transform: translateX(var(--num-hide));
-        }
-      }
-    }
+  @container main (min-width: 744px) {
+    .p-topService { @include service-desktop-fluid(); }
   }
 }
