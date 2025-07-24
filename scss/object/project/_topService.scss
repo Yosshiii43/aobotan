@@ -272,14 +272,12 @@ Top service
   }
 
   /* フォールバック（コンテナ未対応ブラウザ用） */
-  
   @include mq("tab") {
     @include service-desktop-static();
   }
-}
 
-@supports (container-type: inline-size) {
-  @container main (min-width: 744px) {
-    .p-topService { @include service-desktop-fluid(); }
+  /* コンテナクエリ　*/
+  @include cq-pc() {
+    @include service-desktop-fluid();
   }
 }

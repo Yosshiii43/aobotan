@@ -185,15 +185,12 @@ hero
   }
 
   /* フォールバック（コンテナ未対応ブラウザ用） */
-  @include mq("pc"){
+  @include mq("tab"){
     @include hero-desktop();
   }
-}
 
-@supports (container-type: inline-size) {
-  @container main (min-width: 768px) {
-    .p-hero{
-      @include hero-desktop();
-    }
+  /* コンテナクエリ　*/
+  @include cq-pc() {
+    @include hero-desktop();
   }
 }
