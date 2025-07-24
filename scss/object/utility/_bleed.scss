@@ -1,0 +1,19 @@
+/******************************
+fullbleed（背景画面端まで）
+******************************/
+@use "../../foundation/forwards" as *;
+
+.u-fullbleed {
+  position: relative;
+  isolation: isolate;
+}
+.u-fullbleed::before {
+  content: "";
+  position: absolute;
+  inset-block: 0;
+  left: calc(50% - 50vw);
+  width: 100vw;
+  background: var(--bleed-bg, transparent);
+  z-index: -1;
+  border-radius: var(--bleed-radius, 0);
+}
