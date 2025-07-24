@@ -4,67 +4,71 @@ Top about
 @use "../../foundation/forwards" as *;
 @use "sass:math";
 
+@mixin topAbout-desktop(){
+  &__head {
+    padding-block: rem(63) rem(63);
+    margin-bottom: rem(71);
+  }
+
+  &__body {
+    .p-topAbout__text {
+      margin-block: rem(40) rem(41);
+      font-size: rem(16);
+      width: rem(429);
+    }
+  }
+
+  &__catch {
+    //top: rem(254);
+    //right: rem(182);
+    img {
+      padding-bottom: rem(41);
+    }
+  }
+}
+
 .p-topAbout {
   position: relative;
 
-  &__inner {
-    display: flex;
-    flex-direction: column-reverse;
-    gap: rem(126);
-    @include mq("pc") {
-      gap: rem(71);
-    }
+  &__head {
+    background-color: $color-lightgray;
+    padding-block: rem(16) rem(58);
+    margin-bottom: rem(126);
 
-    .p-topAbout__body {
-      margin-inline: rem(20);
-      @include mq("pc") {
-        margin-inline: 0;
-      }
+    .swiper {
+      overflow: hidden;
+      &-wrapper {
+        transition-timing-function: linear !important;
 
-      .p-topAbout__text {
-        margin-block: rem(40) rem(31);
-        font-size: rem(14);
-      @include mq("pc") {
-        margin-block: rem(40) rem(41);
-        font-size: rem(16);
-        width: rem(429);
-      }
-      }
-    }
+        .swiper-slide {
+          width: max-content;
 
-    .p-topAbout__head {
-      background-color: $color-lightgray;
-      padding-block: rem(16) rem(58);
-      @include mq("pc") {
-        padding-block: rem(63) rem(63);
-      }
-
-      .swiper {
-        overflow: hidden;
-        &-wrapper {
-          transition-timing-function: linear !important;
-
-          .swiper-slide {
+          .item {
             width: max-content;
+            margin-right: rclamp(16, 48, 375, 1440);
 
-            .item {
-              width: max-content;
-
-              img {
-                width: rclamp(200, 360, 375, 1440);
-                height: auto;
-                aspect-ratio: 1 / 1;
-              }
+            img {
+              width: rclamp(200, 360, 375, 1440);
+              height: auto;
+              aspect-ratio: 1 / 1;
             }
-
-            .swiper-slide :first-of-type .item{
-                margin-left: rclamp(16, 46, 375, 1440);
-              }
           }
+
+          .swiper-slide :first-of-type .item{
+              margin-left: rclamp(16, 46, 375, 1440);
+            }
         }
       }
     }
   }
+
+  &__body {
+    .p-topAbout__text {
+      margin-block: rem(40) rem(31);
+      font-size: rem(14);
+    }
+  }
+
 
   &__catch {
     position: absolute;
@@ -77,15 +81,11 @@ Top about
     justify-content: space-between;
     gap: rclamp(9, 20, 375, 1440);
     width: fit-content;
-
     img {
       width: rclamp(60, 161, 375, 1440);
       height: auto;
       object-fit: contain;
       padding-bottom: rem(62);
-      @include mq("pc") {
-        padding-bottom: rem(41);
-      }
     }
 
     > div {
@@ -109,6 +109,19 @@ Top about
           color: $color-main;
         }
       }
+    }
+  }
+
+  /* フォールバック（コンテナ未対応ブラウザ用） */
+  @include mq("pc"){
+    @include topAbout-desktop();
+  }
+}
+
+@supports (container-type: inline-size) {
+  @container main (min-width: 768px) {
+    .p-topAbout{
+      @include topAbout-desktop();
     }
   }
 }
