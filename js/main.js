@@ -546,50 +546,37 @@ document.querySelectorAll('.js-dlForm').forEach(form => {
   });
 });
 
+
 /*************************************************************************
- * アコーディオン
+ * 1行と複数行の判定
  *************************************************************************/
-document.querySelectorAll('.js-accordionDetails').forEach(details => {
-  const summary  = details.querySelector('.js-accordionSummary');
-  const content  = details.querySelector('.js-accordionContent');
-  let   anim     = null;                       // 進行中アニメを保持
-  const DURATION = 300;                        // 時間(ms) 好みで
+const updateLineHeight = () => {
+  const elems = document.querySelectorAll('.js-lineHeight');
 
-  summary.addEventListener('click', e => {
-    e.preventDefault();
+  elems.forEach(elem => {
+    // 一旦クラスをリセット
+    elem.classList.remove('lineHeight--single', 'lineHeight--multi');
 
-    /* 進行中アニメがあればキャンセル（連打で “ガクッ” とカクついて見えることの対策） */
-    if (anim) { 
-      anim.cancel(); 
+    // getComputedStyleでline-heightを取得
+    const computed = window.getComputedStyle(elem);
+    const lineHeight = parseFloat(computed.lineHeight);
+    const height = elem.offsetHeight;
+    const lines = Math.round(height / lineHeight);
+
+    if (lines > 1) {
+      elem.classList.add('lineHeight--multi');
+    } else {
+      elem.classList.add('lineHeight--single');
     }
-
-    const isOpening = !details.open;           // これから「開く」か？
-    const startH    = content.offsetHeight;    // 今まさに見えている高さ
-    const endH      = isOpening ? content.scrollHeight // 全部表示したときの高さ
-                                : 0;                  // 閉じるときは 0
-
-    /* 開くときは先に open=true にしてスクリーンリーダーにも知らせる */
-    if (isOpening) {
-      details.open = true;
-    }
-
-    /* Web Animations API で高さを補間 */
-    anim = content.animate( //.animate()メソッドの返り値をanimに格納
-      { height: [`${startH}px`, `${endH}px`] }, // from → to
-      { duration: DURATION, easing: 'ease', fill: 'forwards' } //アニメーション終了後にアニメーション終了時の状態を維持するにはforwards
-    );
-
-    /* アニメ終了後の後始末 */
-    anim.onfinish = () => {
-      if (isOpening) {
-        // 開き終わったら height:auto に戻す  →  中身が増減しても追従
-        content.style.height = 'auto';
-      } else {
-        // 閉じ終わったら open=false に戻し、height 指定を撤去
-        details.open = false;
-        content.style.height = '';
-      }
-      anim = null;
-    };
   });
+};
+
+// 初回実行
+window.addEventListener('DOMContentLoaded', updateLineHeight);
+
+// リサイズ時にも再実行（デバウンス付き）
+let resizeTimer;
+window.addEventListener('resize', () => {
+  clearTimeout(resizeTimer);
+  resizeTimer = setTimeout(updateLineHeight, 200);
 });

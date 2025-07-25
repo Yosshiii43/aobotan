@@ -1,0 +1,88 @@
+/******************************
+Top news
+******************************/
+@use "../../foundation/forwards" as *;
+@use "sass:math";
+
+.p-topNews {
+  margin-block: rem(30) rem(64);
+  @include mq("tab") {
+    margin-block: rem(50) rem(132);
+  }
+
+  &__title {
+    margin-bottom: rem(47);
+    @include mq("tab") {
+      margin-bottom: rem(48);
+    }
+  }
+
+  &__list {
+    border-top: 1px solid $color-bluegray;
+
+    .p-topNews__item {
+      border-bottom: 1px solid $color-bluegray;
+      padding-block: rem(15.5) rem(15);
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      @include mq("tab") {
+        padding-block: rem(31.5) rem(31);
+      }
+
+      &::after {
+        content: "";
+        display: block;
+        width: rem(16);
+        height: rem(16);
+        background-image: url(../img/icon_arrow_raight.svg);
+        margin-left: rem(21);
+      }
+
+      > div {
+        width: calc(100% - rem(21) - rem(16));
+        @include mq("tab") {
+          width: calc(100% - rem(21) - rem(16) - rem(27));
+        }
+
+        .p-topNews__head {
+          display: flex;
+          align-items: center;
+          justify-content: flex-start;
+          gap: rem(16);
+          color: $color-main;
+          font-size: rem(14);
+          font-weight: 700;
+          line-height: 1;
+          margin-bottom: rem(16);
+          @include mq("tab") {
+            margin-bottom: rem(24);
+          }
+
+          span {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding-block: rem(4);
+            border: 1px solid $color-main;
+            width: rem(116);
+          }
+        }
+
+        .p-topNews__text {
+          font-size: rem(14);
+          font-weight: 700;
+          @include mq(tab) {
+            font-size: rem(16);
+          }
+        }
+        .p-topNews__text.lineHeight--single {
+          line-height: 1;
+        }
+        .p-topNews__text.lineHeight--multi {
+          line-height: 1.8;
+        }
+      }
+    }
+  }
+}
