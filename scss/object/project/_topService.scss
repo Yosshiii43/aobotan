@@ -11,7 +11,6 @@ Top service
   --inner-pad-t   : 49px;
   --inner-pad-b   : 100px;
 
-  --right-gap : 158px;
   --num-hide  : 21px;
 
   .p-topService__title {
@@ -21,21 +20,27 @@ Top service
   .p-topService__content {
     display:grid;
     grid-template-areas: "img body";
-    grid-template-columns: minmax(280px, 516fr) minmax(0, 489fr);
-    column-gap: var(--content-gap-pc);
+    grid-template-columns: 
+    minmax(280px, calc(516 / 1002 * 100%))
+    minmax(0,      calc(486 / 1002 * 100%));
+    column-gap: 0;
     margin-bottom: rem(92);
     width: 100%;
-    max-width: rem(1005);
+    max-width: rem(1002);
 
     &.is-reverse {
       grid-template-areas: "body img";
-      grid-template-columns: minmax(0, 489fr) minmax(280px, 516fr);
+      grid-template-columns:
+      minmax(0,      calc(486 / 1002 * 100%))
+      minmax(280px,  calc(516 / 1002 * 100%));
+      margin-left: rem(3);
     }
   }
 
   .p-topService__contentBody {
     grid-area: body;
     padding-top: rclamp(98, 168, 1024, 1440);
+    margin-left: 56px;
 
     .p-topService__contentTitle {
       flex-direction: row;
@@ -43,6 +48,12 @@ Top service
       span:first-child { display: none; }
     }
   }
+
+  .p-topService__content.is-reverse .p-topService__contentBody {
+    margin-left: 0;
+    margin-right: var(--content-gap-pc);
+  }
+
 
   .p-topService__imgWrap { 
     grid-area: img; 
@@ -77,48 +88,58 @@ Top service
 }
 
 @mixin service-desktop-fluid() {
+  /* ---- ここだけ “値” を流体化。プロパティは static と同一 ---- */
   --bg-left-gap   : clamp(100px, 13cqw, 192px);
   --bg-top-gap    : 85px;
   --bg-bottom-gap : 55px;
   --inner-pad-t   : 49px;
   --inner-pad-b   : 100px;
 
-  --right-gap : var(--inner-pad-r);
-  --num-hide  : clamp(10px, 1.6cqw, 21px);
-  --content-gap-pc: clamp(22px, 4cqw, 56px);
+  --num-hide  : clamp(10px, 1.81034cqw, 21px);
 
   .p-topService__title {
-    margin-bottom: clamp(24px, 5cqw, 64px);
+    margin-bottom: clamp(rem(24), 5.51724cqw, rem(64));
   }
 
   .p-topService__content {
     display:grid;
     grid-template-areas: "img body";
-    grid-template-columns: minmax(280px, 516fr) minmax(0, 489fr);
-    column-gap: var(--content-gap-pc);
-    margin-bottom: clamp(50px, 7cqw, 92px);
+    grid-template-columns:
+      minmax(280px, calc(516 / 1002 * 100%))
+      minmax(0,      calc(486 / 1002 * 100%));
+    column-gap: 0;
+    margin-bottom: clamp(rem(50), 7.93103cqw, rem(92));
     width: 100%;
-    max-width: rem(1005);
+    max-width: rem(1002);
 
     &.is-reverse {
       grid-template-areas: "body img";
-      grid-template-columns: minmax(0, 489fr) minmax(280px, 516fr);
+      grid-template-columns:
+        minmax(0,      calc(486 / 1002 * 100%))
+        minmax(280px,  calc(516 / 1002 * 100%));
+      margin-left: rem(3);
     }
   }
 
   .p-topService__contentBody {
     grid-area: body;
-    padding-top: clamp(98px, 12cqw, 168px);
+    padding-top: clamp(rem(98), 14.48276cqw, rem(168));
+    margin-left: 56px;
 
     .p-topService__contentTitle {
       flex-direction: row;
-      margin-bottom: clamp(16px, 4cqw, 48px);
+      margin-bottom: clamp(rem(16), 4.13793cqw, rem(48));
       span:first-child { display: none; }
     }
   }
 
-  .p-topService__imgWrap { 
-    grid-area: img; 
+  .p-topService__content.is-reverse .p-topService__contentBody {
+    margin-left: 0;
+    margin-right: var(--content-gap-pc);
+  }
+
+  .p-topService__imgWrap {
+    grid-area: img;
     position: relative;
     z-index: 0;
   }
@@ -137,7 +158,7 @@ Top service
     left: 100%;
     transform: translateX(calc(-1 * var(--num-hide)));
     font-family: Kanit;
-    font-size: rclamp(98, 168, 1024, 1440);
+    font-size: clamp(rem(98), 14.48276cqw, rem(168));
     font-weight: 700;
     line-height: 1;
     color: $color-bluegray;
@@ -161,7 +182,6 @@ Top service
   --content-gap-pc: #{rem(56)};
 
   /* PC で上書きしたい可変値（フォールバック用の初期化） */
-  --right-gap : 40px;   /* 後でPCで clamp に置き換える */
   --num-hide  : 10px;   /* 後でPCで clamp に置き換える */
 
   position: relative;
@@ -203,7 +223,7 @@ Top service
 
     /* 2番目逆配置用 */
     &.is-reverse {
-      margin-left: rem(3);
+
     }
   }
 
@@ -272,7 +292,6 @@ Top service
   }
 
   /* フォールバック（コンテナ未対応ブラウザ用） */
-  
   @include mq("tab") {
     @include service-desktop-static();
   }
@@ -280,6 +299,8 @@ Top service
 
 @supports (container-type: inline-size) {
   @container main (min-width: 744px) {
-    .p-topService { @include service-desktop-fluid(); }
+    .p-topService {
+      @include service-desktop-fluid() ;
+    }
   }
 }
