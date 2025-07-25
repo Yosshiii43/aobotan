@@ -295,12 +295,8 @@ Top service
   @include mq("tab") {
     @include service-desktop-static();
   }
-}
 
-@supports (container-type: inline-size) {
-  @container main (min-width: 744px) {
-    .p-topService {
-      @include service-desktop-fluid() ;
-    }
+  @include cq-pc() {
+    @include service-desktop-fluid();
   }
 }

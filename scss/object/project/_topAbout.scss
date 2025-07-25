@@ -116,12 +116,8 @@ Top about
   @include mq("pc"){
     @include topAbout-desktop();
   }
-}
 
-@supports (container-type: inline-size) {
-  @container main (min-width: 768px) {
-    .p-topAbout{
-      @include topAbout-desktop();
-    }
+  @include cq-pc() {
+    @include topAbout-desktop();
   }
 }

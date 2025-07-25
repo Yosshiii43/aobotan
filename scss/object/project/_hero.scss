@@ -185,7 +185,11 @@ hero
   }
 
   /* フォールバック（コンテナ未対応ブラウザ用） */
-  @include mq("pc"){
+  @include mq("tab"){
+    @include hero-desktop();
+  }
+
+  @include cq-pc() {
     @include hero-desktop();
   }
 }
