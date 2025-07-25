@@ -1,0 +1,24 @@
+/******************************
+グリッドレイアウト化
+******************************/
+@use "../foundation/forwards" as *;
+
+.exp-grid .l-shell { 
+   display: block;
+
+  @include mq("pc") {
+    display: grid;
+    grid-template-columns: var(--aside-w) 1fr;
+    grid-template-rows: auto 1fr auto;
+    grid-template-areas:
+      "aside main"
+      "aside main"
+      "aside footer";
+    min-height: 100dvh;
+    column-gap: var(--gap-x);
+  }
+}
+
+.l-aside  { grid-area: aside; }
+.l-main   { grid-area: main; }
+.l-footer { grid-area: footer; }

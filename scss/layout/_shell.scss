@@ -1,10 +1,6 @@
 /******************************
-l-main
+l-shell
 ******************************/
 @use "../foundation/forwards" as *;
 
-.l-main{
-  container-type: inline-size;
-  container-name: main;
-  min-width: 0;
-}
+.l-shell { min-width: 0; }

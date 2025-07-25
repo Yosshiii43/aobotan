@@ -13,7 +13,6 @@ const initSwiper = () => {
 
   mySwiper = new Swiper('.p-topAbout .swiper', {
     slidesPerView: 'auto',
-    spaceBetween: 16,
     loop: true,
     loopAdditionalSlides: 2,
     speed: 8000,
@@ -24,11 +23,6 @@ const initSwiper = () => {
     freeMode: {
       enabled: true,
       momentum: false,
-    },
-      breakpoints: {
-      1024: {
-        spaceBetween: 48,
-      }
     },
   });
 };
