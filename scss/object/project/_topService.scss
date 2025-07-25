@@ -9,7 +9,7 @@ Top service
   --bg-top-gap    : 85px;
   --bg-bottom-gap : 55px;
   --inner-pad-t   : 49px;
-  --inner-pad-b   : 100px;
+  --inner-pad-b   : 11px;
 
   --num-hide  : 21px;
 
@@ -89,11 +89,11 @@ Top service
 
 @mixin service-desktop-fluid() {
   /* ---- ここだけ “値” を流体化。プロパティは static と同一 ---- */
-  --bg-left-gap   : clamp(100px, 13cqw, 192px);
+  --bg-left-gap   : clamp(100px, 16.552cqw, 192px);
   --bg-top-gap    : 85px;
   --bg-bottom-gap : 55px;
   --inner-pad-t   : 49px;
-  --inner-pad-b   : 100px;
+  --inner-pad-b   : 11px;
 
   --num-hide  : clamp(10px, 1.81034cqw, 21px);
 
