@@ -23,8 +23,17 @@ contact section
 
     .c-contctSec__title {
       margin-bottom: rem(47);
+      @include mq("tab") {
+        margin-bottom: rem(39);
+      }
     }
     .c-contctSec__body{
+      @include mq("tab") {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: flex-start;
+      }
       .c-contctSec__tel {
         display: flex;
         flex-direction: row;
@@ -36,6 +45,18 @@ contact section
         margin-bottom: rem(24);
         @include mq("tab") {
           flex-direction: column;
+          align-items: flex-start;
+          align-items: center;
+          gap: rem(8);
+          border-bottom: none;
+          padding-top: rem(7);
+          padding-bottom: rem(7);
+          padding-right: rclamp(24, 32, 768, 1023);
+          border-right: 1px solid $color-text;
+          margin-bottom: 0;
+        }
+        @include mq("pc") {
+          padding-right: rclamp(16, 32, 1024, 1440);
         }
         
         p:first-child {
@@ -52,6 +73,10 @@ contact section
           line-height: 1;
           height: fit-content;
           margin-bottom: rem(5);
+          @include mq("tab") {
+            margin-bottom: 0;
+            margin-left: calc(-1 * rem(5));
+          }
         }
       }
       .c-contctSec__telNumber {
@@ -61,6 +86,15 @@ contact section
         justify-content: center;
         gap: rem(8);
         margin-bottom: rem(35);
+        @include mq("tab") {
+          padding-block: rem(8);
+          padding-inline: rclamp(24, 32, 768, 1023);
+          border-right: 1px solid $color-text;
+          margin-bottom: 0;
+        }
+        @include mq("pc") {
+          padding-inline: rclamp(16, 32, 1024, 1440);
+        }
 
         p:first-child {
           font-family: Kanit;
@@ -74,20 +108,20 @@ contact section
         }
       }
       .c-contctSec__mail {
+        @include mq("tab") {
+          padding-left: rclamp(24, 64, 768, 1023);
+        }
+        @include mq("pc") {
+          padding-left: rclamp(24, 64, 1024, 1440);
+        }
         .c-button--a {
-          padding: rem(21) rem(39) rem(21) rem(67);
-
-          &::before {
-            display: block;
-            content: "";
-            width: rem(20);
-            height: rem(20);
-            background: url(../img/icon-mail01.svg);
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            left: rem(40);
-          }
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          justify-content: flex-start;
+          gap: rem(8);
+          width: fit-content;
+          padding: rem(19) rem(39) rem(19) rem(39);
         }
       }
     }
