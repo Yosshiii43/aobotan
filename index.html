@@ -218,7 +218,6 @@
         </div><!-- .l-inner -->
       </section><!-- .p-topService -->
 
-
       <section class="p-topNews">
         <div class="l-inner">
           <h2 class="p-topNews__title c-topSecTitle c-fadeIn js-fadeIn">
@@ -227,27 +226,52 @@
           </h2>
           <ul class="p-topNews__list">
             <li class="p-topNews__item">
-              <div>
+              <button class="modal__btn" data-micromodal-trigger="modal-1" role="button">
                 <div class="p-topNews__head"><span>イベント情報</span><time datetime="2024-06-03">2024.06.03</time></div>
                 <h3 class="p-topNews__text js-lineHeight">住宅設計相談会を実施します。弊社建築士と将来の家造りを真剣に考えませんか？</h3>
-              </div>
+              </button>
             </li>
             <li class="p-topNews__item">
-              <div>
+              <button>
                 <div class="p-topNews__head"><span>イベント情報</span><time datetime="2024-05-23">2024.05.23</time></div>
                 <h3 class="p-topNews__text js-lineHeight">安全管理研修を行いました。</h3>
-              </div>
+              </button>
             </li>
             <li class="p-topNews__item">
-              <div>
+              <button>
                 <div class="p-topNews__head"><span>更新情報</span><time datetime="2024-05-01">2024.05.01</time></div>
                 <h3 class="p-topNews__text js-lineHeight">ホームページをリニューアルしました！！</h3>
-              </div>
+              </button>
             </li>
           </ul>
         </div><!-- .l-inner -->
       </section><!-- .-topService -->
 
+      <!-- [1] -->
+      <div id="modal-1"  class="modal"aria-hidden="true">
+
+        <!-- [2] -->
+        <div class="modal__overlay" tabindex="-1" data-micromodal-close>
+
+          <!-- [3] -->
+          <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-1-title" >
+
+            <header class="nodal__header">
+              <h2 id="modal-1-title">
+                Modal Title
+              </h2>
+
+              <!-- [4] -->
+              <button class="modal__close" aria-label="Close modal" data-micromodal-close></button>
+            </header>
+
+            <div class="modal__body" id="modal-1-content">
+              Modal Content
+            </div>
+
+          </div>
+        </div>
+      </div>
     </main>
 
     <footer class="l-footer p-footer">
@@ -256,6 +280,7 @@
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+  <script src="https://unpkg.com/micromodal/dist/micromodal.min.js"></script>
   <script src="/js/swiper.js" defer></script>
   <script src="/js/main.js" defer></script>
 </body>

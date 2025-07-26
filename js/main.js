@@ -580,3 +580,16 @@ window.addEventListener('resize', () => {
   clearTimeout(resizeTimer);
   resizeTimer = setTimeout(updateLineHeight, 200);
 });
+
+
+/*************************************************************************
+ * モーダル
+ *************************************************************************/
+
+MicroModal.init({
+  openClass: 'is-open',
+  disableScroll: true,
+  disableFocus: false,
+  awaitOpenAnimation: false,
+  awaitCloseAnimation: false,
+});
