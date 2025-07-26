@@ -113,7 +113,7 @@ Top about
   }
 
   /* フォールバック（コンテナ未対応ブラウザ用） */
-  @include mq("pc"){
+  @include mq("tab"){
     @include topAbout-desktop();
   }
 
