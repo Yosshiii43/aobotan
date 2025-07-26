@@ -44,6 +44,17 @@ Top news
         @include mq("tab") {
           width: calc(100% - rem(21) - rem(16) - rem(27));
         }
+        &:focus {
+          outline: $focus-width solid $focus-color;
+          outline-offset: $focus-offset;
+        }
+        &:focus-visible {
+          outline: $focus-width solid $focus-color;
+          outline-offset: $focus-offset;
+        }
+        @supports selector(:focus-visible) {
+          &:focus:not(:focus-visible) { outline: none; }
+        }
 
         .p-topNews__head {
           margin-bottom: rem(16);
