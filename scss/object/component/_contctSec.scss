@@ -1,0 +1,112 @@
+/******************************
+contact section
+******************************/
+@use "../../foundation/forwards" as *;
+@use "sass:math";
+
+.c-contactSec {
+  position: relative;
+  padding-top: rem(28);
+  @include mq("tab") {
+    padding-top: 0;
+  }
+
+  &__inner {
+    padding-block: rem(28) rem(41);
+    padding-inline: rem(20);
+    background-color: $color-lightgray;
+    @include mq("tab") {
+      padding-block: rem(32) rem(53);
+      padding-inline: rem(24) rem(20);
+      border-radius: 50px 0 0 50px;
+    }
+
+    .c-contctSec__title {
+      margin-bottom: rem(47);
+    }
+    .c-contctSec__body{
+      .c-contctSec__tel {
+        display: flex;
+        flex-direction: row;
+        align-items: flex-end;
+        justify-content: flex-start;
+        gap: rem(16);
+        padding-bottom: rem(24);
+        border-bottom: 1px solid $color-text;
+        margin-bottom: rem(24);
+        @include mq("tab") {
+          flex-direction: column;
+        }
+        
+        p:first-child {
+          display: block;
+          font-family: Kanit;
+          font-size: rem(32);
+          line-height: 1;
+        }
+
+        p:last-child {
+          display: block;
+          font-size: rem(12);
+          font-weight: 700;
+          line-height: 1;
+          height: fit-content;
+          margin-bottom: rem(5);
+        }
+      }
+      .c-contctSec__telNumber {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: center;
+        gap: rem(8);
+        margin-bottom: rem(35);
+
+        p:first-child {
+          font-family: Kanit;
+          font-size: rem(32);
+          line-height: 1;
+        }
+        p:last-child {
+          font-size: rem(12);
+          font-weight: 700;
+          line-height: 1;
+        }
+      }
+      .c-contctSec__mail {
+        .c-button--a {
+          padding: rem(21) rem(39) rem(21) rem(67);
+
+          &::before {
+            display: block;
+            content: "";
+            width: rem(20);
+            height: rem(20);
+            background: url(../img/icon-mail01.svg);
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            left: rem(40);
+          }
+        }
+      }
+    }
+  }
+
+  &__catch {
+    position: absolute;
+    top: 0;
+    right: rem(20);
+    height: rclamp(86, 256, 375, 1440);
+    width: auto;
+    @include mq("tab") {
+      top: rem(31);
+      right: rem(40);
+    }
+
+    img {
+      width: 100%;
+      height: 100%;
+    }
+  }
+}
