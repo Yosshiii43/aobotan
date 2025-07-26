@@ -589,7 +589,4 @@ window.addEventListener('resize', () => {
 MicroModal.init({
   openClass: 'is-open',
   disableScroll: true,
-  disableFocus: false,
-  awaitOpenAnimation: false,
-  awaitCloseAnimation: false,
 });
