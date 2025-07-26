@@ -4,17 +4,42 @@ Top news
 @use "../../foundation/forwards" as *;
 @use "sass:math";
 
+@mixin topNews-desktop(){
+  margin-block: rem(50) rem(132);
+
+  &__title {
+    margin-bottom: rem(48);
+  }
+
+  &__list {
+    .p-topNews__item {
+      padding-block: rem(31.5) rem(31);
+
+      .modal__btn {
+        .p-topNews__btnBody{
+          width: calc(100% - rem(21) - rem(16) - rem(27));
+          .p-topNews__head {
+            margin-bottom: rem(24);
+          }
+
+          .p-topNews__text {
+            font-size: rem(16);
+          }
+        }
+
+        .p-topNews__btnIcon {
+          margin-right: rem(27);
+        }
+      }
+    }
+  }
+}
+
 .p-topNews {
   margin-block: rem(30) rem(64);
-  @include mq("tab") {
-    margin-block: rem(50) rem(132);
-  }
 
   &__title {
     margin-bottom: rem(47);
-    @include mq("tab") {
-      margin-bottom: rem(48);
-    }
   }
 
   &__list {
@@ -23,9 +48,6 @@ Top news
     .p-topNews__item {
       border-bottom: 1px solid $color-bluegray;
       padding-block: rem(15.5) rem(15);
-      @include mq("tab") {
-        padding-block: rem(31.5) rem(31);
-      }
 
       .modal__btn {
         display: flex;
@@ -46,14 +68,9 @@ Top news
         }
         .p-topNews__btnBody{
           width: calc(100% - rem(21) - rem(16));
-          @include mq("tab") {
-            width: calc(100% - rem(21) - rem(16) - rem(27));
-          }
+
           .p-topNews__head {
             margin-bottom: rem(16);
-            @include mq("tab") {
-              margin-bottom: rem(24);
-            }
 
             span {
               display: flex;
@@ -68,9 +85,6 @@ Top news
           .p-topNews__text {
             font-size: rem(14);
             font-weight: 700;
-            @include mq(tab) {
-              font-size: rem(16);
-            }
           }
           .p-topNews__text.lineHeight--single {
             line-height: 1;
@@ -83,9 +97,7 @@ Top news
           width: rem(16);
           height: rem(16);
           margin-left: rem(21);
-          @include mq("tab") {
-            margin-right: rem(27);
-          }
+
           img {
             display: block;
             width: 100%;
@@ -94,5 +106,14 @@ Top news
         }
       }
     }
+  }
+
+    /* フォールバック（コンテナ未対応ブラウザ用） */
+  @include mq("tab"){
+    @include topNews-desktop();
+  }
+
+  @include cq-pc() {
+    @include topNews-desktop();
   }
 }
