@@ -583,10 +583,17 @@ window.addEventListener('resize', () => {
 
 
 /*************************************************************************
- * モーダル
+ * モーダル（Micromodal.js使用）
  *************************************************************************/
 
 MicroModal.init({
   openClass: 'is-open',
   disableScroll: true,
+    /* モーダルの中身が2回目以降もトップから表示されるようにする */
+    onShow: (modal) => {
+      const inner = modal.querySelector('.modal__inner');
+      if (inner) {
+        inner.scrollTop = 0;
+      }
+    }
 });
