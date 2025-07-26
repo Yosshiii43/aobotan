@@ -19,7 +19,7 @@
   &__deco{
     -webkit-text-stroke-width: 1px;
     -webkit-text-stroke-color: $color-main;
-    color: $color-white;
+    color: transparent;
     font-family: Kanit;
     font-size: rclamp(72, 128, 375, 1440);
     font-style: normal;
