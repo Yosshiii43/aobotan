@@ -8,54 +8,58 @@ contact section
   padding-top: 0;
 
   &__inner {
-    padding-block: rem(32) rem(53);
-    padding-inline: rem(24) rem(20);
     border-radius: 50px 0 0 50px;
+    > div {
+      position: relative;
+      width: min(calc(100% - rem(24) - rem(40)), var(--inner-max));
+      padding-block: rem(32) rem(53);
+      margin-inline: auto rem(40);
 
-    .c-contctSec__title {
-      margin-bottom: rem(39);
-    }
-    .c-contctSec__body{
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: flex-start;
-        
-      .c-contctSec__tel {
-          flex-direction: column;
-          align-items: flex-start;
+      .c-contctSec__title {
+        margin-bottom: rem(39);
+      }
+      .c-contctSec__body{
+          display: flex;
+          flex-direction: row;
           align-items: center;
-          gap: rem(8);
-          border-bottom: none;
-          padding-top: rem(7);
-          padding-bottom: rem(7);
-          padding-right: rclamp(24, 32, 768, 1023);
-          border-right: 1px solid $color-text;
-          margin-bottom: 0;
-        @include mq("pc") {
-          padding-right: rclamp(16, 32, 1024, 1440);
-        }
-        
+          justify-content: flex-start;
+          
+        .c-contctSec__tel {
+            flex-direction: column;
+            align-items: flex-start;
+            align-items: center;
+            gap: rem(8);
+            border-bottom: none;
+            padding-top: rem(7);
+            padding-bottom: rem(7);
+            padding-right: rclamp(24, 32, 768, 1023);
+            border-right: 1px solid $color-text;
+            margin-bottom: 0;
+          @include mq("pc") {
+            padding-right: rclamp(16, 32, 1024, 1440);
+          }
+          
 
-        p:last-child {
-          margin-bottom: 0;
-          margin-left: calc(-1 * rem(5));
+          p:last-child {
+            margin-bottom: 0;
+            margin-left: calc(-1 * rem(5));
+          }
         }
-      }
-      .c-contctSec__telNumber {
-          padding-block: rem(8);
-          padding-inline: rclamp(24, 32, 768, 1023);
-          border-right: 1px solid $color-text;
-          margin-bottom: 0;
-        @include mq("pc") {
-          padding-inline: rclamp(16, 32, 1024, 1440);
+        .c-contctSec__telNumber {
+            padding-block: rem(8);
+            padding-inline: rclamp(24, 32, 768, 1023);
+            border-right: 1px solid $color-text;
+            margin-bottom: 0;
+          @include mq("pc") {
+            padding-inline: rclamp(16, 32, 1024, 1440);
+          }
         }
-      }
 
-      .c-contctSec__mail {
-        padding-left: rclamp(24, 64, 768, 1023);
-        @include mq("pc") {
-          padding-left: rclamp(24, 64, 1024, 1440);
+        .c-contctSec__mail {
+          padding-left: rclamp(24, 64, 768, 1023);
+          @include mq("pc") {
+            padding-left: rclamp(24, 64, 1024, 1440);
+          }
         }
       }
     }
@@ -63,7 +67,7 @@ contact section
 
   &__catch {
     top: rem(31);
-    right: rem(40);
+    right: 0;
   }
 }
 
@@ -71,52 +75,56 @@ contact section
   padding-top: 0;
 
   &__inner {
-    padding-block: rem(32) rem(53);
-    padding-inline: rem(24) rem(20);
     border-radius: 50px 0 0 50px;
+    > div {
+      position: relative;
+      width: min(calc(100% - rem(24) - rem(40)), var(--inner-max));
+      padding-block: rem(32) rem(53);
+      margin-inline: auto rem(40);
 
-    .c-contctSec__title {
-      margin-bottom: rem(39);
-    }
-    .c-contctSec__body{
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: flex-start;
-        
-      .c-contctSec__tel {
-          flex-direction: column;
-          align-items: flex-start;
+      .c-contctSec__title {
+        margin-bottom: rem(39);
+      }
+      .c-contctSec__body{
+          display: flex;
+          flex-direction: row;
           align-items: center;
-          gap: rem(8);
-          border-bottom: none;
-          padding-top: rem(7);
-          padding-bottom: rem(7);
-          padding-right: cqClampPx(16, 32);
-          border-right: 1px solid $color-text;
-          margin-bottom: 0;
+          justify-content: flex-start;
+          
+        .c-contctSec__tel {
+            flex-direction: column;
+            align-items: flex-start;
+            align-items: center;
+            gap: rem(8);
+            border-bottom: none;
+            padding-top: rem(7);
+            padding-bottom: rem(7);
+            padding-right: cqClampPx(16, 32);
+            border-right: 1px solid $color-text;
+            margin-bottom: 0;
 
-        p:last-child {
-          margin-bottom: 0;
-          margin-left: calc(-1 * rem(5));
+          p:last-child {
+            margin-bottom: 0;
+            margin-left: calc(-1 * rem(5));
+          }
         }
-      }
-      .c-contctSec__telNumber {
-          padding-block: rem(8);
-          padding-inline: cqClampPx(16, 32);
-          border-right: 1px solid $color-text;
-          margin-bottom: 0;
-      }
+        .c-contctSec__telNumber {
+            padding-block: rem(8);
+            padding-inline: cqClampPx(16, 32);
+            border-right: 1px solid $color-text;
+            margin-bottom: 0;
+        }
 
-      .c-contctSec__mail {
-        padding-left: cqClampPx(24, 64);
+        .c-contctSec__mail {
+          padding-left: cqClampPx(24, 64);
+        }
       }
     }
   }
 
   &__catch {
     top: rem(31);
-    right: rem(40);
+    right: 0;
   }
 }
 
@@ -125,70 +133,72 @@ contact section
   padding-top: rem(28);
 
   &__inner {
-    padding-block: rem(28) rem(41);
-    padding-inline: rem(20);
     background-color: $color-lightgray;
+    > div {
+      padding-block: rem(28) rem(41);
+      margin-inline: rem(20);
 
-    .c-contctSec__title {
-      margin-bottom: rem(47);
-    }
-
-    .c-contctSec__body{
-      .c-contctSec__tel {
-        display: flex;
-        flex-direction: row;
-        align-items: flex-end;
-        justify-content: flex-start;
-        gap: rem(16);
-        padding-bottom: rem(24);
-        border-bottom: 1px solid $color-text;
-        margin-bottom: rem(24);
-        
-        p:first-child {
-          display: block;
-          font-family: Kanit;
-          font-size: rem(32);
-          line-height: 1;
-        }
-
-        p:last-child {
-          display: block;
-          font-size: rem(12);
-          font-weight: 700;
-          line-height: 1;
-          height: fit-content;
-          margin-bottom: rem(5);
-        }
+      .c-contctSec__title {
+        margin-bottom: rem(47);
       }
 
-      .c-contctSec__telNumber {
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-        justify-content: center;
-        gap: rem(8);
-        margin-bottom: rem(35);
-
-        p:first-child {
-          font-family: Kanit;
-          font-size: rem(32);
-          line-height: 1;
-        }
-        p:last-child {
-          font-size: rem(12);
-          font-weight: 700;
-          line-height: 1;
-        }
-      }
-      .c-contctSec__mail {
-        .c-button--a {
+      .c-contctSec__body{
+        .c-contctSec__tel {
           display: flex;
           flex-direction: row;
-          align-items: center;
+          align-items: flex-end;
           justify-content: flex-start;
+          gap: rem(16);
+          padding-bottom: rem(24);
+          border-bottom: 1px solid $color-text;
+          margin-bottom: rem(24);
+          
+          p:first-child {
+            display: block;
+            font-family: Kanit;
+            font-size: rem(32);
+            line-height: 1;
+          }
+
+          p:last-child {
+            display: block;
+            font-size: rem(12);
+            font-weight: 700;
+            line-height: 1;
+            height: fit-content;
+            margin-bottom: rem(5);
+          }
+        }
+
+        .c-contctSec__telNumber {
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+          justify-content: center;
           gap: rem(8);
-          width: fit-content;
-          padding: rem(19) rem(39) rem(19) rem(39);
+          margin-bottom: rem(35);
+
+          p:first-child {
+            font-family: Kanit;
+            font-size: rem(32);
+            line-height: 1;
+          }
+          p:last-child {
+            font-size: rem(12);
+            font-weight: 700;
+            line-height: 1;
+          }
+        }
+        .c-contctSec__mail {
+          .c-button--a {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: flex-start;
+            gap: rem(8);
+            width: fit-content;
+            padding: rem(19) rem(39) rem(19) rclamp(20, 39, 320, 340);
+          }
         }
       }
     }
