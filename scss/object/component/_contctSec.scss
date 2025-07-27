@@ -6,6 +6,7 @@ contact section
 
 @mixin contactSec-tablet-static(){
   padding-top: 0;
+  margin-bottom: rem(84);
 
   &__inner {
     border-radius: 50px 0 0 50px;
@@ -73,6 +74,7 @@ contact section
 
 @mixin contactSec-tablet-fluid(){
   padding-top: 0;
+  margin-bottom: rem(84);
 
   &__inner {
     border-radius: 50px 0 0 50px;
