@@ -79,3 +79,35 @@ $spDesignSize: 375;
 //.example {
 //  font-size: rclamp(24, 64, 375, 1440);
 //}
+
+
+///コンテナクエリ用 min-max
+// 単位をはぎ取る
+@function to-num($v) {
+  @return if(unitless($v), $v, math.div($v, 1px));
+}
+
+/*  744px→$minPx, 1160px→$maxPx を px で返す clamp()  */
+@function cqClampPx(
+  $minPx, $maxPx,
+  $minW: 744px, $maxW: 1160px
+) {
+  $min   : to-num($minPx);
+  $max   : to-num($maxPx);
+  $minWn : to-num($minW);
+  $maxWn : to-num($maxW);
+
+  $slope : ($max - $min) / ($maxWn - $minWn);    // unitless
+  $base  : $min - $slope * $minWn;               // unitless
+  $k     : $slope * 100;                         // unitless (px per cqw)
+
+  @return clamp(
+    #{$min}px,
+    calc(#{$base}px + #{$k}cqw),
+    #{$max}px
+  );
+}
+// px clamp → rem に変換
+@function pxClampToRem($expr) {
+  @return calc( (#{$expr}) / 1px * 1rem / 16 );
+}

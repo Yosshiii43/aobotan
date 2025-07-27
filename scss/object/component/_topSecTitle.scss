@@ -21,10 +21,13 @@
     -webkit-text-stroke-color: $color-main;
     color: transparent;
     font-family: Kanit;
-    font-size: rclamp(72, 128, 375, 1440);
+    font-size: rclamp(64, 72, 320, 375);
     font-style: normal;
     font-weight: 700;
     line-height: 1;
     text-transform: uppercase;
+    @include mq("tab") {
+      font-size: rclamp(98, 128, 768, 1440);
+    }
   }
 }
