@@ -5,7 +5,7 @@ Top news
 @use "sass:math";
 
 @mixin topNews-desktop(){
-    margin-block: rem(50) rem(132);
+  padding-block: rem(50) rem(132);
 
   &__title {
     margin-bottom: rem(48);
@@ -36,7 +36,7 @@ Top news
 }
 
 .p-topNews {
-  margin-block: rem(30) rem(36);
+  padding-block: rem(30) rem(36);
 
   &__title {
     margin-bottom: rem(47);
