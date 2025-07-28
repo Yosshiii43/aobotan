@@ -189,7 +189,7 @@ hero
     @include hero-desktop();
   }
 
-  @include cq-pc() {
+  @include cq(main, 744px) {
     @include hero-desktop();
   }
 }

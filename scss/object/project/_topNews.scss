@@ -113,7 +113,7 @@ Top news
     @include topNews-desktop();
   }
 
-  @include cq-pc() {
+  @include cq(main, 744px) {
     @include topNews-desktop();
   }
 }

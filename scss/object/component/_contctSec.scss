@@ -224,7 +224,7 @@ contact section
     @include contactSec-tablet-static();
   }
 
-  @include cq-pc() {
+  @include cq(main, 744px) {
     @include contactSec-tablet-fluid();
   }
 }

@@ -115,7 +115,7 @@ Top about
     @include topAbout-desktop();
   }
 
-  @include cq-pc() {
+  @include cq(main, 744px) {
     @include topAbout-desktop();
   }
 }

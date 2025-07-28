@@ -195,7 +195,7 @@ footer
     @include footer-tabAndPC();
   }
 
-  @include cq-pc() {
+  @include cq(footer, 744px) {
     @include footer-tabAndPC();
   }
 }

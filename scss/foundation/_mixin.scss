@@ -30,16 +30,20 @@ $breakpoints: (
   }
 }
 
-///コンテナクエリ
-$CQ_PC: 744px; // = 1024 - 280（固定）
-
-@mixin cq-pc($cq: $CQ_PC) {
+/// コンテナクエリ共通
+@mixin cq($container-name, $min-width) {
   @supports (container-type: inline-size) {
-    @container main (min-width: #{$cq}) {
+    @container #{$container-name} (min-width: #{$min-width}) {
       @content;
     }
   }
 }
+//使用例
+//@include cq(main, 744px) {
+//  .p-section {
+//    font-size: 1.4rem;
+//  }
+//}
 
 ///pxからvwを算出
 $pcDesignSize: 1440;
