@@ -125,16 +125,15 @@ footer
           }
         }
 
-        li.p-footer__break {
+        li.p-footer__break { //強制改行のためのli要素
           flex-basis: 100%;
           height: 0;
           margin: 0;
           padding: 0;
-          border: none;
           font-size: 0;
           line-height: 0;
           visibility: hidden;
-          display: none; // 初期は非表示
+          display: none;
         }
 
         li:last-child {
