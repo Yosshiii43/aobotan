@@ -1,0 +1,93 @@
+/******************************
+footer
+******************************/
+@use "../../foundation/forwards" as *;
+@use "sass:math";
+
+.p-footer {
+  .l-inner {
+    > div {
+      @include mq("tab") {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+      }
+      .p-footer__head {
+        padding-block: rem(24);
+
+        .p-footer__icon {
+          display: block;
+          width: rem(222);
+          height: rem(133);
+          margin-inline: auto;
+          margin-bottom: rem(36);
+          @include mq("tab") {
+            margin-inline: 0 auto;
+          }
+        }
+
+        .p-footer__info {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          gap: rem(20);
+          margin-bottom: rem(68);
+          @include mq("tab") {
+            align-items: flex-start;
+          }
+          p {
+            font-size: rem(12);
+            line-height: 1;
+            text-align: center;
+            @include mq("tab") {
+              font-size: rem(16);
+              text-align: start;
+              width: rem(441);
+            }
+          }
+
+          .p-footer__address {
+            display: flex;
+            flex-direction: column;
+            gap: rem(20);
+          }
+          .p-footer__businessHours {
+            display: flex;
+            flex-direction: row;
+            gap: rem(16);
+          }
+          .p-footer__holiday {
+            display: flex;
+            flex-direction: row;
+            gap: rem(16);
+          }
+        }
+      }
+      .p-footer__nav {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: rem(32);
+        margin-bottom: rem(58);
+        @include mq("tab") {
+          flex-direction: row;
+          justify-content: flex-start;
+          flex-wrap: wrap;
+        }
+
+        li {
+          font-weight: 700;
+          line-height: 1;
+          text-align: center;
+        }
+      }
+    }
+  }
+  .p-footer__copyright{
+    font-size: rem(12);
+    text-align: center;
+  }
+}
+

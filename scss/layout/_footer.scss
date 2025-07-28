@@ -4,7 +4,4 @@ l-footer
 @use "../foundation/forwards" as *;
 
 .l-footer {
-  @include mq("pc") {
-    margin-left: rem(280);
-  }
 }
