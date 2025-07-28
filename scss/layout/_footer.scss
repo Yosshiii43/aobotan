@@ -4,4 +4,7 @@ l-footer
 @use "../foundation/forwards" as *;
 
 .l-footer {
+  container-type: inline-size;
+  container-name: footer;
+  min-width: 0;
 }
