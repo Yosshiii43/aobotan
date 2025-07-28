@@ -1,26 +1,13 @@
-<!DOCTYPE html>
-<html lang="ja">
-<head prefix="og: https://ogp.me/ns#">
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1.0">
-  <meta name="description" content="大阪府大阪市に拠点をおく青牡丹工務店は、丁寧な家造りで理想を現実にします。住宅建築からリフォームまで、高品質なサービスと経験豊富なスタッフがお客様のニーズに応えます。お気軽にご相談ください。" >
-  <meta name="robots" content="noindex">
-  <title>青牡丹工務店 | 大阪市北区の住宅建築・リフォーム・公共事業なら青牡丹工務店</title>
-  <meta property="og:url" content="https://aobotan.yosshiii.site/">
-  <meta property="og:type" content="website">
-  <meta property="og:title" content="青牡丹工務店">
-  <meta property="og:description" content="大阪府大阪市に拠点をおく青牡丹工務店は、丁寧な家造りで理想を現実にします。住宅建築からリフォームまで、高品質なサービスと経験豊富なスタッフがお客様のニーズに応えます。お気軽にご相談ください。">
-  <meta property="og:site_name" content="青牡丹工務店">
-  <meta property="og:image" content="https://aobotan.yosshiii.site/img/img_ogp.png">
-  <link rel="icon" href="/img/favicon.png" type="/image/png">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;700&family=Zen+Kaku+Gothic+New:wght@400;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
-  <link rel="stylesheet" href="/css/style.css">
-</head>
+<?php
+$pageTitle = '青牡丹工務店 | 大阪市北区の住宅建築・リフォーム・公共事業なら青牡丹工務店';
+$pageDescription = '大阪府大阪市に拠点をおく青牡丹工務店は、丁寧な家造りで理想を現実にします。住宅建築からリフォームまで、高品質なサービスと経験豊富なスタッフがお客様のニーズに応えます。お気軽にご相談ください。';
+$ogImage = 'https://aobotan.yosshiii.site/img/img_ogp.png';
+$ogUrl = 'https://aobotan.yosshiii.site/';
+$noIndex = true;
+include 'inc/head.php';
+?>
 
-<body class="exp-grid">
+<body>
   <div class="c-loader" id="logo_loader">
     <div class="c-loader__inner">
       <img src="img/icon_loaderLogo01.svg" alt="" aria-hidden="true">
@@ -28,62 +15,11 @@
   </div>
 
   <div class="l-shell">
-    <header class="l-aside p-header" id="js-header">
-      <div class="p-header__inner">
-        <h1 class="p-header__title"><a href="/"><img src="./img/img_logo.svg" alt="青牡丹工務店" width="200" height="121"></a></h1>
-        <div class="p-nav" id="js-navWrapper" aria-hidden="true">
-          <nav id="global-nav" aria-label="グローバルメニュー">
-            <ul class="p-nav__list">
-              <li class="p-nav__item"><a class="p-nav__link" href="/">トップページ</a></li>
-              <li class="p-nav__item has-child">
-                <a class="p-nav__link" 
-                   href="/about"
-                   aria-haspopup="true"
-                   aria-expanded="false">私達について</a>
-                <ul class="p-nav__sublist" aria-label="私達についてのサブメニュー">
-                  <li class="p-nav__sublistInner">
-                    <ul class="p-nav__sublistBody">
-                      <li class="p-nav__subitem"><a class="p-nav__link" href="/about/#philosophy">経営理念</a></li>
-                      <li class="p-nav__subitem"><a class="p-nav__link" href="/about/#profile">会社概要</a></li>
-                      <li class="p-nav__subitem"><a class="p-nav__link" href="/about/#initiatives">安全への取り組み</a></li>
-                    </ul>
-                  </li>
-                </ul>
-              </li>
-              <li class="p-nav__item has-child">
-                <a class="p-nav__link"
-                   href="/service"
-                   aria-haspopup="true"
-                   aria-expanded="false" >事業内容</a>
-                <ul class="p-nav__sublist" aria-label="事業内容のサブメニュー">
-                  <li class="p-nav__sublistInner">
-                    <ul class="p-nav__sublistBody">
-                      <li class="p-nav__subitem"><a class="p-nav__link" href="/service/#housing">住宅建築・リフォーム</a></li>
-                      <li class="p-nav__subitem"><a class="p-nav__link" href="/service/#business">法人新築・リフォーム</a></li>
-                      <li class="p-nav__subitem"><a class="p-nav__link" href="/service/#public">公共工事</a></li>
-                    </ul>
-                  </li>
-                </ul>
-              </li>
-              <li class="p-nav__item"><a class="p-nav__link" href="#news">お知らせ</a></li>
-              <li class="p-nav__item p-nav__itemContact"><a class="p-nav__link" href="/contact">お問い合わせ</a></li>
-            </ul>
-          </nav>
-          <p class="p-nav__copyright">&copy; AOBOTAN INC.</p>
-        </div>
-        <button class="c-hamburger" id="js-hamburger"
-                aria-controls="global-nav" 
-                aria-expanded="false"
-                aria-label="メニューを開閉">
-          <span class="c-hamburger__bar"></span>
-          <span class="c-hamburger__bar"></span>
-          <span class="c-hamburger__bar"></span>
-        </button>
-      </div><!-- .l-inner -->
-    </header>
+    <!-- 全ページ共通のヘッダー -->
+    <?php include 'inc/header.php'; ?>
 
     <main class="l-main">
-
+      <!-- コンテンツ -->
       <div class="p-hero">
           <div class="p-hero__bg"></div>
           <div class="p-hero__body">
@@ -365,49 +301,4 @@
 
       </section><!-- .c-contactSec -->
 
-    </main>
-
-    <footer class="l-footer p-footer">
-      <div class="l-inner">
-        <div>
-          <div class="p-footer__head">
-            <img class="p-footer__icon" src="img/img_logo.svg" alt="青牡丹工務店" width="200" height="121">
-            <div class="p-footer__info">
-              <p class="p-footer__address">
-                <span>〒000-0000</span>
-                <span>大阪府大阪市中央区北区南町5-6-7</span>
-              </p>
-              <p class="p-footer__businessHours">
-                <span>営業時間</span><span>10:00~20:00</span>
-              </p>
-              <p class="p-footer__holiday">
-                <span>定休日</span><span>日曜日、祝日、年末年始（12月31日から1月3日まで）</span>
-              </p>
-            </div>
-          </div>
-          <ul class="p-footer__nav">
-            <li><a href="/">トップページ</a></li>
-            <li><a href="/about">私たちについて</a></li>
-            <li><a href="/about/#philosophy">経営理念</a></li>
-            <li class="p-footer__break" aria-hidden="true"></li>
-            <li><a href="/about/#profile">会社概要</a></li>
-            <li><a href="/about/#initiatives">安全への取り組み</a></li>
-            <li><a href="/service">事業内容</a></li>
-            <li><a href="/service/#housing">住宅建築・リフォーム</a></li>
-            <li><a href="/service/#business">法人新築・リフォーム</a></li>
-            <li><a href="/service/#public">公共工事</a></li>
-            <li><a href="#news">お知らせ</a></li>
-            <li><a href="/contact">お問い合わせ</a></li>
-          </ul>
-        </div>
-        <p class="p-footer__copyright">&copy; AOBOTAN INC.</p>
-      </div>
-    </footer>
-  </div>
-
-  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-  <script src="https://unpkg.com/micromodal/dist/micromodal.min.js"></script>
-  <script src="/js/swiper.js" defer></script>
-  <script src="/js/main.js" defer></script>
-</body>
-</html>
+<?php include 'inc/footer.php'; ?>
