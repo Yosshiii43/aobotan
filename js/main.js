@@ -597,3 +597,32 @@ MicroModal.init({
       }
     }
 });
+
+/*************************************************************************
+ * footer 
+ *************************************************************************/
+function updateFooterBreakVisibility() {
+  const nav = document.querySelector('.p-footer__nav');
+  const breakEl = nav?.querySelector('.p-footer__break');
+  if (!nav || !breakEl) return;
+
+  const items = [...nav.children].filter(el => el !== breakEl);
+  if (items.length < 3) {
+    breakEl.style.display = 'none';
+    return;
+  }
+
+  const navWidth = nav.clientWidth;
+  const gapX = 24; // 横gapと一致させる
+  const width =
+    items.slice(0, 3).reduce((sum, el) => sum + el.getBoundingClientRect().width, 0)
+    + gapX * 2;
+
+  breakEl.style.display = width <= navWidth ? 'block' : 'none';
+}
+
+window.addEventListener('DOMContentLoaded', updateFooterBreakVisibility);
+window.addEventListener('resize', () => {
+  clearTimeout(window._footerBreakTimer);
+  window._footerBreakTimer = setTimeout(updateFooterBreakVisibility, 100);
+});
