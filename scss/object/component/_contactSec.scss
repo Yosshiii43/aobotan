@@ -16,16 +16,16 @@ contact section
       padding-block: rem(32) rem(53);
       margin-inline: auto rem(40);
 
-      .c-contctSec__title {
+      .c-contactSec__title {
         margin-bottom: rem(39);
       }
-      .c-contctSec__body{
+      .c-contactSec__body{
           display: flex;
           flex-direction: row;
           align-items: center;
           justify-content: flex-start;
           
-        .c-contctSec__tel {
+        .c-contactSec__tel {
             flex-direction: column;
             align-items: flex-start;
             align-items: center;
@@ -46,7 +46,7 @@ contact section
             margin-left: calc(-1 * rem(5));
           }
         }
-        .c-contctSec__telNumber {
+        .c-contactSec__telNumber {
             padding-block: rem(8);
             padding-inline: rclamp(24, 32, 768, 1023);
             border-right: 1px solid $color-text;
@@ -56,7 +56,7 @@ contact section
           }
         }
 
-        .c-contctSec__mail {
+        .c-contactSec__mail {
           padding-left: rclamp(24, 64, 768, 1023);
           @include mq("pc") {
             padding-left: rclamp(24, 64, 1024, 1440);
@@ -84,16 +84,16 @@ contact section
       padding-block: rem(32) rem(53);
       margin-inline: auto rem(40);
 
-      .c-contctSec__title {
+      .c-contactSec__title {
         margin-bottom: rem(39);
       }
-      .c-contctSec__body{
+      .c-contactSec__body{
           display: flex;
           flex-direction: row;
           align-items: center;
           justify-content: flex-start;
           
-        .c-contctSec__tel {
+        .c-contactSec__tel {
             flex-direction: column;
             align-items: flex-start;
             align-items: center;
@@ -110,14 +110,14 @@ contact section
             margin-left: calc(-1 * rem(5));
           }
         }
-        .c-contctSec__telNumber {
+        .c-contactSec__telNumber {
             padding-block: rem(8);
             padding-inline: cqClampPx(16, 32);
             border-right: 1px solid $color-text;
             margin-bottom: 0;
         }
 
-        .c-contctSec__mail {
+        .c-contactSec__mail {
           padding-left: cqClampPx(24, 64);
         }
       }
@@ -140,12 +140,12 @@ contact section
       padding-block: rem(28) rem(41);
       margin-inline: rem(20);
 
-      .c-contctSec__title {
+      .c-contactSec__title {
         margin-bottom: rem(47);
       }
 
-      .c-contctSec__body{
-        .c-contctSec__tel {
+      .c-contactSec__body{
+        .c-contactSec__tel {
           display: flex;
           flex-direction: row;
           align-items: flex-end;
@@ -172,7 +172,7 @@ contact section
           }
         }
 
-        .c-contctSec__telNumber {
+        .c-contactSec__telNumber {
           display: flex;
           flex-direction: column;
           align-items: flex-start;
@@ -191,7 +191,7 @@ contact section
             line-height: 1;
           }
         }
-        .c-contctSec__mail {
+        .c-contactSec__mail {
           .c-button--a {
             display: flex;
             flex-direction: row;
