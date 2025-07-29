@@ -21,7 +21,7 @@
           </div>
           <ul class="p-footer__nav">
             <li><a href="/">トップページ</a></li>
-            <li><a href="/about">私たちについて</a></li>
+            <li><a href="/about">私達について</a></li>
             <li><a href="/about/#philosophy">経営理念</a></li>
             <li class="p-footer__break" aria-hidden="true"></li>
             <li><a href="/about/#profile">会社概要</a></li>
