@@ -30,7 +30,7 @@
             <li><a href="/service/#housing">住宅建築・リフォーム</a></li>
             <li><a href="/service/#business">法人新築・リフォーム</a></li>
             <li><a href="/service/#public">公共工事</a></li>
-            <li><a href="#news">お知らせ</a></li>
+            <li><a href="/#news">お知らせ</a></li>
             <li><a href="/contact">お問い合わせ</a></li>
           </ul>
         </div>

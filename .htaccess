@@ -1,3 +1,0 @@
-<FilesMatch "favicon\.(ico|png)$">
-  Require all granted
-</FilesMatch>

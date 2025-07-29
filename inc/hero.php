@@ -1,8 +1,8 @@
-      <div class="p-hero">
-          <div class="p-hero__bg"></div>
-          <div class="p-hero__body">
-            <div class="p-hero__bodyInner">
-              <p class="p-hero__img"><img src="/img/img_aboutHero01.jpg" alt=""></p>
+      <div class="c-hero">
+          <div class="c-hero__bg"></div>
+          <div class="c-hero__body">
+            <div class="c-hero__bodyInner">
+              <p class="c-hero__img"><img src="<?= htmlspecialchars($heroImage ?? '') ?>" alt=""></p>
             </div>
           </div>
-      </div> <!-- .p-hero -->
+      </div> <!-- .c-hero -->

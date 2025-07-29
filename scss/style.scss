@@ -22,11 +22,12 @@
 @use "object/component/list";
 @use "object/component/newsHead";
 @use "object/component/contctSec";
+@use "object/component/hero" as chero;
 
 //project
 @use "object/project/header" as ph;
 @use "object/project/nav";
-@use "object/project/hero";
+@use "object/project/hero" as phero;
 @use "object/project/topAbout";
 @use "object/project/topService";
 @use "object/project/topNews";

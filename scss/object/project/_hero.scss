@@ -193,11 +193,3 @@ hero
     @include hero-desktop();
   }
 }
-
-@supports (container-type: inline-size) {
-  @container main (min-width: 768px) {
-    .p-hero{
-      @include hero-desktop();
-    }
-  }
-}

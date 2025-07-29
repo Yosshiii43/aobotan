@@ -35,7 +35,7 @@
               </li>
             </ul>
           </li>
-          <li class="p-nav__item"><a class="p-nav__link" href="#news">お知らせ</a></li>
+          <li class="p-nav__item"><a class="p-nav__link" href="/#news">お知らせ</a></li>
           <li class="p-nav__item p-nav__itemContact"><a class="p-nav__link" href="/contact">お問い合わせ</a></li>
         </ul>
       </nav>

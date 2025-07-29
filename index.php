@@ -1,7 +1,7 @@
 <?php
 $pageTitle = '青牡丹工務店 | 大阪市北区の住宅建築・リフォーム・公共事業なら青牡丹工務店';
 $pageDescription = '大阪府大阪市に拠点をおく青牡丹工務店は、丁寧な家造りで理想を現実にします。住宅建築からリフォームまで、高品質なサービスと経験豊富なスタッフがお客様のニーズに応えます。お気軽にご相談ください。';
-$ogImage = 'https://aobotan.yosshiii.site/img/img_ogp.png';
+$ogImage = '/img/img_ogp.png';
 $ogUrl = 'https://aobotan.yosshiii.site/';
 $noIndex = true;
 include $_SERVER['DOCUMENT_ROOT'] . '/inc/head.php';
@@ -19,16 +19,16 @@ include $_SERVER['DOCUMENT_ROOT'] . '/inc/head.php';
     <?php include $_SERVER['DOCUMENT_ROOT'] . '/inc/header.php'; ?>
 
     <main class="l-main">
-      <!-- コンテンツ -->
+      <!-- ヒーロー -->
       <div class="p-hero">
           <div class="p-hero__bg"></div>
           <div class="p-hero__body">
             <div class="p-hero__bodyInner">
-              <p class="p-hero__img p-hero__img01"><img src="img/img_hero01.svg" alt=""></p>
-              <p class="p-hero__img p-hero__img02"><img src="img/img_hero02.svg" alt=""></p>
-              <p class="p-hero__img p-hero__img03"><img src="img/img_hero03.svg" alt=""></p>
-              <p class="p-hero__img p-hero__img04"><img src="img/img_hero04.svg" alt=""></p>
-              <p class="p-hero__img p-hero__img05"><img src="img/img_hero05.svg" alt=""></p>
+              <p class="p-hero__img p-hero__img01"><img src="/img/img_hero01.svg" alt=""></p>
+              <p class="p-hero__img p-hero__img02"><img src="/img/img_hero02.svg" alt=""></p>
+              <p class="p-hero__img p-hero__img03"><img src="/img/img_hero03.svg" alt=""></p>
+              <p class="p-hero__img p-hero__img04"><img src="/img/img_hero04.svg" alt=""></p>
+              <p class="p-hero__img p-hero__img05"><img src="/img/img_hero05.svg" alt=""></p>
               <div class="p-hero__catchCopy">
                 <div class="p-hero__catchCopyPrimary c-fadeInTime2000ms">
                   <p>理想を、カタチに</p>
@@ -45,6 +45,7 @@ include $_SERVER['DOCUMENT_ROOT'] . '/inc/head.php';
           </div>
       </div> <!-- .p-hero -->
 
+      <!-- コンテンツ -->
       <section class="p-topAbout">
         <div class="p-topAbout__head">
           <div class="swiper c-swiper">
@@ -195,7 +196,7 @@ include $_SERVER['DOCUMENT_ROOT'] . '/inc/head.php';
           <div id="modal-1" class="modal" aria-hidden="true">
             <div class="modal__overlay" tabindex="-1" data-micromodal-close>
               <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-1-title" >
-                <button class="modal__close" aria-label="Close modal" data-micromodal-close><img src="../img/icon_close01.svg" alt=""></button>
+                <button class="modal__close" aria-label="Close modal" data-micromodal-close><img src="/img/icon_close01.svg" alt=""></button>
                 <div class="modal__inner" id="modal-1-content">
                   <div class="modal__head c-newsHead"><span>イベント情報</span><time datetime="2024-06-03">2024.06.03</time></div>
                   <h3  id="modal-1-title" class="modal__title">住宅設計相談会を実施します。弊社建築士と将来の家造りを真剣に考えませんか？</h3>
@@ -222,7 +223,7 @@ include $_SERVER['DOCUMENT_ROOT'] . '/inc/head.php';
           <div id="modal-2" class="modal" aria-hidden="true">
             <div class="modal__overlay" tabindex="-1" data-micromodal-close>
               <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-2-title" >
-                <button class="modal__close" aria-label="Close modal" data-micromodal-close><img src="../img/icon_close01.svg" alt=""></button>
+                <button class="modal__close" aria-label="Close modal" data-micromodal-close><img src="/img/icon_close01.svg" alt=""></button>
                 <div class="modal__inner" id="modal-2-content">
                   <div class="modal__head c-newsHead"><span>イベント情報</span><time datetime="2024-05-23">2024.05.23</time></div>
                   <h3 id="modal-2-title" class="modal__title">安全管理研修を実施しました！</h3>
@@ -248,7 +249,7 @@ include $_SERVER['DOCUMENT_ROOT'] . '/inc/head.php';
           <div id="modal-3" class="modal" aria-hidden="true">
             <div class="modal__overlay" tabindex="-1" data-micromodal-close>
               <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-3-title" >
-                <button class="modal__close" aria-label="Close modal" data-micromodal-close><img src="../img/icon_close01.svg" alt=""></button>
+                <button class="modal__close" aria-label="Close modal" data-micromodal-close><img src="/img/icon_close01.svg" alt=""></button>
                 <div class="modal__inner" id="modal-3-content">
                   <div class="modal__head c-newsHead"><span>イベント情報</span><time datetime="2024-05-01">2024.05.01</time></div>
                   <h3 id="modal-3-title" class="modal__title">ホームページをリニューアルしました！！</h3>
@@ -294,7 +295,7 @@ include $_SERVER['DOCUMENT_ROOT'] . '/inc/head.php';
               </div>
             </div>
             <div class="c-contactSec__catch">
-              <img src="img/img_contact01.svg" alt="">
+              <img src="/img/img_contact01.svg" alt="">
             </div><!-- .p-topService__catch -->
           </div>
         </div><!-- .c-contactSec__inner -->
