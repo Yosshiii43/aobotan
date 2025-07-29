@@ -200,6 +200,10 @@ contact section
             gap: rem(8);
             width: fit-content;
             padding: rem(19) rem(39) rem(19) rclamp(20, 39, 320, 340);
+            
+            &:hover img{
+              filter: brightness(0) invert(1);
+            }
           }
         }
       }
