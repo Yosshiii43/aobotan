@@ -6,7 +6,6 @@
 
 @mixin c-hero-desktop(){
   padding-top: 0;
-  padding-bottom: rem(76);
 
   .c-hero__bg{
     display: block;
@@ -14,7 +13,7 @@
     top: calc(-1 * rem(40));
     right: 0;
     width: pc-vw(727);
-    aspect-ratio: 1 / 1;
+    aspect-ratio: 727 / 563;
     background-color: $color-main;
     z-index: 0;
   }
@@ -25,19 +24,17 @@
     margin-right: rem(40);
     width: calc(100% - rem(40));
     height: auto;
-    aspect-ratio: 1120 / 873;
-    border-radius: 50px;
+    aspect-ratio: 1120 / 661;
+    
+    img{
+      border-radius: 50px;
+    }
   }
-
-  /* 画像・テキスト位置のPC用 */
-  .c-hero__img05{ width: math.div(162,1120)*100%; top: math.div(390,873)*100%;     left: math.div(902,1120)*100%; }
-
 }
 
 .c-hero {
   position: relative;
   padding-top: rem(23);
-  padding-bottom: rem(73);
 
   &__bg {
     display: none;
@@ -46,26 +43,14 @@
   &__body {
     position: relative;
     width: calc(100% - rem(10));
-    height: sp-vw(589);
-    margin-left: rem(10);
-    background-color: $color-lightgray;
-    border-radius: 10px 0 0 10px;
+    margin-inline: rem(10) auto;
     z-index: 1;  // bg の上
-
-    &Inner {
-      position: relative;
-      width: 100%;
-      height: 100%;
-    }
-  }
-
-  .c-hero__img {
-    position: absolute;
 
     img {
       width: 100%;
       height: 100%;
       object-fit: cover;
+      border-radius: 10px 0 0 10px;
     }
   }
 
