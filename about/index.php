@@ -15,12 +15,22 @@ include $_SERVER['DOCUMENT_ROOT'] . '/inc/head.php';
 
   <div class="l-shell">
     <!-- 全ページ共通のヘッダー -->
-    <?php include $_SERVER['DOCUMENT_ROOT'] . '/inc/header.php'; ?>
+    <?php
+    $is_top = false;
+    include $_SERVER['DOCUMENT_ROOT'] . '/inc/header.php';
+    ?>
 
     <main class="l-main">
       <!-- ヒーロー -->
       <?php include $_SERVER['DOCUMENT_ROOT'] . '/inc/hero.php'; ?>
 
       <!-- コンテンツ -->
+       <div class="c-mainContainer">
+        <div class="l-inner">
+          <section class="c-headeSection">
+            <h1>私達について</h1>
+          </section>
+        </div>
+      </div>
 
 <?php include $_SERVER['DOCUMENT_ROOT'] . '/inc/footer.php'; ?>

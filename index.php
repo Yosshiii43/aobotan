@@ -16,7 +16,10 @@ include $_SERVER['DOCUMENT_ROOT'] . '/inc/head.php';
 
   <div class="l-shell">
     <!-- 全ページ共通のヘッダー -->
-    <?php include $_SERVER['DOCUMENT_ROOT'] . '/inc/header.php'; ?>
+    <?php
+    $is_top = true;
+    include $_SERVER['DOCUMENT_ROOT'] . '/inc/header.php';
+    ?>
 
     <main class="l-main">
       <!-- ヒーロー -->
