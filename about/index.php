@@ -5,6 +5,9 @@ $ogImage = '/img/img_ogp.png';
 $ogUrl = 'https://aobotan.yosshiii.site/about/';
 $noIndex = true;
 $heroImage = '/img/img_aboutHero01.jpg';
+$heroImageAlt = '工務店の室内';
+$heroImageWidth ='2240';
+$heroImageHeight ='1322';
 include $_SERVER['DOCUMENT_ROOT'] . '/inc/head.php';
 ?>
 
