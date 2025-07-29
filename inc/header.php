@@ -1,6 +1,6 @@
 <header class="l-aside p-header" id="js-header">
   <div class="p-header__inner">
-    <h1 class="p-header__title"><a href="/"><img src="./img/img_logo.svg" alt="青牡丹工務店" width="200" height="121"></a></h1>
+    <h1 class="p-header__title"><a href="/"><img src="/img/img_logo.svg" alt="青牡丹工務店" width="200" height="121"></a></h1>
     <div class="p-nav" id="js-navWrapper" aria-hidden="true">
       <nav id="global-nav" aria-label="グローバルメニュー">
         <ul class="p-nav__list">

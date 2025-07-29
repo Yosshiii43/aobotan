@@ -5,7 +5,7 @@
       <div class="l-inner">
         <div>
           <div class="p-footer__head">
-            <img class="p-footer__icon" src="img/img_logo.svg" alt="青牡丹工務店" width="200" height="121">
+            <img class="p-footer__icon" src="/img/img_logo.svg" alt="青牡丹工務店" width="200" height="121">
             <div class="p-footer__info">
               <p class="p-footer__address">
                 <span>〒000-0000</span>
