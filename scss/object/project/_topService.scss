@@ -88,7 +88,7 @@ Top service
 
     &__catch {
     top: rem(calc(93 + 85));
-    left: rem(858);
+    right: calc(math.div(178, 1160) * 100%);
     width: calc(math.div(124, 1160) * 100%);
   }
 }
@@ -177,7 +177,7 @@ Top service
 
   &__catch {
     top: rem(calc(93 + 85));
-    left: rem(858);
+    right: calc(math.div(178, 1160) * 100%);
     width: calc(math.div(124, 1160) * 100%);
   }
 }
@@ -293,7 +293,7 @@ Top service
   &__catch {
     position: absolute;
     top:  rem(4);
-    left: rem(296);
+    right: calc(math.div(20, 375) * 100%);
     width: calc(math.div(69, 375) * 100%);
     height:auto;
     z-index:2;
