@@ -28,12 +28,50 @@
     transform: translateY(-50%);
     right: rem(19);
   }
-  &:hover {
+  &:hover,
+  &:focus,
+  &:focus-visible {
+    color: $color-white;
+    background-color: $color-text;
+    border-color: $color-text;
+    &::after {
+      background-color: $color-white;
+    }
+  }
+}
+
+.c-button--b {
+  display: inline-block;
+  width: rem(208);
+  padding-block: rem(10) rem(33);
+  text-align: center;
+  font-size: rem(16);
+  color: $color-text;
+  line-height: 1;
+  position: relative;
+  background-color: $color-white;
+  border: 1px solid $color-main;
+  border-radius: 10px;
+
+  &::after {
+    display: block;
+    content: "";
+    width: rem(10);
+    height: rem(10);
+    background-image: url(/img/icon_arrow_down.svg);
+    position: absolute;
+    bottom: rem(11);
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  &:hover,
+  &:focus,
+  &:focus-visible {
     color: $color-white;
     background-color: $color-main;
     border-color: $color-main;
     &::after {
-      background-color: $color-white;
+      filter: brightness(0) invert(1);
     }
   }
 }
