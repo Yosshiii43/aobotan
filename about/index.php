@@ -42,5 +42,5 @@ include $_SERVER['DOCUMENT_ROOT'] . '/inc/head.php';
           </div>
         </div>
       </section>
-
+      <?php include $_SERVER['DOCUMENT_ROOT'] . '/inc/contactSec.php'; ?>
 <?php include $_SERVER['DOCUMENT_ROOT'] . '/inc/footer.php'; ?>
