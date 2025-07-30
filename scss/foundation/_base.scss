@@ -14,13 +14,13 @@
   /* spacing vars */
   --inner-pl: 20px;   /* SP既定 左padding */
   --inner-pr: 20px;   /* SP既定 右padding */
-  --inner-max: 1400px; /* PC画面幅大の時用（仮） */
+  --inner-max: 1320px; /* PC画面幅大の時用(仮) */
 }
 
 @include mq("pc") {
   :root {
     /* layput vars */
-    --aside-w: clamp(17.5rem, -36.667rem + 55.56vw, 30rem);  /* PC時の縦ヘッダー幅280pxから480px可変 */
+    --aside-w: clamp(17.5rem, -20rem + 41.67vw, 30rem);  /* PC時の縦ヘッダー幅 1440pxの時280pxから1920pxの時480px可変 */
     --gap-x : 0px;
 
     /* header vars */
