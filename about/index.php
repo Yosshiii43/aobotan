@@ -11,7 +11,7 @@ $heroImageHeight ='1322';
 include $_SERVER['DOCUMENT_ROOT'] . '/inc/head.php';
 ?>
 
-<body  class="exp-grid">
+<body  class="exp-grid p-about" id="about">
 
   <div class="l-shell">
     <!-- 全ページ共通のヘッダー -->
@@ -25,17 +25,20 @@ include $_SERVER['DOCUMENT_ROOT'] . '/inc/head.php';
       <?php include $_SERVER['DOCUMENT_ROOT'] . '/inc/hero.php'; ?>
 
       <!-- コンテンツ -->
-      <section class="c-lowerHeadeSection">
+      <section class="c-lowerHeaderSection">
         <div class="l-inner--703">
-          <h1 class="c-lowerheadeSection__title">私達について</h1>
-          <div class="c-lowerheadeSection__text">
+          <h1 class="c-lowerHeaderSection__title">私達について</h1>
+          <div class="c-lowerHeaderSection__text">
             <p>「丁寧な家造りで、理想を現実に」</p>
             <p>これを実現するために、わたしたちが行っていることを一部ご紹介します。</p>
           </div>
-          <div class="c-lowerheadeSection__button">
+          <div class="c-lowerHeaderSection__button">
             <a class="c-button--b" href="#philosophy">経営理念</a>
             <a class="c-button--b" href="#profile">会社概要</a>
             <a class="c-button--b" href="#initiatives">安全への取り組み</a>
+          </div>
+          <div class="c-lowerHeaderSection__catch">
+            <img src="/img/img_about01.svg" alt="">
           </div>
         </div>
       </section>
