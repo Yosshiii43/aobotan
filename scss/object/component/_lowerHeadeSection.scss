@@ -4,6 +4,57 @@
 @use "../../foundation/forwards" as *;
 @use "sass:math";
 
-.c-lowerHeadeSection {
-  
+.c-lowerHeaderSection {
+  padding-top: rem(64);
+  padding-bottom: rem(80);
+  > div {
+    position: relative;
+  }
+  &__title {
+    font-size: rem(24);
+    font-weight: 700;
+    line-height: 1;
+    margin-bottom: rem(64);
+    @include mq("tab") {
+      font-size: rem(40);
+    }
+  }
+
+  &__text {
+    margin-bottom: rem(64);
+    @include mq("tab") {
+      width: rem(422);
+    }
+  }
+
+  &__button {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: rem(24);
+
+    @include mq("tab") {
+      flex-direction: row;
+      align-items: center;
+      justify-content: flex-start;
+    }
+  }
+
+  &__catch {
+    position: absolute;
+    top: calc(-1 * rem(20));
+    right: var(--inner-pr);
+    width: rem(80);
+    @include mq("tab") {
+      top: 0;
+      width: rem(165);
+    }
+
+    img {
+      width: 100%;
+      height: auto;
+      object-fit: contain;
+    }
+  }
 }

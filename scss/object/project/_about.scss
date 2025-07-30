@@ -1,0 +1,15 @@
+/******************************
+page about
+******************************/
+@use "../../foundation/forwards" as *;
+@use "sass:math";
+
+.p-about {
+  .c-lowerHeaderSection {
+    &__text {
+      @include mq("tab") {
+      width: rem(415);
+      }
+    }
+  }
+}

@@ -22,6 +22,7 @@
 @use "object/component/newsHead";
 @use "object/component/contactSec";
 @use "object/component/lowerHero";
+@use "object/component/lowerHeadeSection";
 
 //project
 @use "object/project/header" as ph;
@@ -32,6 +33,7 @@
 @use "object/project/topNews";
 @use "object/project/modal";
 @use "object/project/footer" as pf;
+@use "object/project/about";
 
 
 //utility
