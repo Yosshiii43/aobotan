@@ -279,7 +279,7 @@ include $_SERVER['DOCUMENT_ROOT'] . '/inc/head.php';
 
       <section class="c-contactSec">
         <div class="c-contactSec__inner">
-          <div>
+          <div class="l-inner">
             <h2 class="c-contactSec__title c-topSecTitle c-fadeIn js-fadeIn">
               <span class="c-topSecTitle__text">お問い合わせ</span>
               <span class="c-topSecTitle__deco">contact</span>

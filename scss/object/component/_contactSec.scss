@@ -8,13 +8,13 @@ contact section
   padding-top: 0;
   margin-bottom: rem(84);
 
-  &__inner {
+  &__inner{
     border-radius: 50px 0 0 50px;
-    > div {
+    padding-right: var(--inner-pr);
+    .l-inner {
       position: relative;
-      width: min(calc(100% - rem(24) - rem(40)), var(--inner-max));
       padding-block: rem(32) rem(53);
-      margin-inline: auto rem(40);
+      padding-left: rem(24);
 
       .c-contactSec__title {
         margin-bottom: rem(39);
@@ -76,13 +76,13 @@ contact section
   padding-top: 0;
   margin-bottom: rem(84);
 
-  &__inner {
+  &__inner{
     border-radius: 50px 0 0 50px;
-    > div {
+    padding-right: var(--inner-pr);
+    .l-inner {
       position: relative;
-      width: min(calc(100% - rem(24) - rem(40)), var(--inner-max));
       padding-block: rem(32) rem(53);
-      margin-inline: auto rem(40);
+      padding-left: rem(24);
 
       .c-contactSec__title {
         margin-bottom: rem(39);
@@ -131,14 +131,13 @@ contact section
 }
 
 .c-contactSec {
-  position: relative;
   padding-top: rem(28);
 
-  &__inner {
+  &__inner{
     background-color: $color-lightgray;
-    > div {
-      padding-block: rem(28) rem(41);
-      margin-inline: rem(20);
+    .l-inner {
+      position: relative;
+      padding-block: rem(27) rem(41);
 
       .c-contactSec__title {
         margin-bottom: rem(47);
