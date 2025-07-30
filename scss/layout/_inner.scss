@@ -11,7 +11,8 @@ l-inner 汎用インナー
 }
 
 .l-inner--703 {
-  width: min(100%, 703px);
+  width: 100%;
+  max-width: calc(703px + var(--inner-pl) + var(--inner-pr));
   padding-left:  var(--inner-pl);
   padding-right: var(--inner-pr);
   box-sizing: border-box;
