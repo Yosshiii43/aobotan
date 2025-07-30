@@ -20,10 +20,10 @@ hero
   }
 
   .p-hero__body{
-    margin-top: rem(40);
-    margin-left: rem(40);
-    margin-right: rem(40);
-    width: calc(100% - rem(40) * 2);
+    margin-top: rem(20);
+    margin-left: rem(20);
+    margin-right: rem(20);
+    width: calc(100% - rem(20) * 2);
     height: auto;
     aspect-ratio: 1120 / 873;
     border-radius: 50px;
@@ -48,7 +48,7 @@ hero
 
   .p-hero__scroll{
     bottom: rem(140);
-    left: rem(49);
+    left: rem(29);
 
     &::before{ height: rem(112); }
   }
@@ -56,7 +56,9 @@ hero
 
 @mixin hero-desktop(){
   .p-hero__body{
+    margin-top: rem(40);
     margin-left: 0;
+    margin-right: rem(40);
     width: calc(100% - rem(40));
   }
   .p-hero__scroll{
