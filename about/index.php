@@ -25,12 +25,19 @@ include $_SERVER['DOCUMENT_ROOT'] . '/inc/head.php';
       <?php include $_SERVER['DOCUMENT_ROOT'] . '/inc/hero.php'; ?>
 
       <!-- コンテンツ -->
-       <div class="c-mainContainer">
-        <div class="l-inner">
-          <section class="c-headeSection">
-            <h1>私達について</h1>
-          </section>
+      <section class="c-lowerHeadeSection">
+        <div class="l-inner--703">
+          <h1 class="c-lowerheadeSection__title">私達について</h1>
+          <div class="c-lowerheadeSection__text">
+            <p>「丁寧な家造りで、理想を現実に」</p>
+            <p>これを実現するために、わたしたちが行っていることを一部ご紹介します。</p>
+          </div>
+          <div class="c-lowerheadeSection__button">
+            <a class="c-button--b" href="#philosophy">経営理念</a>
+            <a class="c-button--b" href="#profile">会社概要</a>
+            <a class="c-button--b" href="#initiatives">安全への取り組み</a>
+          </div>
         </div>
-      </div>
+      </section>
 
 <?php include $_SERVER['DOCUMENT_ROOT'] . '/inc/footer.php'; ?>
