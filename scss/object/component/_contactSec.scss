@@ -132,11 +132,10 @@ contact section
 
 .c-contactSec {
   padding-top: rem(28);
-
+  position: relative;
   &__inner{
     background-color: $color-lightgray;
     .l-inner {
-      position: relative;
       padding-block: rem(27) rem(41);
 
       .c-contactSec__title {
