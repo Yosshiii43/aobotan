@@ -52,6 +52,7 @@
   background-color: $color-white;
   border: 1px solid $color-main;
   border-radius: 10px;
+  flex-shrink: 0;
 
   &::after {
     display: block;
