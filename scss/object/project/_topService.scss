@@ -233,10 +233,6 @@ Top service
 
     &:last-of-type { margin-bottom: 0; }
 
-    /* 2番目逆配置用 */
-    &.is-reverse {
-      width: calc(math.div(123.98, 1440) * 100%);
-    }
   }
 
   /* ===== 本文ブロック ===== */
