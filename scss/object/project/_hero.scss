@@ -4,7 +4,7 @@ hero
 @use "../../foundation/forwards" as *;
 @use "sass:math";
 
-@mixin hero-desktop(){
+@mixin hero-tablet(){
   padding-top: 0;
   padding-bottom: rem(76);
 
@@ -21,9 +21,9 @@ hero
 
   .p-hero__body{
     margin-top: rem(40);
-    margin-left: 0;
+    margin-left: rem(40);
     margin-right: rem(40);
-    width: calc(100% - rem(40));
+    width: calc(100% - rem(40) * 2);
     height: auto;
     aspect-ratio: 1120 / 873;
     border-radius: 50px;
@@ -48,9 +48,19 @@ hero
 
   .p-hero__scroll{
     bottom: rem(140);
-    left: rem(18);
+    left: rem(49);
 
     &::before{ height: rem(112); }
+  }
+}
+
+@mixin hero-desktop(){
+  .p-hero__body{
+    margin-left: 0;
+    width: calc(100% - rem(40));
+  }
+  .p-hero__scroll{
+    left: rclamp(12, 18, 1024, 1440);
   }
 }
 
@@ -184,12 +194,11 @@ hero
     100%{transform:scale(1,0);transform-origin:0 100%;}
   }
 
-  /* フォールバック（コンテナ未対応ブラウザ用） */
+  /*全幅背景のためメディアクエリのみ*/
   @include mq("tab"){
-    @include hero-desktop();
+    @include hero-tablet();
   }
-
-  @include cq(main, 744px) {
+    @include mq("pc"){
     @include hero-desktop();
   }
 }
