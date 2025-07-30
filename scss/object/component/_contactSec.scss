@@ -4,7 +4,7 @@ contact section
 @use "../../foundation/forwards" as *;
 @use "sass:math";
 
-@mixin contactSec-tablet-static(){
+@mixin contactSec-tablet(){
   padding-top: 0;
   margin-bottom: rem(84);
 
@@ -89,75 +89,6 @@ contact section
     @include mq("pc") {
       right: 0;
     }
-  }
-}
-
-@mixin contactSec-tablet-fluid(){
-  padding-top: 0;
-  margin-bottom: rem(84);
-
-  &__inner{
-    padding-right: var(--inner-pr);
-    @include mq("pc") {
-      border-radius: 50px 0 0 50px;
-    }
-    .l-inner {
-      position: relative;
-      padding-block: rem(32) rem(53);
-      padding-left: rem(24);
-
-      .c-contactSec__title {
-        margin-bottom: rem(39);
-      }
-      .c-contactSec__body{
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: flex-start;
-          
-        .c-contactSec__tel {
-          flex-direction: column;
-          align-items: flex-start;
-          align-items: center;
-          gap: rem(8);
-          border-bottom: none;
-          padding-top: rem(7);
-          padding-bottom: rem(7);
-          padding-right: cqClampPx(16, 32);
-          border-right: 1px solid $color-text;
-          margin-bottom: 0;
-
-        p:first-child {
-          font-size: rclamp(28, 32, 1024, 1050);
-        }
-
-        p:last-child {
-          margin-bottom: 0;
-          margin-left: calc(-1 * rem(5));
-        }
-      }
-
-      .c-contactSec__telNumber {
-        padding-block: rem(8);
-        padding-inline: cqClampPx(16, 32);
-        border-right: 1px solid $color-text;
-        margin-bottom: 0;
-
-        p:first-child {
-          font-size: rclamp(28, 32, 1024, 1050);
-        }
-      }
-
-      .c-contactSec__mail {
-        padding-left: cqClampPx(24, 64);
-      }
-      }
-    }
-  }
-
-  &__catch {
-    top: rem(31);
-    right: 0;
   }
 }
 
@@ -252,12 +183,8 @@ contact section
     }
   }
 
-  /* フォールバック（コンテナ未対応ブラウザ用） */
+  /*全幅背景のためメディアクエリのみ*/
   @include mq("tab") {
-    @include contactSec-tablet-static();
-  }
-
-  @include cq(main, 744px) {
-    @include contactSec-tablet-fluid();
+    @include contactSec-tablet();
   }
 }
