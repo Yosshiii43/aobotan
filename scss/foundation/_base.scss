@@ -20,7 +20,7 @@
 @include mq("pc") {
   :root {
     /* layput vars */
-    --aside-w: 280px;  /* PC時の縦ヘッダー幅 */
+    --aside-w: clamp(17.5rem, -36.667rem + 55.56vw, 30rem);  /* PC時の縦ヘッダー幅 */
     --gap-x : 0px;
 
     /* header vars */
