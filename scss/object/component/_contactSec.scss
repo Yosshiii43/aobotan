@@ -37,11 +37,11 @@ contact section
           border-bottom: none;
           padding-top: rem(7);
           padding-bottom: rem(7);
-          padding-right: rclamp(24, 32, 768, 1023);
+          padding-right: rclamp(20, 32, 744, 1023);
           border-right: 1px solid $color-text;
           margin-bottom: 0;
           @include mq("pc") {
-            padding-right: rclamp(16, 32, 1024, 1440);
+            padding-right: rclamp(20, 32, 1024, 1440);
           }
 
           p:first-child {
@@ -57,11 +57,11 @@ contact section
 
         .c-contactSec__telNumber {
           padding-block: rem(8);
-          padding-inline: rclamp(24, 32, 768, 1023);
+          padding-inline: rclamp(20, 32, 744, 1023);
           border-right: 1px solid $color-text;
           margin-bottom: 0;
           @include mq("pc") {
-            padding-inline: rclamp(16, 32, 1024, 1440);
+            padding-inline: rclamp(20, 32, 1024, 1440);
           }
 
           p:first-child {
@@ -72,14 +72,12 @@ contact section
         }
 
         .c-contactSec__mail {
-          padding-left: rclamp(24, 64, 768, 1023);
+          padding-left: rclamp(24, 64, 744, 1023);
           @include mq("pc") {
             padding-left: rclamp(24, 64, 1024, 1440);
           }
         }//.c-contactSec__mail
       }//.c-contactSec__body
-
-
     }//.l-inner
   }//.p-contactSec__inner
 
