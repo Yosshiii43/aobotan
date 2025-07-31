@@ -39,8 +39,12 @@ Top service
 
   .p-topService__contentBody {
     grid-area: body;
-    padding-top: rclamp(98, 168, 1024, 1440);
-    margin-left: 56px;
+    padding-top: rclamp(98, 168, 744, 1023);
+    margin-left: rclamp(20, 44, 744, 1023);
+    @include mq("pc") {
+      padding-top: rclamp(98, 168, 1024, 1440);
+      margin-left: rclamp(20, 56, 1024, 1440);
+    }
 
     .p-topService__contentTitle {
       flex-direction: row;
@@ -51,7 +55,10 @@ Top service
 
   .p-topService__content.is-reverse .p-topService__contentBody {
     margin-left: 0;
-    margin-right: var(--content-gap-pc);
+    margin-right: rclamp(20, 44, 744, 1023);
+    @include mq("pc") {
+      margin-right: rclamp(20, 56, 1024, 1440);
+    }
   }
 
 
@@ -73,17 +80,24 @@ Top service
     z-index: 1;
     top: 0;
     left: 100%;
-    transform: translateX(calc(-1 * var(--num-hide)));
+    transform: translateX(calc(-1 * rclamp(10, 21, 744, 1023)));
     font-family: Kanit;
-    font-size: rclamp(98, 168, 1024, 1440);
+    font-size: rclamp(98, 168, 744, 1023);
     font-weight: 700;
     line-height: 1;
     color: $color-bluegray;
     white-space: nowrap;
+    @include mq("pc") {
+      transform: translateX(calc(-1 * rclamp(10, 21, 1024, 1440)));
+      font-size: rclamp(98, 168, 1024, 1440);
+    }
   }
   .p-topService__nam--r {
     left:auto; right:100%;
-    transform: translateX(var(--num-hide));
+    transform: translateX(rclamp(10, 21, 744, 1023));
+    @include mq("pc") {
+      transform: translateX(rclamp(10, 21, 1024, 1440));
+    }
   }
 
     &__catch {
@@ -130,7 +144,7 @@ Top service
   .p-topService__contentBody {
     grid-area: body;
     padding-top: clamp(rem(98), 14.48276cqw, rem(168));
-    margin-left: 56px;
+    margin-left: cqClampPx(20, 56);
 
     .p-topService__contentTitle {
       flex-direction: row;
@@ -141,7 +155,7 @@ Top service
 
   .p-topService__content.is-reverse .p-topService__contentBody {
     margin-left: 0;
-    margin-right: var(--content-gap-pc);
+    margin-right: cqClampPx(20, 56);
   }
 
   .p-topService__imgWrap {
