@@ -41,13 +41,19 @@ page about profile
         display: flex;
         flex-direction: column;
         line-height: 1;
-        gap: rem(24);
+        gap: rem(16);
         margin-top: rem(16);
+        @include mq("tab") {
+          gap: rem(24);
+        }
 
         span:last-child {
           color: $color-main;
-          font-size: rem(32);
+          font-size: rem(24);
           font-weight: 700;
+          @include mq("tab") {
+            font-size: rem(32);
+          }
         }
       }
     }
@@ -64,17 +70,19 @@ page about profile
     }
     th {
       font-weight: 700;
-      padding-top: calc(rem(30) - rem(6.4));
+      padding-top: calc(rem(20) - rem(6.4));
       @include mq("tab") {
         border-bottom: 1px solid $color-main;
+        padding-top: calc(rem(30) - rem(6.4));
         padding-bottom: calc(rem(29) - rem(6.4));
       }
     }
     td {
-      padding-bottom: calc(rem(29) - rem(6.4));
+      padding-bottom: calc(rem(19) - rem(6.4));
       border-bottom: 1px solid $color-main;
       @include mq("tab") {
         padding-top: calc(rem(30) - rem(6.4));
+        padding-bottom: calc(rem(29) - rem(6.4));
       }
     }
     tr:nth-child(6) td{
