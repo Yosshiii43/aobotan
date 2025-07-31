@@ -7,18 +7,13 @@ page about profile
   padding-top: rem(40);
   padding-bottom: rem(16);
 
-
   &__greeting {
-    display: grid;
-    grid-template-columns: 1fr auto;
-    justify-content: space-between;
-    gap: rclamp(24, 157, 1024, 1440);
     margin-bottom: rem(52);
     @include mq("tab") {
     display: grid;
     grid-template-columns: 1fr auto;
     justify-content: space-between;
-    gap: rclamp(24, 96, 768, 1024);
+    gap: rclamp(24, 92, 768, 1023);
     }
     @include mq("pc") {
     display: grid;
@@ -29,9 +24,18 @@ page about profile
 
     figure {
       width: rem(331);
+      margin-inline: auto;
+      @include mq("tab") {
+        width: rclamp(260, 331, 768, 1023);
+      }
+      @include mq("pc") {
+        width: rclamp(260, 331, 1024, 1440);
+      }
+
       img {
         width: 100%;
       }
+
       figcaption {
         display: flex;
         flex-direction: column;
@@ -46,5 +50,9 @@ page about profile
         }
       }
     }
+  }
+
+  &__table {
+
   }
 }
