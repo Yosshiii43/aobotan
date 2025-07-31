@@ -6,7 +6,10 @@ page about philosophy
 
   .p-aboutPhilosophy {
     padding-top: rem(40);
-    padding-bottom: rem(11);
+    padding-bottom: rem(40);
+    @include mq("tab") {
+      padding-bottom: rem(11);
+    }
     .l-inner--923 {
       padding-bottom: rem(24);
       position: relative;

@@ -5,7 +5,7 @@
 @use "sass:math";
 
 .c-lowerHeaderSection {
-  padding-block: rem(64) rem(24);
+  padding-block: rem(64) rem(38);
   @include mq("tab") {
     padding-block: rem(64) rem(40);
   }

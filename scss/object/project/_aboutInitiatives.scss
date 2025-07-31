@@ -5,7 +5,7 @@ page about initiatives
 @use "sass:math";
 
 .p-aboutInitiatives {
-  padding-block: rem(40) rem(36);
+  padding-block: rem(40) rem(56);
   @include mq("tab") {
     padding-block: rem(40) rem(193);
   }
@@ -18,12 +18,20 @@ page about initiatives
   }
   &__contents {
     &:first-of-type{
-      margin-bottom: rem(25);
+      margin-bottom: rem(40);
+      @include mq("tab") {
+        margin-bottom: rem(25);
+      }
     }
     h3 {
-      font-size: rem(24);
+      font-size: rem(20);
       font-weight: 700;
-      margin-bottom: rem(31);
+      margin-bottom: rem(20);
+      @include mq("tab") {
+        font-size: rem(24);
+        font-weight: 700;
+        margin-bottom: rem(31);
+      }
     }
 
     .p-aboutInitiatives__body {

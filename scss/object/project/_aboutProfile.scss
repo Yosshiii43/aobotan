@@ -5,8 +5,10 @@ page about profile
 @use "sass:math";
 .p-aboutProfile {
   padding-top: rem(40);
-  padding-bottom: rem(16);
-
+  padding-bottom: rem(40);
+  @include mq("tab") {
+    padding-bottom: rem(16);
+  }
   &__greeting {
     margin-bottom: rem(52);
     line-height: 29px;
@@ -25,6 +27,7 @@ page about profile
 
     figure {
       width: rem(331);
+      max-width: 100%;
       margin-inline: auto;
       @include mq("tab") {
         width: rclamp(260, 331, 768, 1023);
