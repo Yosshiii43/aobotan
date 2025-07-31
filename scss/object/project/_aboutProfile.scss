@@ -9,6 +9,7 @@ page about profile
 
   &__greeting {
     margin-bottom: rem(52);
+    line-height: 29px;
     @include mq("tab") {
     display: grid;
     grid-template-columns: 1fr auto;
@@ -53,6 +54,41 @@ page about profile
   }
 
   &__table {
-
+    width: 100%;
+    tr {
+      display: grid;
+      grid-template-columns: 1fr;
+      @include mq("tab") {
+        grid-template-columns: (rem(80) + rem(162)) 1fr;
+      }
+    }
+    th {
+      font-weight: 700;
+      padding-top: calc(rem(30) - rem(6.4));
+      @include mq("tab") {
+        border-bottom: 1px solid $color-main;
+        padding-bottom: calc(rem(29) - rem(6.4));
+      }
+    }
+    td {
+      padding-bottom: calc(rem(29) - rem(6.4));
+      border-bottom: 1px solid $color-main;
+      @include mq("tab") {
+        padding-top: calc(rem(30) - rem(6.4));
+      }
+    }
+    tr:nth-child(6) td{
+      display: flex;
+      flex-direction: column;
+      @include mq("tab") {
+        flex-direction: row;
+      }
+      span {
+        display: block;
+        @include mq("tab") {
+          display: inline;
+        }
+      }
+    }
   }
 }
