@@ -1,0 +1,42 @@
+/******************************
+page about initiatives
+******************************/
+@use "../../foundation/forwards" as *;
+@use "sass:math";
+
+.p-aboutInitiatives {
+  padding-block: rem(40) rem(36);
+  @include mq("tab") {
+    padding-block: rem(40) rem(193);
+  }
+
+
+  .c-aboutH2 {
+    @include mq("tab") {
+      margin-bottom: rem(86);
+    }
+  }
+  &__contents {
+    &:first-of-type{
+      margin-bottom: rem(25);
+    }
+    h3 {
+      font-size: rem(24);
+      font-weight: 700;
+      margin-bottom: rem(31);
+    }
+
+    .p-aboutInitiatives__body {
+      display: grid;
+      grid-template-columns: 1fr;
+      column-gap: rem(44);
+      @include mq("tab") {
+        grid-template-columns: 1fr 267px;
+      }
+
+      p {
+        line-height: 29px;
+      }
+    }
+  }
+}

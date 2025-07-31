@@ -88,5 +88,31 @@ include $_SERVER['DOCUMENT_ROOT'] . '/inc/head.php';
         </div>
       </section>
 
+      <section class="p-aboutInitiatives" id="initiatives">
+        <div class="l-inner--953">
+          <h2 class="p-aboutInitiatives__title c-aboutH2">安全への取り組み</h2>
+          <section class="p-aboutInitiatives__contents">
+            <h3>経営層による安全衛生巡視</h3>
+            <div class="p-aboutInitiatives__body">
+              <div>
+                <p>経営層による安全衛生巡視は、当社の安全管理体制の中核を担う活動の一つです。この巡視では、経営者や上級管理職が定期的に現場を訪問し、安全な作業環境の確保や安全基準の遵守を徹底することが主な目的です。</p>
+                <p>具体的には、巡視の際には安全規則や法令の遵守状況を点検し、作業現場における危険な箇所や潜在的なリスクを特定します。また、機械や設備の安全装置が正しく機能しているかどうかも確認します。さらに、作業員に対して安全教育や指導を行い、安全意識の向上を図ります。</p>
+              </div>
+              <img src="/img/img_patrolling01.jpg" alt="安全衛生巡視の様子" width="534" height="416">
+            </div>
+          </section>
+          <section class="p-aboutInitiatives__contents">
+            <h3>労働災害防止への取り組み・教育体制</h3>
+            <div class="p-aboutInitiatives__body">
+              <div>
+                <p>労働災害の防止に向けた従業員への教育・訓練も欠かせません。新入社員や新規作業員には、安全教育プログラムを実施し、作業時の安全ルールや手順、危険な状況の認識方法などを徹底的に指導しています。さらに、定期的な安全講習会や研修を通じて、従業員の安全意識を高める取り組みを行っています。</p>
+                <p>労働災害が発生した場合には、速やかに原因究明を行い、再発防止策を迅速に実施します。また、従業員からの安全に関する意見や提案を積極的に受け付け、改善に向けた取り組みを推進しています。</p>
+              </div>
+              <img src="/img/img_educationalSystem.jpg" alt="労働災害防止の研修の様子" width="534" height="416">
+            </div>
+          </section>
+        </div>
+      </section>
+
       <?php include $_SERVER['DOCUMENT_ROOT'] . '/inc/contactSec.php'; ?>
 <?php include $_SERVER['DOCUMENT_ROOT'] . '/inc/footer.php'; ?>
