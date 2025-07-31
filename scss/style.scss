@@ -23,6 +23,7 @@
 @use "object/component/contactSec";
 @use "object/component/lowerHero";
 @use "object/component/lowerHeaderSection";
+@use "object/component/aboutH2";
 
 //project
 @use "object/project/header" as ph;
@@ -34,6 +35,8 @@
 @use "object/project/modal";
 @use "object/project/footer" as pf;
 @use "object/project/about";
+@use "object/project/aboutPhilosophy";
+@use "object/project/aboutProfile";
 
 
 //utility

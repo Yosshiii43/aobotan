@@ -1,0 +1,14 @@
+/******************************
+aboutページ h2
+******************************/
+@use "../../foundation/forwards" as *;
+
+.c-aboutH2 {
+  font-size: rem(24);
+  font-weight: 700;
+  line-height: 1;
+  margin-bottom: rem(64);
+  @include mq("tab") {
+    font-size: rem(32);
+  }
+}

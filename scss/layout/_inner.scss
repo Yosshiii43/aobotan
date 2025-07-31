@@ -18,8 +18,24 @@ l-inner 汎用インナー
   box-sizing: border-box;
 }
 
-.l-inner--953 {
+.l-inner--923 {
+  width: 100%;
+  padding-left:  var(--inner-pl);
+  padding-right: var(--inner-pr);
+  box-sizing: border-box;
+  @include mq("pc") {
+    max-width: calc(923px + var(--inner-pl) + var(--inner-pr));
+  }
+}
 
+.l-inner--953 {
+  width: 100%;
+  padding-left:  var(--inner-pl);
+  padding-right: var(--inner-pr);
+  box-sizing: border-box;
+  @include mq("pc") {
+    max-width: calc(953px + var(--inner-pl) + var(--inner-pr));
+  }
 }
 
 .l-inner--960 {

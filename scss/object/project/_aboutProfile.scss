@@ -1,0 +1,50 @@
+/******************************
+page about profile
+******************************/
+@use "../../foundation/forwards" as *;
+@use "sass:math";
+.p-aboutProfile {
+  padding-top: rem(40);
+  padding-bottom: rem(16);
+
+
+  &__greeting {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    justify-content: space-between;
+    gap: rclamp(24, 157, 1024, 1440);
+    margin-bottom: rem(52);
+    @include mq("tab") {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    justify-content: space-between;
+    gap: rclamp(24, 96, 768, 1024);
+    }
+    @include mq("pc") {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    justify-content: space-between;
+    gap: rclamp(24, 157, 1024, 1440);
+    }
+
+    figure {
+      width: rem(331);
+      img {
+        width: 100%;
+      }
+      figcaption {
+        display: flex;
+        flex-direction: column;
+        line-height: 1;
+        gap: rem(24);
+        margin-top: rem(16);
+
+        span:last-child {
+          color: $color-main;
+          font-size: rem(32);
+          font-weight: 700;
+        }
+      }
+    }
+  }
+}
