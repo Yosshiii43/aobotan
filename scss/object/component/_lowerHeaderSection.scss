@@ -5,8 +5,11 @@
 @use "sass:math";
 
 .c-lowerHeaderSection {
-  padding-top: rem(64);
-  padding-bottom: rem(40);
+  padding-block: rem(64) rem(24);
+  @include mq("tab") {
+    padding-block: rem(64) rem(40);
+  }
+
   > div {
     position: relative;
   }
@@ -22,8 +25,9 @@
   }
 
   &__text {
-    margin-bottom: rem(64);
+    margin-bottom: rem(48);
     @include mq("tab") {
+      margin-bottom: rem(64);
       width: rem(422);
     }
   }
