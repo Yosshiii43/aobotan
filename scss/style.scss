@@ -24,7 +24,6 @@
 @use "object/component/lowerHero";
 @use "object/component/lowerHeaderSection";
 @use "object/component/aboutH2";
-@use "object/component/serviceH2";
 
 //project
 @use "object/project/header" as ph;
@@ -40,7 +39,7 @@
 @use "object/project/aboutProfile";
 @use "object/project/aboutInitiatives";
 @use "object/project/service";
-@use "object/project/serviceHousing";
+@use "object/project/serviceContent";
 
 
 //utility

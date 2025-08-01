@@ -4,7 +4,7 @@ page service housing
 @use "../../foundation/forwards" as *;
 @use "sass:math";
 
-.p-serviceHousing {
+.p-serviceContent {
   padding-top: rem(40);
   padding-bottom: rem(40);
   @include mq("tab") {
@@ -18,14 +18,23 @@ page service housing
     }
   }
 
-  &__contents{
+  &__body{
     > div {
       margin: 0 rem(10) rem(72);
       @include mq("tab") {
         margin: 0 rem(50) rem(72);
       }
 
-      .p-serviceHousing_discription {
+      .p-serviceContent__title {
+        font-size: rem(24);
+        font-weight: 700;
+        line-height: 1;
+        padding-block: rem(56) rem(38);
+        border-bottom: 1px solid $color-main;
+        margin-bottom: rem(20);
+      }
+
+      .p-serviceContent_discription {
         display: grid;
         grid-template-columns: 1fr;
         margin-bottom: rem(60);
@@ -36,21 +45,21 @@ page service housing
           margin-bottom: rem(88);
         }
 
-        .p-serviceHousing_discriptionLead {
+        .p-serviceContent_discriptionLead {
           font-size: rem(20);
           font-weight: 700;
           line-height: 36.5px;
         }
 
-        .p-serviceHousing_discriptionText {
+        .p-serviceContent_discriptionText {
           line-height: 29px;
         }
       }
 
-      .p-serviceHousing__cases {
+      .p-serviceContent__cases {
         display: grid;
         grid-template-columns: 1fr;
-        gap: rem(24);
+        gap: rem(40);
         @include mq("tab") {
           max-width: rem(766);
           grid-template-columns: 1fr 1fr;
@@ -60,7 +69,10 @@ page service housing
         h3 {
           font-weight: 700;
           line-height: 1;
-          margin-bottom: rem(20);
+          margin-bottom: rem(16);
+          @include mq("tab") {
+            margin-bottom: rem(20);
+          }
         }
 
         img {
@@ -68,7 +80,10 @@ page service housing
           height: auto;
           aspect-ratio: auto;
           border-radius: 5px;
-          margin-bottom: rem(20);
+          margin-bottom: rem(16);
+          @include mq("tab") {
+            margin-bottom: rem(20);
+          }
         }
 
         figcaption {

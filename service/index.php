@@ -42,39 +42,39 @@ include $_SERVER['DOCUMENT_ROOT'] . '/inc/head.php';
         </div>
       </section>
 
-      <section class="p-serviceHousing" id="housing">
+      <section class="p-serviceContent" id="housing">
         <div class="l-inner--960">
-          <img class="p-serviceHousing__mainImg" src="/img/img_service02.jpg" alt="オリエンタルな雰囲気のリビングダイニング">
-          <div class="p-serviceHousing__contents">
+          <img class="p-serviceContent__mainImg" src="/img/img_service02.jpg" alt="オリエンタルな雰囲気のリビングダイニング">
+          <div class="p-serviceContent__body">
             <div>
-              <h2 class="p-serviceHousing__title c-serviceH2">住宅建築・リフォーム</h2>
-              <div class="p-serviceHousing_discription">
-                <div class="p-serviceHousing_discriptionLead">
+              <h2 class="p-serviceContent__title">住宅建築・リフォーム</h2>
+              <div class="p-serviceContent_discription">
+                <div class="p-serviceContent_discriptionLead">
                   <p>当社の住宅建築・リフォーム事業では、お客様の夢や理想を具現化するためのサービスを提供しています。</p>
                 </div>
-                <div class="p-serviceHousing_discriptionText">
+                <div class="p-serviceContent_discriptionText">
                   <p>新しい家を建てる際には、お客様のニーズや希望を理解し、オーダーメイドの住宅を設計・施工します。</p>
                   <p>また、古くなったり、機能性が低下したりした建物を、新しい価値ある空間へと再生するリフォームサービスを提供しています。お客様のライフスタイルやニーズに合わせて、効率的かつリーズナブルなリフォームプランをご提案し、品質に妥協することなく施工いたします。</p>
                 </div>
-              </div><!-- .p-serviceHousing_discription -->
-              <div class="p-serviceHousing__cases">
-                <article class="p-serviceHousing__case">
+              </div><!-- .p-serviceContent_discription -->
+              <div class="p-serviceContent__cases">
+                <article class="p-serviceContent__case">
                   <h3>芦屋（兵庫県）のコテージ付き住宅</h3>
                   <figure>
                     <img  src="/img/img_housesWithCottages01.jpg" alt="コテージのある2階建て住宅外観" width="704" height="548">
                     <figcaption>施工年月：R2年2月 構造：S造</figcaption>
                   </figure>
                 </article>
-                <article class="p-serviceHousing__case">
+                <article class="p-serviceContent__case">
                   <h3>鷹峯（京都府京都市）のモダン和風住宅</h3>
                   <figure>
                     <img src="/img/img_modernJapaneseStyleHouse01.jpg" alt="和風の庭のある3階建てのモダン木造住宅外観" width="704" height="548">
                     <figcaption>施工年月：R4年4月 構造：木造</figcaption>
                   </figure>
                 </article>
-              </div><!-- .p-serviceHousing__cases -->
+              </div><!-- .p-serviceContent__cases -->
             </div>
-          </div><!-- .p-serviceHousing__contents -->
+          </div><!-- .p-serviceContent__body -->
         </div><!-- l-inner--960 -->
       </section>
 
