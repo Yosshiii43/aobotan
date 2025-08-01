@@ -39,5 +39,11 @@ l-inner 汎用インナー
 }
 
 .l-inner--960 {
-
+  width: 100%;
+  padding-left:  var(--inner-pl);
+  padding-right: var(--inner-pr);
+  box-sizing: border-box;
+  @include mq("pc") {
+    max-width: calc(960px + var(--inner-pl) + var(--inner-pr));
+  }
 }
