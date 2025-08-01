@@ -1,11 +1,20 @@
 /******************************
-page-service
+page service
 ******************************/
 @use "../../foundation/forwards" as *;
 @use "sass:math";
 
-.p-pageService {
-  @include mq("pc") {
-    --inner-pr: 200px;
+.p-service {
+ .c-lowerHero {
+  &__body {
+    aspect-ratio: 1120 / 671;
   }
+ }
+ 
+ .c-lowerHeaderSection {
+    padding-block: rem(54) rem(35);
+  @include mq("tab") {
+    padding-block: rem(54) rem(40);
+  }
+ }
 }
