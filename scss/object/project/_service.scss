@@ -13,8 +13,5 @@ page service
  
  .c-lowerHeaderSection {
     padding-block: rem(54) rem(35);
-  @include mq("tab") {
-    padding-block: rem(54) rem(40);
-  }
  }
 }

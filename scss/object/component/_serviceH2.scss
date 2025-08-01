@@ -1,0 +1,13 @@
+/******************************
+serviceページ h2
+******************************/
+@use "../../foundation/forwards" as *;
+
+.c-serviceH2 {
+  font-size: rem(24);
+  font-weight: 700;
+  line-height: 1;
+  padding-block: rem(56) rem(38);
+  border-bottom: 1px solid $color-main;
+  margin-bottom: rem(20);
+}
