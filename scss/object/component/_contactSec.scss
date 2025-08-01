@@ -5,7 +5,7 @@ contact section
 @use "sass:math";
 
 @mixin contactSec-tablet(){
-  padding-top: 0;
+  padding-top: rem(40);
   margin-bottom: rem(84);
 
   &__inner{
@@ -91,7 +91,7 @@ contact section
 }
 
 .c-contactSec {
-  padding-top: rem(28);
+  padding-top: calc(rem(28) + rem(36));
   position: relative;
   &__inner{
     background-color: $color-lightgray;
@@ -170,7 +170,7 @@ contact section
 
   &__catch {
     position: absolute;
-    top: 0;
+    top: rem(36);
     right: rem(20);
     height: rclamp(86, 256, 375, 1440);
     width: auto;

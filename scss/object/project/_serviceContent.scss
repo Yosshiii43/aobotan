@@ -20,9 +20,9 @@ page service housing
 
   &__body{
     > div {
-      margin: 0 rem(10) rem(72);
+      margin-inline: rem(10);
       @include mq("tab") {
-        margin: 0 rem(50) rem(72);
+        margin-inline: rem(50);
       }
 
       .p-serviceContent__title {
@@ -94,5 +94,18 @@ page service housing
       }
     }
   }
+}
 
+.p-serviceContent--business,
+.p-serviceContent--public {
+  .p-serviceContent__body {
+    > div {
+      .p-serviceContent_discription {
+        margin-bottom: rem(88);
+        @include mq("tab") {
+          margin-bottom: rem(146);
+        }
+      }
+    }
+  }
 }

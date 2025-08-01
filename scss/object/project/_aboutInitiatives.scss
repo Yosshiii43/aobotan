@@ -5,9 +5,9 @@ page about initiatives
 @use "sass:math";
 
 .p-aboutInitiatives {
-  padding-block: rem(40) rem(56);
+  padding-block: rem(40) rem(20);
   @include mq("tab") {
-    padding-block: rem(40) rem(193);
+    padding-block: rem(40) calc(rem(193) - rem(40));
   }
 
 

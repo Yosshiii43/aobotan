@@ -42,9 +42,9 @@ include $_SERVER['DOCUMENT_ROOT'] . '/inc/head.php';
         </div>
       </section>
 
-      <section class="p-serviceContent" id="housing">
+      <section class="p-serviceContent p-serviceContent--housing" id="housing">
         <div class="l-inner--960">
-          <img class="p-serviceContent__mainImg" src="/img/img_service02.jpg" alt="オリエンタルな雰囲気のリビングダイニング">
+          <img class="p-serviceContent__mainImg" src="/img/img_service02.jpg" alt="オリエンタルな雰囲気のリビングダイニング" width="1920" height="800">
           <div class="p-serviceContent__body">
             <div>
               <h2 class="p-serviceContent__title">住宅建築・リフォーム</h2>
@@ -78,9 +78,9 @@ include $_SERVER['DOCUMENT_ROOT'] . '/inc/head.php';
         </div><!-- l-inner--960 -->
       </section><!-- #housing -->
 
-      <section class="p-serviceContent" id="business">
+      <section class="p-serviceContent p-serviceContent--business" id="business">
         <div class="l-inner--960">
-          <img class="p-serviceContent__mainImg" src="/img/img_service03.jpg" alt="複数の重なり合った設計図">
+          <img class="p-serviceContent__mainImg" src="/img/img_service03.jpg" alt="複数の重なり合った設計図" width="1920" height="800">
           <div class="p-serviceContent__body">
             <div>
               <h2 class="p-serviceContent__title">法人新築・リフォーム</h2>
@@ -113,33 +113,32 @@ include $_SERVER['DOCUMENT_ROOT'] . '/inc/head.php';
         </div><!-- l-inner--960 -->
       </section><!-- #business -->
 
-      <section class="p-serviceContent" id="public">
+      <section class="p-serviceContent p-serviceContent--public" id="public">
         <div class="l-inner--960">
-          <img class="p-serviceContent__mainImg" src="/img/img_service02.jpg" alt="オリエンタルな雰囲気のリビングダイニング">
+          <img class="p-serviceContent__mainImg" src="/img/img_service04.jpg" alt="赤煉瓦造りの前庭のある公共施設外観" width="1920" height="800">
           <div class="p-serviceContent__body">
             <div>
-              <h2 class="p-serviceContent__title">住宅建築・リフォーム</h2>
+              <h2 class="p-serviceContent__title">公共工事</h2>
               <div class="p-serviceContent_discription">
                 <div class="p-serviceContent_discriptionLead">
-                  <p>当社の住宅建築・リフォーム事業では、お客様の夢や理想を具現化するためのサービスを提供しています。</p>
+                  <p>公共工事事業は、道路や橋梁、公共施設などの建設・改修を行う事業です。</p>
                 </div>
                 <div class="p-serviceContent_discriptionText">
-                  <p>新しい家を建てる際には、お客様のニーズや希望を理解し、オーダーメイドの住宅を設計・施工します。</p>
-                  <p>また、古くなったり、機能性が低下したりした建物を、新しい価値ある空間へと再生するリフォームサービスを提供しています。お客様のライフスタイルやニーズに合わせて、効率的かつリーズナブルなリフォームプランをご提案し、品質に妥協することなく施工いたします。</p>
+                  <p>公共工事事業は、地域社会の発展や住民の生活に密接に関わる重要な事業です。政府や自治体からの発注が多く、厳しい品質基準や工期管理が求められます。当社では、経験豊富な専門家がチームを組み、最新の技術とノウハウを駆使して、安全で信頼性の高い公共施設の建設に貢献しています。</p>
                 </div>
               </div><!-- .p-serviceContent_discription -->
               <div class="p-serviceContent__cases">
                 <article class="p-serviceContent__case">
-                  <h3>芦屋（兵庫県）のコテージ付き住宅</h3>
+                  <h3>神戸市立真島小学校　内装工事</h3>
                   <figure>
-                    <img  src="/img/img_housesWithCottages01.jpg" alt="コテージのある2階建て住宅外観" width="704" height="548">
-                    <figcaption>施工年月：R2年2月 構造：S造</figcaption>
+                    <img  src="/img/img_elementarySchool01.jpg" alt="明るい日差しの入る小学校の教室" width="704" height="548">
+                    <figcaption>施工年月：R1年3月 構造：S造</figcaption>
                   </figure>
                 </article>
                 <article class="p-serviceContent__case">
-                  <h3>鷹峯（京都府京都市）のモダン和風住宅</h3>
+                  <h3>枚方市立暮方郵便局</h3>
                   <figure>
-                    <img src="/img/img_modernJapaneseStyleHouse01.jpg" alt="和風の庭のある3階建てのモダン木造住宅外観" width="704" height="548">
+                    <img src="/img/img_postOffice01.jpg" alt="曇り空を背景に建つ郵便局外観" width="704" height="548">
                     <figcaption>施工年月：R4年4月 構造：木造</figcaption>
                   </figure>
                 </article>
