@@ -42,10 +42,38 @@ include $_SERVER['DOCUMENT_ROOT'] . '/inc/head.php';
         </div>
       </section>
 
-      <section class="p-aboutPhilosophy" id="philosophy">
-        <div class="l-inner--923">
-          <h2 class="p-aboutphilosophy__title c-aboutH2">経営理念</h2>
-        </div>
+      <section class="p-serviceHousing" id="housing">
+        <div class="l-inner--960">
+          <img class="p-serviceHousing__mainImg" src="/img/img_service02.jpg" alt="オリエンタルな雰囲気のリビングダイニング">
+          <div class="p-serviceHousing__contents">
+            <h2 class="p-serviceHousing c-serviceH2">住宅建築・リフォーム</h2>
+            <div>
+              <div class="p-serviceHousing_discription">
+                <div class="p-serviceHousing_discriptionLead">
+                  <p>当社の住宅建築・リフォーム事業では、お客様の夢や理想を具現化するためのサービスを提供しています。</p>
+                </div>
+                <div class="p-serviceHousing_discriptionText">
+                  <p>新しい家を建てる際には、お客様のニーズや希望を理解し、オーダーメイドの住宅を設計・施工します。</p>
+                  <p>また、古くなったり、機能性が低下したりした建物を、新しい価値ある空間へと再生するリフォームサービスを提供しています。お客様のライフスタイルやニーズに合わせて、効率的かつリーズナブルなリフォームプランをご提案し、品質に妥協することなく施工いたします。</p>
+                </div>
+              </div><!-- .p-serviceHousing_discription -->
+              <div class="p-serviceHousing_cases">
+                <article class="p-serviceHousing_case">
+                  <h3>芦屋（兵庫県）のコテージ付き住宅</h3>
+                  <figure src="/img/img_housesWithCottages01.jpg" alt="コテージのある2階建て住宅外観" width="704" height="548">
+                    <figcaption>施工年月：R2年2月 構造：S造</figcaption>
+                  </figure>
+                </article>
+                <article class="p-serviceHousing_case">
+                  <h3>鷹峯（京都府京都市）のモダン和風住宅</h3>
+                  <figure src="/img/img_modernJapaneseStyleHouse01.jpg" alt="和風の庭のある3階建てのモダン木造住宅外観" width="704" height="548">
+                    <figcaption>施工年月：R4年4月 構造：木造</figcaption>
+                  </figure>
+                </article>
+              </div><!-- .p-serviceHousing_case -->
+            </div>
+          </div><!-- .p-serviceHousing__contents -->
+        </div><!-- l-inner--960 -->
       </section>
 
 
