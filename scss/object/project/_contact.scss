@@ -1,0 +1,21 @@
+/******************************
+page contact,thanks
+******************************/
+@use "../../foundation/forwards" as *;
+@use "sass:math";
+
+.p-contact, 
+.p-thanks{
+ .c-lowerHero {
+  &__body {
+    aspect-ratio: 1120 / 656;
+  }
+ }
+ 
+ .c-lowerHeaderSection {
+    padding-block: rem(69) rem(22);
+    &__text {
+      margin-bottom: 0;
+    }
+ }
+}

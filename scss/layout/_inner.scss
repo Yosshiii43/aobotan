@@ -47,3 +47,11 @@ l-inner 汎用インナー
     max-width: calc(960px + var(--inner-pl) + var(--inner-pr));
   }
 }
+
+.l-inner--470 {
+  width: 100%;
+  max-width: calc(470px + var(--inner-pl) + var(--inner-pr));
+  padding-left:  var(--inner-pl);
+  padding-right: var(--inner-pr);
+  box-sizing: border-box;
+}

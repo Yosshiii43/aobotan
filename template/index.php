@@ -25,6 +25,22 @@ include $_SERVER['DOCUMENT_ROOT'] . '/inc/head.php';
       <?php include $_SERVER['DOCUMENT_ROOT'] . '/inc/hero.php'; ?>
 
       <!-- コンテンツ -->
+      <section class="c-lowerHeaderSection">
+        <div class="l-inner--703">
+          <h1 class="c-lowerHeaderSection__title">お問い合わせ</h1>
+          <div class="c-lowerHeaderSection__text">
+            <p>青牡丹工務店のサービスにご興味を持って頂き、誠にありがとうございます。下記のフォームよりお問い合わせください。</p>
+          </div>
+          <div class="c-lowerHeaderSection__button">
+            <a class="c-button--b" href="#housing">住宅建築・リフォーム</a>
+            <a class="c-button--b" href="#business">法人新築・リフォーム</a>
+            <a class="c-button--b" href="#public">公共工事</a>
+          </div>
+          <div class="c-lowerHeaderSection__catch">
+            <img src="/img/img_service01.svg" alt="">
+          </div>
+        </div>
+      </section>
 
       <?php include $_SERVER['DOCUMENT_ROOT'] . '/inc/contactSec.php'; ?>
 <?php include $_SERVER['DOCUMENT_ROOT'] . '/inc/footer.php'; ?>
