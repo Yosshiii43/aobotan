@@ -23,10 +23,12 @@ page contact,thanks
   display: flex;
   flex-direction: column;
   gap: rem(80);
+  padding-bottom: rem(40);
   @include mq("tab") {
     flex-direction: row;
     justify-content: space-between;
     gap: 0;
+    padding-bottom: rem(32);
   }
 
   .p-contact__tel {
