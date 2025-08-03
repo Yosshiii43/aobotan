@@ -147,8 +147,9 @@ contactForm
         align-items: center;
         justify-content: center;
         gap: rem(8);
-        margin-top: rem(51);
-        margin-bottom: rem(69);
+        margin-top: rem(51) - rem(6.4); //line-height1.8にするため
+        margin-bottom: rem(69) - rem(6.4);
+        line-height: 1.8;
         
         input {
           width: 16px;
