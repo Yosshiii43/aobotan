@@ -174,7 +174,9 @@ contactForm
   }
 
   &__button {
-    padding: rem(21) rem(109);
+    padding: rem(21) 0;
+    width: 80%;
+    max-width: rem(284);
     color: $color-white;
     background-color: $color-main;
     border-color: $color-main;
