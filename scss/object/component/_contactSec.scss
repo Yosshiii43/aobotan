@@ -157,10 +157,12 @@ contact section
             justify-content: flex-start;
             gap: rem(8);
             width: fit-content;
-            padding: rem(19) rem(39) rem(19) rclamp(20, 39, 320, 340);
+            padding: rem(20) rem(40) rem(20) rclamp(20, 40, 320, 340);
+            border: none;
             
             &:hover img{
               filter: brightness(0) invert(1);
+              border: none;
             }
           }
         }
