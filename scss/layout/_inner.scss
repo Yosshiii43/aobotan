@@ -50,8 +50,24 @@ l-inner 汎用インナー
 
 .l-inner--470 {
   width: 100%;
-  max-width: calc(470px + var(--inner-pl) + var(--inner-pr));
+  max-width: 470px;
+  box-sizing: border-box;
+  @include mq("tab") {
+    max-width: rclamp(420, 470, 744, 1023);
+    margin-right: rem(20);
+  }
+    @include mq("pc") {
+    max-width: rclamp(420, 470, 1024, 1440);
+    margin-right: rem(20);
+  }
+}
+
+.l-inner--880 {
+  width: 100%;
   padding-left:  var(--inner-pl);
   padding-right: var(--inner-pr);
   box-sizing: border-box;
+  @include mq("tab") {
+    max-width: calc(880px + var(--inner-pl) + var(--inner-pr));
+  }
 }

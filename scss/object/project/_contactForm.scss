@@ -5,13 +5,13 @@ contactForm
 @use "sass:math";
 
 .p-contactForm {
-  padding-top: rem(40);
 
   &__progress {
     position: relative;
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: rem(52);
+    margin-bottom: rem(62);
 
     &::after {
       position: absolute;
@@ -47,6 +47,143 @@ contactForm
         background-color: $color-main;
       }
 
+    }
+  }
+
+  &__form {
+    &Body {
+      .p-contactForm__item {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: rem(26);
+        line-height: 1;
+
+        .p-contactForm__label{
+          font-weight: 700;
+          line-height: 1;
+          margin-bottom: rem(27);
+
+          span {
+            display: inline-block;
+            font-size: rem(12);
+            margin-left: rem(8);
+
+            &::first-letter {
+              color: $color-red;
+            }
+          }
+        }
+
+        input[type="text"] {
+          font-weight: 700;
+          padding: rem(17.5) rem(15);
+          border: 1px solid $color-bluegray;
+          background-color: $color-lightgray;
+          box-sizing: border-box;
+          width: 100%;
+          min-width: 0;
+          &::placeholder {
+            color: $color-gray;
+          }
+        }
+      }
+
+      .p-contactForm__item--type {
+        .p-contactForm__radioItem {
+          display: flex;
+          align-items: center;
+          gap: rem(8);
+          margin-bottom: rem(14);
+
+          &:last-child {
+            margin-bottom: 0;
+          }
+
+          input {
+            position: relative;
+            width: 16px;
+            height: 16px;
+            border: 1px solid $color-main;
+            border-radius: 50%;
+            -webkit-appearance: none;
+              -moz-appearance: none;
+                    appearance: none;
+          }
+          input:checked:before {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: $color-main;
+            content: '';
+          }
+          label {
+            font-weight: 700;
+          }
+        }
+      }
+
+      .p-contactForm__item--name {
+        > div {
+          display: grid;
+          grid-template-columns: 1fr;
+          gap: rem(20);
+          @include mq("tab") {
+            grid-template-columns: 1fr 1fr;
+            gap: rclamp(20, 40, 744, 1023);
+          }
+          @include mq("pc") {
+            gap: rclamp(20, 40, 1024, 1440);
+          }
+        }
+      }
+
+      .p-contactForm__item--agree {
+        flex-direction: row;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: rem(8);
+        margin-top: rem(51);
+        margin-bottom: rem(69);
+        
+        input {
+          width: 16px;
+          height: 16px;
+          border: 1px solid $color-main;
+          -webkit-appearance: none;
+            -moz-appearance: none;
+                  appearance: none;
+        }
+        input:checked {
+          -webkit-appearance: auto;
+          -moz-appearance: auto;
+                appearance: auto;
+          width: 16px;
+          height: 16px;
+          accent-color: $color-main;
+        }
+        .p-contactForm__label {
+          margin-bottom: 0;
+        }
+      }
+    }
+  }
+
+  &__button {
+    padding: rem(21) rem(109);
+    color: $color-white;
+    background-color: $color-main;
+    border-color: $color-main;
+    margin-inline: auto;
+    display: flex;
+    justify-content: center;
+
+    &::after {
+      background-color: $color-white;
     }
   }
 }

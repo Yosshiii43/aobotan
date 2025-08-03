@@ -37,19 +37,95 @@ include $_SERVER['DOCUMENT_ROOT'] . '/inc/head.php';
         </div>
       </section>
 
-      <article class="p-contactForm">
+      <div class="p-contact__wrapper l-inner--880">
         <div class="l-inner--470">
-          <div class="p-contactForm__progress">
-            <div class="p-contactForm__progressItem is-current"><span>01</span><span>入力</span></div>
-            <div class="p-contactForm__progressItem"><span>02</span><span>送信完了</span></div>
-          </div><!-- .p-contactForm__progress -->
+          <article class="p-contactForm">
+            <div class="p-contactForm__progress">
+              <div class="p-contactForm__progressItem is-current"><span>01</span><span>入力</span></div>
+              <div class="p-contactForm__progressItem"><span>02</span><span>送信完了</span></div>
+            </div><!-- .p-contactForm__progress -->
 
-          <form action="">
-            
-          </form>
+            <form class="p-contactForm__form js-form" method="post" action="mail.php">
+              <div class="p-contactForm__formBody">
+
+                <!-- お問い合わせの種類 -->
+                <fieldset class="p-contactForm__item p-contactForm__item--type">
+                  <legend class="p-contactForm__label">お問い合わせの種類<span>★必須</span></legend>
+
+                  <div class="p-contactForm__radioItem">
+                    <input type="radio" id="house" name="お問い合わせの種類" value="注文住宅の相談" required>
+                    <label for="house">注文住宅の相談</label>
+                  </div>
+
+                  <div class="p-contactForm__radioItem">
+                    <input type="radio" id="corporate" name="お問い合わせの種類" value="法人建築の相談">
+                    <label for="corporate">法人建築の相談</label>
+                  </div>
+
+                  <div class="p-contactForm__radioItem">
+                    <input type="radio" id="renovation" name="お問い合わせの種類" value="リフォームの相談">
+                    <label for="renovation">リフォームの相談</label>
+                  </div>
+
+                  <div class="p-contactForm__radioItem">
+                    <input type="radio" id="publicworks" name="お問い合わせの種類" value="公共工事の相談">
+                    <label for="publicworks">公共工事の相談</label>
+                  </div>
+
+                  <div class="p-contactForm__radioItem">
+                    <input type="radio" id="other" name="お問い合わせの種類" value="その他">
+                    <label for="other">その他</label>
+                  </div>
+                </fieldset>
+
+                <!-- お名前 -->
+                <fieldset class="p-contactForm__item p-contactForm__item--name">
+                  <legend class="p-contactForm__label">お名前<span>&#9733;必須</span></legend>
+                  <div>
+                    <input name="姓" type="text" required autocomplete="family-name" placeholder="青牡丹" required>
+                    <input name="名" type="text" autocomplete="given-name" placeholder="幸太郎" required>
+                  </div>
+                </fieldset>
+
+                <!-- メールアドレス -->
+                <div class="p-contactForm__item">
+                  <label class="p-contactForm__label" for="email">メールアドレス<span>&#9733;必須</span></label>
+                  <input type="text" id="email" name="Email" placeholder="aobotan@gmail.com" autocomplete="email" required>
+                </div>
+
+                <!-- 電話番号 -->
+                <div class="p-contactForm__item">
+                  <label class="p-contactForm__label" for="tel">電話番号</label>
+                  <input type="text" name="電話番号" placeholder="000-0000-0000" autocomplete="tel">
+                </div>
+
+                <!-- 住所 -->
+                <div class="p-contactForm__item">
+                  <label class="p-contactForm__label" for="address">住所<span>&#9733;必須</span></label>
+                  <input type="text" id="address" name="住所" placeholder="大阪府大阪市中央区北区南町5-6-7" autocomplete="street-address" required>
+                </div>
+
+                <!-- 同意チェック -->
+                <div class="p-contactForm__item p-contactForm__item--agree">
+                  <input class="p-contactForm__label" type="checkbox" name="agree" id="agree" required>
+                  <label for="agree">入力内容に間違いないことを確認しました</label>
+                </div>
+
+                <!-- 送信ボタン -->
+                <button class="c-button--a p-contactForm__button" type="submit" disabled>送信する</button>
+
+              </div><!-- .p-contactForm__formBody -->
+            </form><!-- .p-contactForm__form -->
+          </article><!-- .p-contactForm -->
         </div><!-- .l-inner--470 -->
-      </article><!-- .p-contactForm -->
 
+        <article class="p-contact__tel">
+          <p>お電話も受け付けています。</p>
+          <p><a href="tel:0000-000-0000">0000-000-0000</a></p>
+          <p>営業時間10:00-20:00</p>
+        </article>
+
+      </div><!-- .p-contact_wrapper -->
 
       <?php include $_SERVER['DOCUMENT_ROOT'] . '/inc/contactSec.php'; ?>
 <?php include $_SERVER['DOCUMENT_ROOT'] . '/inc/footer.php'; ?>

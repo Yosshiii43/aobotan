@@ -626,3 +626,40 @@ window.addEventListener('resize', () => {
   clearTimeout(window._footerBreakTimer);
   window._footerBreakTimer = setTimeout(updateFooterBreakVisibility, 100);
 });
+
+
+/*************************************************************************
+ * メールフォーム
+ *************************************************************************/
+document.addEventListener('DOMContentLoaded', () => {
+  const form = document.querySelector('.js-form');
+  if (!form) return;
+
+  const submitButton = form.querySelector('button[type="submit"]');
+
+  // 入力監視して送信ボタンの有効・無効を制御
+  form.addEventListener('input', () => {
+    submitButton.disabled = !form.checkValidity();
+  });
+
+  // 電話番号フィールドの整形
+  form.querySelectorAll('input[type="tel"]').forEach(telField => {
+    telField.addEventListener('blur', () => {
+      let v = telField.value.trim();
+
+      /* +8190… → 090… */
+      if (/^\+81\d{9,10}$/.test(v)) {
+        v = '0' + v.slice(3);
+      }
+
+      /* ハイフンが無ければ 3-4-4 / 2-4-4 に整形 */
+      if (/^\d{10,11}$/.test(v)) {
+        v = v.length === 11
+          ? v.replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3')  // 11桁 → 3-4-4
+          : v.replace(/(\d{2})(\d{4})(\d{4})/, '$1-$2-$3'); // 10桁 → 2-4-4
+      }
+
+      telField.value = v;
+    });
+  });
+});
