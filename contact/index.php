@@ -82,21 +82,25 @@ include $_SERVER['DOCUMENT_ROOT'] . '/inc/head.php';
                 <fieldset class="p-contactForm__item p-contactForm__item--name">
                   <legend class="p-contactForm__label">お名前<span>&#9733;必須</span></legend>
                   <div>
-                    <input name="姓" type="text" required autocomplete="family-name" placeholder="青牡丹" required>
-                    <input name="名" type="text" autocomplete="given-name" placeholder="幸太郎" required>
+                    <label>
+                      <input name="姓" type="text" required autocomplete="family-name" placeholder="青牡丹" aria-label="姓" required>
+                    </label>
+                    <label>
+                      <input name="名" type="text" autocomplete="given-name" placeholder="幸太郎" aria-label="名" required>
+                    </label>
                   </div>
                 </fieldset>
 
                 <!-- メールアドレス -->
                 <div class="p-contactForm__item">
                   <label class="p-contactForm__label" for="email">メールアドレス<span>&#9733;必須</span></label>
-                  <input type="text" id="email" name="Email" placeholder="aobotan@gmail.com" autocomplete="email" required>
+                  <input type="email" id="email" name="メールアドレス" placeholder="aobotan@gmail.com" autocomplete="email" required>
                 </div>
 
                 <!-- 電話番号 -->
                 <div class="p-contactForm__item">
                   <label class="p-contactForm__label" for="tel">電話番号</label>
-                  <input type="text" name="電話番号" placeholder="000-0000-0000" autocomplete="tel">
+                  <input type="tel" id="tel" name="電話番号" placeholder="000-0000-0000" pattern="^(0\d{1,4}-\d{1,4}-\d{3,4}|0\d{9,10})?$" autocomplete="tel-national">
                 </div>
 
                 <!-- 住所 -->
@@ -107,12 +111,12 @@ include $_SERVER['DOCUMENT_ROOT'] . '/inc/head.php';
 
                 <!-- 同意チェック -->
                 <div class="p-contactForm__item p-contactForm__item--agree">
-                  <input class="p-contactForm__label" type="checkbox" name="agree" id="agree" required>
+                  <input class="p-contactForm__label" type="checkbox" name="同意" id="agree" required>
                   <label for="agree">入力内容に間違いないことを確認しました</label>
                 </div>
 
                 <!-- 送信ボタン -->
-                <button class="c-button--a p-contactForm__button" type="submit" disabled>送信する</button>
+                <button class="c-button--a p-contactForm__button is-disabled" type="submit">送信する</button>
 
               </div><!-- .p-contactForm__formBody -->
             </form><!-- .p-contactForm__form -->

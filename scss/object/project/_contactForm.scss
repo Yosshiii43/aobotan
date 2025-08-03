@@ -74,7 +74,9 @@ contactForm
           }
         }
 
-        input[type="text"] {
+        input[type="text"],
+        input[type="email"],
+        input[type="tel"] {
           font-weight: 700;
           padding: rem(17.5) rem(15);
           border: 1px solid $color-bluegray;
@@ -187,6 +189,16 @@ contactForm
 
     &::after {
       background-color: $color-white;
+    }
+
+    &.is-disabled {
+      cursor: not-allowed;
+
+      &:hover {
+        color: $color-white;
+        background-color: $color-main;
+        border-color: $color-main;
+      }
     }
   }
 }

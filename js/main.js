@@ -467,85 +467,6 @@ document.addEventListener('DOMContentLoaded', () => {
   window.addEventListener('scroll', onScroll);
 });
 
-/*************************************************************************
- * 電話番号表示形式
- *************************************************************************/
-document.addEventListener('DOMContentLoaded', () => {
-  document
-    .querySelectorAll('.js-form__tel input[type="tel"]')   // ← input 要素だけ取る
-    .forEach(telField => {
-
-      telField.addEventListener('blur', () => {
-        let v = telField.value.trim();
-
-        /* +8190… → 090… */
-        if (/^\+81\d{9,10}$/.test(v)) {
-          v = '0' + v.slice(3);
-        }
-
-        /* ハイフンが無ければ 3-4-4 / 2-4-4 に整形 */
-        if (/^\d{10,11}$/.test(v)) {
-          v = v.length === 11
-            ? v.replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3')  // 11桁 → 3-4-4
-            : v.replace(/(\d{2})(\d{4})(\d{4})/, '$1-$2-$3'); // 10桁 → 2-4-4
-        }
-
-        telField.value = v;
-      });
-    });
-});
-
-
-/*************************************************************************
- * 資料請求フォーム
- *************************************************************************/
-document.querySelectorAll('.js-dlForm').forEach(form => {
-  const body = form.querySelector('.c-form__inner');
-  const btn  = form.querySelector('.js-dlBtn');
-  const msg  = form.querySelector('.js-thanksMsg');
-
-  if (!form || !btn || !msg || !body) {
-    console.warn('フォーム部品が見つかりません');
-    return;
-  }
-
-  form.addEventListener('submit', async (e) => {
-    e.preventDefault();
-
-    if (!form.reportValidity()) return;  // 必須・型チェック
-
-    btn.disabled = true;
-    btn.classList.add('is-disabled'); 
-
-    try {
-      /** 1) HTTP レイヤーのエラーを確認 */
-      const res = await fetch(form.action, {
-        method: 'POST',
-        body  : new FormData(form),
-        credentials: 'same-origin'
-      });
-
-      if (!res.ok) throw new Error(`HTTP ${res.status}`);
-
-      /** 2) JSON をパースしてアプリケーションエラーを確認 */
-      const data = await res.json();               // ← ここで壊れた JSON なら catch へ
-      if (data.status !== 'ok') throw new Error('API status NG');
-
-      /** 3) 成功処理 */
-      const h = body.offsetHeight;                 // 現在の高さを取得
-      form.style.minHeight = `${h}px`;             // フォーム全体の最小高さを固定
-      body.style.display = 'none';                 // 入力・ボタン・注意書きを隠す
-      msg.style.display  = 'block';                // サンクスメッセージ表示
-
-    } catch (err) {
-      alert('送信に失敗しました。時間をおいて再度お試しください');
-      btn.disabled = false;
-      btn.classList.remove('is-disabled');
-      console.error(err);                          // console で原因を確認できる
-    }
-  });
-});
-
 
 /*************************************************************************
  * 1行と複数行の判定
@@ -632,34 +553,87 @@ window.addEventListener('resize', () => {
  * メールフォーム
  *************************************************************************/
 document.addEventListener('DOMContentLoaded', () => {
-  const form = document.querySelector('.js-form');
+  const form = document.querySelector('.p-contactForm__form');
   if (!form) return;
 
-  const submitButton = form.querySelector('button[type="submit"]');
+  const submitBtn = form.querySelector('.p-contactForm__button');
+  const requiredFields = form.querySelectorAll('[required]');
+  const telInput = form.querySelector('input[name="電話番号"]');
 
-  // 入力監視して送信ボタンの有効・無効を制御
-  form.addEventListener('input', () => {
-    submitButton.disabled = !form.checkValidity();
+  // --- 初期状態で見た目を無効化 ---
+  submitBtn.classList.add('is-disabled');
+
+  // --- 電話番号を整形する関数 ---
+  function formatPhoneNumber(value) {
+    let val = value.replace(/[０-９]/g, s => String.fromCharCode(s.charCodeAt(0) - 0xFEE0)) // 全角→半角
+                   .replace(/[^\d-]/g, ''); // 数字とハイフン以外削除
+
+    const raw = val.replace(/-/g, '');
+    if (!/^0\d+$/.test(raw)) return val; // 先頭0以外は整形しない
+
+    if (raw.length === 11) {
+      // 携帯など 3-4-4
+      return raw.replace(/^(\d{3})(\d{4})(\d{4})$/, '$1-$2-$3');
+    } else if (raw.length === 10) {
+      // 入力者がハイフンを入れていたら優先
+      if (value.includes('-')) return val;
+
+      if (/^(0120|0800)/.test(raw)) {
+        // フリーダイヤル 4-3-3
+        return raw.replace(/^(\d{4})(\d{3})(\d{3})$/, '$1-$2-$3');
+      } else if (/^0[36]/.test(raw)) {
+        // 東京03 / 大阪06 2-4-4
+        return raw.replace(/^(\d{2})(\d{4})(\d{4})$/, '$1-$2-$3');
+      } else {
+        // その他固定電話 3-3-4
+        return raw.replace(/^(\d{3})(\d{3})(\d{4})$/, '$1-$2-$3');
+      }
+    }
+    return val; // 桁数不足はそのまま
+  }
+
+  // --- フィールドの入力チェック ---
+  function validateField(field) {
+    if (field === telInput) {
+      field.value = formatPhoneNumber(field.value);
+    }
+    return field.checkValidity();
+  }
+
+  // --- ボタンの有効化制御 ---
+  function updateSubmitState() {
+    const allValid = Array.from(requiredFields).every(f => validateField(f));
+    submitBtn.classList.toggle('is-disabled', !allValid);
+  }
+
+  // --- 入力イベント ---
+  form.addEventListener('input', e => {
+    const field = e.target;
+    if (!(field instanceof HTMLInputElement || field instanceof HTMLTextAreaElement)) return;
+
+    if (field.required || field === telInput) {
+      validateField(field);
+      updateSubmitState();
+    }
   });
 
-  // 電話番号フィールドの整形
-  form.querySelectorAll('input[type="tel"]').forEach(telField => {
-    telField.addEventListener('blur', () => {
-      let v = telField.value.trim();
+  // --- blur 時にバリデーション＆電話整形 ---
+  form.addEventListener('blur', e => {
+    const field = e.target;
+    if (!(field instanceof HTMLInputElement || field instanceof HTMLTextAreaElement)) return;
 
-      /* +8190… → 090… */
-      if (/^\+81\d{9,10}$/.test(v)) {
-        v = '0' + v.slice(3);
-      }
+    if (field.required || field === telInput) {
+      validateField(field);
+      updateSubmitState();
+    }
+  }, true);
 
-      /* ハイフンが無ければ 3-4-4 / 2-4-4 に整形 */
-      if (/^\d{10,11}$/.test(v)) {
-        v = v.length === 11
-          ? v.replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3')  // 11桁 → 3-4-4
-          : v.replace(/(\d{2})(\d{4})(\d{4})/, '$1-$2-$3'); // 10桁 → 2-4-4
-      }
-
-      telField.value = v;
-    });
+  // --- submit 時 ---
+  form.addEventListener('submit', e => {
+    // is-disabled なら強制的にエラーを表示
+    if (submitBtn.classList.contains('is-disabled')) {
+      e.preventDefault();
+      form.reportValidity();
+    }
   });
 });
