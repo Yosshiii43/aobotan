@@ -174,12 +174,13 @@ contact section
     position: absolute;
     top: rem(36);
     right: rem(20);
-    height: rclamp(86, 256, 375, 1440);
-    width: auto;
+    width: rclamp(59, 175, 375, 1440);
+    height: auto;
 
     img {
       width: 100%;
-      height: 100%;
+      height: auto;
+      aspect-ratio: 175 / 256;
     }
   }
 
