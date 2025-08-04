@@ -12,6 +12,7 @@
 
   > div {
     position: relative;
+    max-width: rem(600);
   }
   
   &__title {
@@ -26,6 +27,7 @@
 
   &__text {
     margin-bottom: rem(48);
+    max-width: rem(422);
     @include mq("tab") {
       margin-bottom: rem(64);
       width: rem(422);
@@ -50,10 +52,13 @@
     position: absolute;
     top: calc(-1 * rem(20));
     right: var(--inner-pr);
-    width: rem(80);
+    width: rclamp(80, 120, 375, 743);
     @include mq("tab") {
       top: 0;
-      width: rem(165);
+      width: rclamp(120, 140, 744, 1023);
+    }
+    @include mq("pc") {
+      width: rclamp(120, 165, 1024, 1440);
     }
 
     img {
