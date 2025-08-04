@@ -1,0 +1,26 @@
+/******************************
+page thanks
+******************************/
+@use "../../foundation/forwards" as *;
+@use "sass:math";
+
+.p-thanks {
+  .p-contact__wrapper {
+    padding-bottom: rem(40);
+    @include mq("tab") {
+      padding-bottom: rem(130);
+    }
+    .p-contactForm {
+      &__progress {
+        margin-bottom: rem(91);
+      }
+
+      &__button {
+        width: rem(284);
+        max-width: 100%;
+        margin-inline-start: 0;
+        margin-inline-end: auto;
+      }
+    }
+  }
+}

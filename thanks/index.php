@@ -1,13 +1,13 @@
 <?php
 $pageTitle = '送信完了 | 青牡丹工務店';
-$pageDescription = '大阪府大阪市に拠点をおく青牡丹工務店にお問い合わせをありがとうございました。';
+$pageDescription = '大阪府大阪市に拠点をおく青牡丹工務店のお問い合わせフォーム送信完了画面です。';
 $ogImage = '/img/img_ogp.png';
 $ogUrl = 'https://aobotan.yosshiii.site/thanks/';
 $noIndex = true;
-$heroImage = '/img/img_serviceHero01.jpg';
-$heroImageAlt = '建築模型';
+$heroImage = '/img/img_contactHero01.jpg';
+$heroImageAlt = '机に置かれた設計図と鉛筆';
 $heroImageWidth ='2240';
-$heroImageHeight ='1342';
+$heroImageHeight ='1312';
 include $_SERVER['DOCUMENT_ROOT'] . '/inc/head.php';
 ?>
 
@@ -29,21 +29,33 @@ include $_SERVER['DOCUMENT_ROOT'] . '/inc/head.php';
         <div class="l-inner--703">
           <h1 class="c-lowerHeaderSection__title">送信完了</h1>
           <div class="c-lowerHeaderSection__text">
-            <p>お問い合わせありがとうございました。</p>
+            <p>お問い合わせありがとうございました</p>
             <p>後日担当者より返信させていただきますので、お待ち下さいませ。</p>
           </div>
-          <div class="c-lowerHeaderSection__button">
-            <a class="c-button--b" href="#housing">住宅建築・リフォーム</a>
-            <a class="c-button--b" href="#business">法人新築・リフォーム</a>
-            <a class="c-button--b" href="#public">公共工事</a>
-          </div>
           <div class="c-lowerHeaderSection__catch">
-            <img src="/img/img_service01.svg" alt="">
+            <img src="/img/img_contact02.svg" alt="">
           </div>
         </div>
       </section>
 
-      
+      <div class="p-contact__wrapper l-inner--880">
+        <div class="l-inner--470">
+          <article class="p-contactForm">
+            <div class="p-contactForm__progress">
+              <div class="p-contactForm__progressItem"><span>01</span><span>入力</span></div>
+              <div class="p-contactForm__progressItem is-current"><span>02</span><span>送信完了</span></div>
+            </div><!-- .p-contactForm__progress -->
+            <a class="c-button--a p-contactForm__button" href="/">トップページに戻る</a>
+          </article><!-- .p-contactForm -->
+        </div><!-- .l-inner--470 -->
+
+        <article class="p-contact__tel">
+          <p>お電話も受け付けています。</p>
+          <p><a href="tel:0000-000-0000">0000-000-0000</a></p>
+          <p>営業時間10:00-20:00</p>
+        </article>
+
+      </div><!-- .p-contact_wrapper -->
 
       <?php include $_SERVER['DOCUMENT_ROOT'] . '/inc/contactSec.php'; ?>
 <?php include $_SERVER['DOCUMENT_ROOT'] . '/inc/footer.php'; ?>
