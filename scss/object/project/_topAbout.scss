@@ -4,7 +4,7 @@ Top about
 @use "../../foundation/forwards" as *;
 @use "sass:math";
 
-@mixin topAbout-desktop(){
+@mixin topAbout-tablet(){
   &__head {
     padding-block: rem(63) rem(63);
     margin-bottom: rem(71);
@@ -112,10 +112,10 @@ Top about
 
   /* フォールバック（コンテナ未対応ブラウザ用） */
   @include mq("tab"){
-    @include topAbout-desktop();
+    @include topAbout-tablet();
   }
 
   @include cq(main, 744px) {
-    @include topAbout-desktop();
+    @include topAbout-tablet();
   }
 }
