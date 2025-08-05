@@ -56,7 +56,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (_animFrame) { cancelAnimationFrame(_animFrame); _animFrame = null; }
   };
 
-  const easeOut = t => t * (2 - t);
+  const easeOut = t => 1 - Math.pow(1 - t, 3); // 立ち上がり速め
 
   function animateScrollTo(targetY, duration = 450) {
     return new Promise(resolve => {
