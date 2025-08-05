@@ -12,7 +12,9 @@
 
   > div {
     position: relative;
-    max-width: rem(600);
+    @media(max-width: 733px) {
+      max-width: rem(600);
+    }
   }
   
   &__title {
