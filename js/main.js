@@ -3,65 +3,23 @@
  * ハンバーガーメニュー制御 + スムーススクロール安定化 + ヘッダーずれ対策 + フェードイン即時表示
  *************************************************************************/
 
-// リロード時に勝手に元のスクロール位置へ戻らないように
+// リロード時や戻る進むでブラウザが勝手に位置復元しないように
 if ('scrollRestoration' in history) {
   history.scrollRestoration = 'manual';
 }
 
 document.addEventListener('DOMContentLoaded', () => {
   const BREAKPOINT_PC = 1024;
-  const HEADER_H = 79; // SP固定ヘッダー高さ
+  const HEADER_H = 79; // SP 固定ヘッダーの見込み高さ（px）
+  const isPC = () => window.innerWidth >= BREAKPOINT_PC;
+
   const body = document.body;
   const nav = document.querySelector('.p-nav');
   const hamburger = document.querySelector('.c-hamburger');
-
   if (!nav) return;
 
   /* -------------------------------------------------
-     0. 初期スクロール制御（iOS Safari 初回ズレ対策）
-  ------------------------------------------------- */
-  if ('scrollRestoration' in history) {
-    history.scrollRestoration = 'manual';
-  }
-  window.scrollTo(0, 0);
-
-  function scrollToHash(href, smooth = true) {
-    const target = document.querySelector(href);
-    if (!target) return;
-
-    const doScroll = () => {
-      const rect = target.getBoundingClientRect();
-      const targetTop = window.scrollY + rect.top;
-      const offsetTop = window.innerWidth < BREAKPOINT_PC
-        ? targetTop - HEADER_H
-        : targetTop;
-
-      // 1回目は即座にスクロール
-      window.scrollTo({ top: offsetTop, behavior: 'auto' });
-
-      // iOS Safari 対策：少し待って再計算してスクロール
-      setTimeout(() => {
-        const rect2 = target.getBoundingClientRect();
-        const targetTop2 = window.scrollY + rect2.top;
-        const offsetTop2 = window.innerWidth < BREAKPOINT_PC
-          ? targetTop2 - HEADER_H
-          : targetTop2;
-
-        window.scrollTo({ top: offsetTop2, behavior: smooth ? 'smooth' : 'auto' });
-      }, 350);
-    };
-
-    // viewport安定を少し待つ
-    setTimeout(doScroll, 100);
-  }
-
-  // ページ直アクセスで #id がある場合
-  if (location.hash) {
-    scrollToHash(location.hash, false);
-  }
-
-  /* -------------------------------------------------
-     1. SP モバイルメニュー開閉
+     1) モバイルメニュー開閉
   ------------------------------------------------- */
   const openMobileMenu = () => {
     nav.classList.add('is-open');
@@ -88,53 +46,131 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   /* -------------------------------------------------
-     2. ハッシュリンクのスムーススクロール
+     2) オフセット計算 & スクロール（補正付き）
+     - SP時は固定ヘッダー分(79px)を引く
+     - iOS Safari 初回ズレを軽減するため、再補正を数回だけ実施
+  ------------------------------------------------- */
+  const computeOffsetTop = (el) => {
+    const rect = el.getBoundingClientRect();
+    const targetTop = window.scrollY + rect.top;
+    return isPC() ? targetTop : (targetTop - HEADER_H);
+  };
+
+  // クリック時などユーザー操作のスクロール（基本は smooth）
+  function scrollToElement(el, smooth = true) {
+    if (!el) return;
+
+    // まず目的位置へ（スムース）
+    const firstY = computeOffsetTop(el);
+    window.scrollTo({ top: firstY, behavior: smooth ? 'smooth' : 'auto' });
+
+    // その後 2～3フレームだけ描画に合わせて再補正（瞬間移動）し、誤差を消す
+    let attempts = 0;
+    const maxAttempts = 3;
+    const rafAdjust = () => {
+      attempts++;
+      const y = computeOffsetTop(el);
+      const diff = y - window.scrollY;
+      if (Math.abs(diff) > 1 && attempts <= maxAttempts) {
+        window.scrollTo({ top: y, behavior: 'auto' });
+        requestAnimationFrame(rafAdjust);
+      }
+    };
+    requestAnimationFrame(rafAdjust);
+  }
+
+  // 初回直アクセス（URLに #id あり）のときのスクロール（正確さ優先）
+  function initialHashScroll() {
+    const hash = location.hash;
+    if (!hash || hash === '#') return;
+    const target = document.querySelector(hash);
+    if (!target) return;
+
+    // 画像/フォント後の描画安定に少し猶予
+    setTimeout(() => {
+      // まず瞬間移動で位置合わせ
+      const firstY = computeOffsetTop(target);
+      window.scrollTo({ top: firstY, behavior: 'auto' });
+
+      // アドレスバー縮み等に追従（数フレームだけ）
+      let attempts = 0;
+      const maxAttempts = 5;
+      const rafAdjust = () => {
+        attempts++;
+        const y = computeOffsetTop(target);
+        const diff = y - window.scrollY;
+        if (Math.abs(diff) > 1 && attempts <= maxAttempts) {
+          window.scrollTo({ top: y, behavior: 'auto' });
+          requestAnimationFrame(rafAdjust);
+        }
+      };
+      requestAnimationFrame(rafAdjust);
+    }, 80);
+  }
+
+  /* -------------------------------------------------
+     3) ナビ内リンクのクリック
+     - # のとき：スムーズ + SPはメニュー閉じてから
+     - 通常リンク：SPは閉じてから遷移（デフォルト動作のままでOK）
+     - 「ハッシュなしでスムーススクロール」要件に合わせ、クリック時はURLにハッシュを残さない
   ------------------------------------------------- */
   nav.addEventListener('click', (e) => {
     const a = e.target.closest('a[href]');
     if (!a) return;
 
     const href = a.getAttribute('href');
-    if (!href || href === '#') {
-      // ダミーリンクは閉じるだけ
-      if (window.innerWidth < BREAKPOINT_PC) closeMobileMenu();
+    if (!href) return;
+
+    // ダミーリンクは閉じるだけ
+    if (href === '#') {
+      if (!isPC()) closeMobileMenu();
       e.preventDefault();
       return;
     }
 
+    // ページ内リンク
     if (href.startsWith('#')) {
       e.preventDefault();
-      if (window.innerWidth < BREAKPOINT_PC && nav.classList.contains('is-open')) {
+      const target = document.querySelector(href);
+      if (!target) return;
+
+      if (!isPC() && nav.classList.contains('is-open')) {
+        // SP: 閉じアニメーション後にスクロール
         closeMobileMenu();
-        setTimeout(() => scrollToHash(href), 310); // メニュー閉鎖後にスクロール
+        setTimeout(() => {
+          scrollToElement(target, true);
+          // ハッシュをURLに残さない
+          history.replaceState(null, '', location.pathname + location.search);
+        }, 310);
       } else {
-        scrollToHash(href);
+        scrollToElement(target, true);
+        history.replaceState(null, '', location.pathname + location.search);
       }
-    } else if (window.innerWidth < BREAKPOINT_PC) {
-      // ページ遷移リンクは閉じてから遷移
+      return;
+    }
+
+    // 通常リンク：SPは閉じる（遷移はブラウザに任せる）
+    if (!isPC()) {
       closeMobileMenu();
     }
   });
 
   /* -------------------------------------------------
-     3. PCサブメニュー（hover & focus、Esc対応）
+     4) PCサブメニュー（hover / focus / Esc / 矢印）
+     - 以前の「実測 height アニメ」実装を踏襲
   ------------------------------------------------- */
-  const isPC = () => window.innerWidth >= BREAKPOINT_PC;
   const parentItems = nav.querySelectorAll('.p-nav__item.has-child');
   let activeLi = null;
   let transitionMap = new WeakMap();
 
-  function setState(li, state) {
-    li.dataset.state = state;
-  }
-
-  function cleanupTransition(panel) {
+  const setState = (li, state) => { li.dataset.state = state; };
+  const cleanupTransition = (panel) => {
     const listener = transitionMap.get(panel);
     if (listener) {
       panel.removeEventListener('transitionend', listener);
       transitionMap.delete(panel);
     }
-  }
+  };
 
   function closePanel(li, instant = false) {
     const trigger = li.querySelector(':scope > .p-nav__link');
@@ -196,7 +232,6 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!panel) return;
 
     if (activeLi && activeLi !== li) closePanel(activeLi);
-
     cleanupTransition(panel);
 
     setState(li, 'opening');
@@ -230,16 +265,18 @@ document.addEventListener('DOMContentLoaded', () => {
     activeLi = null;
   }
 
+  // イベント登録（PC）
   parentItems.forEach(li => {
     setState(li, 'closed');
+
     const trigger = li.querySelector(':scope > .p-nav__link');
     const panel   = li.querySelector(':scope > .p-nav__sublist');
     if (!trigger || !panel) return;
 
-    // Focus
+    // Focusで開く
     trigger.addEventListener('focus', () => openPanel(li));
 
-    // Keyboard
+    // 親リンクキーボード
     trigger.addEventListener('keydown', e => {
       if (!isPC()) return;
       if (e.key === 'ArrowDown') {
@@ -255,6 +292,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
 
+    // サブ内部
     panel.addEventListener('keydown', e => {
       if (!isPC()) return;
       if (e.key === 'Escape') {
@@ -269,9 +307,9 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
 
-    li.addEventListener('focusout', e => {
-      if (!isPC()) return;
-      if (!li.classList.contains('is-open')) return;
+    // フォーカス外れで閉じ
+    li.addEventListener('focusout', () => {
+      if (!isPC() || !li.classList.contains('is-open')) return;
       setTimeout(() => {
         const now = document.activeElement;
         if (li.contains(now)) return;
@@ -284,24 +322,21 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Hover
-    li.addEventListener('pointerenter', () => {
-      if (!isPC()) return;
-      openPanel(li);
-    });
-    li.addEventListener('pointerleave', () => {
-      if (!isPC()) return;
-      closePanel(li);
-    });
+    li.addEventListener('pointerenter', () => { if (isPC()) openPanel(li); });
+    li.addEventListener('pointerleave', () => { if (isPC()) closePanel(li); });
   });
 
+  // Nav外へフォーカス移動で全閉
   document.addEventListener('focusin', e => {
     if (isPC() && !nav.contains(e.target)) closeAll();
   });
 
+  // Escで全閉
   document.addEventListener('keydown', e => {
     if (isPC() && e.key === 'Escape') closeAll();
   });
 
+  // 幅切り替え
   window.addEventListener('resize', () => {
     if (!isPC()) {
       parentItems.forEach(li => {
@@ -309,7 +344,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const panel   = li.querySelector(':scope > .p-nav__sublist');
         cleanupTransition(panel);
         li.classList.remove('is-open','is-animating');
-        setState(li, 'open');
+        setState(li, 'open'); // SPでは開き扱い（リスト縦並び）
         trigger?.setAttribute('aria-expanded', 'false');
         if (panel) {
           panel.style.height     = 'auto';
@@ -323,49 +358,13 @@ document.addEventListener('DOMContentLoaded', () => {
       closeAll(true);
     }
   });
-});
 
-const BREAKPOINT_PC = 1024;
-const HEADER_H = 79;
-
-function smoothScrollWithCorrection(id) {
-  const target = document.querySelector(id);
-  if (!target) return;
-
-  let frameCount = 0;
-  const maxFrames = 20;
-
-  function adjustScroll(first) {
-    const rect = target.getBoundingClientRect();
-    const targetTop = window.scrollY + rect.top;
-    const offsetTop = window.innerWidth < BREAKPOINT_PC
-      ? targetTop - HEADER_H
-      : targetTop;
-
-    const currentY = window.scrollY;
-    const diff = offsetTop - currentY;
-
-    // 初回はautoでジャンプ、それ以降は誤差があれば補正
-    if (first) {
-      window.scrollTo({ top: offsetTop, behavior: 'auto' });
-    } else if (Math.abs(diff) > 1) {
-      window.scrollTo({ top: offsetTop, behavior: 'auto' });
-    }
-
-    frameCount++;
-    if (frameCount < maxFrames && Math.abs(diff) > 1) {
-      requestAnimationFrame(() => adjustScroll(false));
-    }
-  }
-
-  requestAnimationFrame(() => adjustScroll(true));
-}
-
-// 初回アクセスでURLにハッシュがある場合だけ補正
-window.addEventListener('load', () => {
-  if (location.hash) {
-    smoothScrollWithCorrection(location.hash);
-  }
+  /* -------------------------------------------------
+     5) 初回 # 直アクセスの補正（1回だけ）
+  ------------------------------------------------- */
+  window.addEventListener('load', () => {
+    initialHashScroll(); // 上で定義した正確さ優先の補正を実行
+  });
 });
 
 /*************************************************************************
