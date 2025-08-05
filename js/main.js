@@ -18,7 +18,50 @@ document.addEventListener('DOMContentLoaded', () => {
   if (!nav) return;
 
   /* -------------------------------------------------
-     1. モバイルメニュー開閉
+     0. 初期スクロール制御（iOS Safari 初回ズレ対策）
+  ------------------------------------------------- */
+  if ('scrollRestoration' in history) {
+    history.scrollRestoration = 'manual';
+  }
+  window.scrollTo(0, 0);
+
+  function scrollToHash(href, smooth = true) {
+    const target = document.querySelector(href);
+    if (!target) return;
+
+    const doScroll = () => {
+      const rect = target.getBoundingClientRect();
+      const targetTop = window.scrollY + rect.top;
+      const offsetTop = window.innerWidth < BREAKPOINT_PC
+        ? targetTop - HEADER_H
+        : targetTop;
+
+      // 1回目は即座にスクロール
+      window.scrollTo({ top: offsetTop, behavior: 'auto' });
+
+      // iOS Safari 対策：少し待って再計算してスクロール
+      setTimeout(() => {
+        const rect2 = target.getBoundingClientRect();
+        const targetTop2 = window.scrollY + rect2.top;
+        const offsetTop2 = window.innerWidth < BREAKPOINT_PC
+          ? targetTop2 - HEADER_H
+          : targetTop2;
+
+        window.scrollTo({ top: offsetTop2, behavior: smooth ? 'smooth' : 'auto' });
+      }, 350);
+    };
+
+    // viewport安定を少し待つ
+    setTimeout(doScroll, 100);
+  }
+
+  // ページ直アクセスで #id がある場合
+  if (location.hash) {
+    scrollToHash(location.hash, false);
+  }
+
+  /* -------------------------------------------------
+     1. SP モバイルメニュー開閉
   ------------------------------------------------- */
   const openMobileMenu = () => {
     nav.classList.add('is-open');
@@ -47,29 +90,6 @@ document.addEventListener('DOMContentLoaded', () => {
   /* -------------------------------------------------
      2. ハッシュリンクのスムーススクロール
   ------------------------------------------------- */
-  function scrollToHash(href) {
-    const target = document.querySelector(href);
-    if (!target) return;
-
-    const rect = target.getBoundingClientRect();
-    const targetTop = window.scrollY + rect.top;
-
-    // SP時は固定ヘッダーぶん補正
-    const offsetTop = window.innerWidth < BREAKPOINT_PC
-      ? targetTop - HEADER_H
-      : targetTop;
-
-    if (window.innerWidth < BREAKPOINT_PC && nav.classList.contains('is-open')) {
-      closeMobileMenu();
-      // メニュー閉じアニメーションを待ってスクロール
-      setTimeout(() => {
-        window.scrollTo({ top: offsetTop, behavior: 'smooth' });
-      }, 310);
-    } else {
-      window.scrollTo({ top: offsetTop, behavior: 'smooth' });
-    }
-  }
-
   nav.addEventListener('click', (e) => {
     const a = e.target.closest('a[href]');
     if (!a) return;
@@ -84,7 +104,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (href.startsWith('#')) {
       e.preventDefault();
-      scrollToHash(href);
+      if (window.innerWidth < BREAKPOINT_PC && nav.classList.contains('is-open')) {
+        closeMobileMenu();
+        setTimeout(() => scrollToHash(href), 310); // メニュー閉鎖後にスクロール
+      } else {
+        scrollToHash(href);
+      }
     } else if (window.innerWidth < BREAKPOINT_PC) {
       // ページ遷移リンクは閉じてから遷移
       closeMobileMenu();
@@ -92,7 +117,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   /* -------------------------------------------------
-     3. PCサブメニュー（hover & focus、heightアニメ対応）
+     3. PCサブメニュー（hover & focus、Esc対応）
   ------------------------------------------------- */
   const isPC = () => window.innerWidth >= BREAKPOINT_PC;
   const parentItems = nav.querySelectorAll('.p-nav__item.has-child');
@@ -298,6 +323,38 @@ document.addEventListener('DOMContentLoaded', () => {
       closeAll(true);
     }
   });
+});
+
+// ==========================
+// 初回ハッシュ位置補正
+// ==========================
+window.addEventListener('load', () => {
+  const hash = location.hash;
+  if (!hash || !hash.startsWith('#')) return;
+
+  const target = document.querySelector(hash);
+  if (!target) return;
+
+  const BREAKPOINT_PC = 1024;
+  const HEADER_H = 79;
+
+  const scrollToTarget = () => {
+    const rect = target.getBoundingClientRect();
+    const targetTop = window.scrollY + rect.top;
+    const offsetTop = window.innerWidth < BREAKPOINT_PC
+      ? targetTop - HEADER_H
+      : targetTop;
+
+    window.scrollTo({ top: offsetTop });
+  };
+
+  // Safari対策：ロード後に複数回補正
+  let retry = 0;
+  const intervalId = setInterval(() => {
+    scrollToTarget();
+    retry++;
+    if (retry > 4) clearInterval(intervalId); // 5回で終了
+  }, 150);
 });
 
 /*************************************************************************
