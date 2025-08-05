@@ -325,36 +325,47 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 
-// ==========================
-// 初回ハッシュ位置補正
-// ==========================
-window.addEventListener('load', () => {
-  const hash = location.hash;
-  if (!hash || !hash.startsWith('#')) return;
+const BREAKPOINT_PC = 1024;
+const HEADER_H = 79;
 
-  const target = document.querySelector(hash);
+function smoothScrollWithCorrection(id) {
+  const target = document.querySelector(id);
   if (!target) return;
 
-  const BREAKPOINT_PC = 1024;
-  const HEADER_H = 79;
+  let frameCount = 0;
+  const maxFrames = 20;
 
-  const scrollToTarget = () => {
+  function adjustScroll(first) {
     const rect = target.getBoundingClientRect();
     const targetTop = window.scrollY + rect.top;
     const offsetTop = window.innerWidth < BREAKPOINT_PC
       ? targetTop - HEADER_H
       : targetTop;
 
-    window.scrollTo({ top: offsetTop });
-  };
+    const currentY = window.scrollY;
+    const diff = offsetTop - currentY;
 
-  // Safari対策：ロード後に複数回補正
-  let retry = 0;
-  const intervalId = setInterval(() => {
-    scrollToTarget();
-    retry++;
-    if (retry > 4) clearInterval(intervalId); // 5回で終了
-  }, 150);
+    // 初回はautoでジャンプ、それ以降は誤差があれば補正
+    if (first) {
+      window.scrollTo({ top: offsetTop, behavior: 'auto' });
+    } else if (Math.abs(diff) > 1) {
+      window.scrollTo({ top: offsetTop, behavior: 'auto' });
+    }
+
+    frameCount++;
+    if (frameCount < maxFrames && Math.abs(diff) > 1) {
+      requestAnimationFrame(() => adjustScroll(false));
+    }
+  }
+
+  requestAnimationFrame(() => adjustScroll(true));
+}
+
+// 初回アクセスでURLにハッシュがある場合だけ補正
+window.addEventListener('load', () => {
+  if (location.hash) {
+    smoothScrollWithCorrection(location.hash);
+  }
 });
 
 /*************************************************************************
