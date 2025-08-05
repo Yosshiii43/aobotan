@@ -11,7 +11,7 @@
                 <p>お電話</p>
               </div>
               <div class="c-contactSec__telNumber">
-                <p>0000-000-0000</p>
+                <p><a href="tel:00000000000">0000-000-0000</a></p>
                 <p>営業時間10:00-20:00</p>
               </div>
               <div class="c-contactSec__mail">
