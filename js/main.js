@@ -9,165 +9,98 @@ if ('scrollRestoration' in history) {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-  /* ─────────────────────────────────────
-     0. 定数 & 要素取得
-  ───────────────────────────────────── */
-  const header    = document.getElementById('js-header');
-  const mqPC      = window.matchMedia('(min-width: 1024px)');
-  const hamburger = document.getElementById('js-hamburger');
-  const nav       = document.getElementById('js-navWrapper');
-  const body      = document.body;
+  const BREAKPOINT_PC = 1024;
+  const HEADER_H = 79; // SP固定ヘッダー高さ
+  const body = document.body;
+  const nav = document.querySelector('.p-nav');
+  const hamburger = document.querySelector('.c-hamburger');
+
   if (!nav) return;
 
-  /* ヘッダー高さを CSS変数から取得 */
-  const getHeaderHeight = () => {
-    // PCのときは高さ0として扱う（ヘッダーを引かない）
-    if (mqPC.matches) return 0;
-
-    const header = document.querySelector('#js-header'); // 適宜修正
-    return header ? header.offsetHeight : 0;
+  /* -------------------------------------------------
+     1. モバイルメニュー開閉
+  ------------------------------------------------- */
+  const openMobileMenu = () => {
+    nav.classList.add('is-open');
+    body.classList.add('is-scrollLock');
+    hamburger?.setAttribute('aria-expanded', 'true');
+    nav.setAttribute('aria-hidden', 'false');
+    nav.removeAttribute('inert');
   };
 
-  /* ─────────────────────────────────────
-     1. ナビ状態を強制リセット
-  ───────────────────────────────────── */
   const closeMobileMenu = () => {
-    hamburger?.classList.remove('is-open');
-    hamburger?.setAttribute('aria-expanded', 'false');
     nav.classList.remove('is-open');
     body.classList.remove('is-scrollLock');
+    hamburger?.setAttribute('aria-expanded', 'false');
     nav.setAttribute('aria-hidden', 'true');
     nav.setAttribute('inert', '');
   };
 
-  const openDesktopNav = () => {
-    hamburger?.classList.remove('is-open');
-    hamburger?.setAttribute('aria-expanded', 'false');
-    body.classList.remove('is-scrollLock');
-    nav.classList.remove('is-open');
-    nav.removeAttribute('aria-hidden');
-    nav.removeAttribute('inert');
-  };
-
-  /* ─────────────────────────────────────
-     2. ハンバーガー開閉
-  ───────────────────────────────────── */
-  const toggleMenu = () => {
-    const isOpen = nav.classList.toggle('is-open');
-    hamburger?.setAttribute('aria-expanded', isOpen);
-    nav.setAttribute('aria-hidden', !isOpen);
-    body.classList.toggle('is-scrollLock', isOpen);
-
-    if (isOpen) {
-      nav.removeAttribute('inert');
+  hamburger?.addEventListener('click', () => {
+    if (nav.classList.contains('is-open')) {
+      closeMobileMenu();
     } else {
-      const focused = document.activeElement;
-      if (nav.contains(focused)) focused.blur();
-      nav.setAttribute('inert', '');
+      openMobileMenu();
     }
-  };
-
-  hamburger?.addEventListener('click', toggleMenu);
-
-  /* ─────────────────────────────────────
-     3. スムーススクロール処理
-  ───────────────────────────────────── */
-  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-  const smoothScrollTo = (targetY, duration = 350) => {
-    if (reduceMotion) {
-      window.scrollTo(0, targetY);
-      return;
-    }
-    const startY = window.pageYOffset;
-    const dist   = targetY - startY;
-    const startT = performance.now();
-    const easeOut = t => t * (2 - t);
-
-    const step = now => {
-      const t = Math.min(1, (now - startT) / duration);
-      window.scrollTo(0, startY + dist * easeOut(t));
-      if (t < 1) requestAnimationFrame(step);
-    };
-    requestAnimationFrame(step);
-  };
-
-  const scrollToTarget = (target) => {
-    const headerH = getHeaderHeight();
-    let retry = 0;
-    const maxRetry = 10;
-
-    const waitForStable = () => {
-      const rect = target.getBoundingClientRect();
-      const offsetY = rect.top + window.pageYOffset - headerH;
-
-      if (retry > 1) {
-        smoothScrollTo(offsetY);
-        setTimeout(() => {
-          const correctedOffsetY =
-            target.getBoundingClientRect().top + window.pageYOffset - getHeaderHeight();
-          window.scrollTo({ top: correctedOffsetY });
-        }, 400);
-      } else {
-        retry++;
-        requestAnimationFrame(waitForStable);
-      }
-    };
-
-    waitForStable();
-  };
-
-  /* ─────────────────────────────────────
-     4. アンカーリンククリック
-  ───────────────────────────────────── */
-  document.querySelectorAll('a[href^="#"]').forEach(link => {
-    link.addEventListener('click', e => {
-      const href = link.getAttribute('href');
-      e.preventDefault();
-      if (!href || href === '#') return;
-      const target = document.querySelector(href);
-      if (!target) return;
-
-      history.pushState(null, '', href);
-      if (nav.classList.contains('is-open')) toggleMenu();
-
-      document.querySelectorAll('.c-fadeIn').forEach(el => {
-        el.classList.add('is-inview');
-      });
-
-      scrollToTarget(target);
-    });
   });
 
-  /* ─────────────────────────────────────
-     5. PC/SP幅切替の状態初期化
-  ───────────────────────────────────── */
-  mqPC.addEventListener('change', e => {
-    if (e.matches) {
-      openDesktopNav();
+  /* -------------------------------------------------
+     2. ハッシュリンクのスムーススクロール
+  ------------------------------------------------- */
+  function scrollToHash(href) {
+    const target = document.querySelector(href);
+    if (!target) return;
+
+    const rect = target.getBoundingClientRect();
+    const targetTop = window.scrollY + rect.top;
+
+    // SP時は固定ヘッダーぶん補正
+    const offsetTop = window.innerWidth < BREAKPOINT_PC
+      ? targetTop - HEADER_H
+      : targetTop;
+
+    if (window.innerWidth < BREAKPOINT_PC && nav.classList.contains('is-open')) {
+      closeMobileMenu();
+      // メニュー閉じアニメーションを待ってスクロール
+      setTimeout(() => {
+        window.scrollTo({ top: offsetTop, behavior: 'smooth' });
+      }, 310);
     } else {
+      window.scrollTo({ top: offsetTop, behavior: 'smooth' });
+    }
+  }
+
+  nav.addEventListener('click', (e) => {
+    const a = e.target.closest('a[href]');
+    if (!a) return;
+
+    const href = a.getAttribute('href');
+    if (!href || href === '#') {
+      // ダミーリンクは閉じるだけ
+      if (window.innerWidth < BREAKPOINT_PC) closeMobileMenu();
+      e.preventDefault();
+      return;
+    }
+
+    if (href.startsWith('#')) {
+      e.preventDefault();
+      scrollToHash(href);
+    } else if (window.innerWidth < BREAKPOINT_PC) {
+      // ページ遷移リンクは閉じてから遷移
       closeMobileMenu();
     }
   });
 
-  if (mqPC.matches) {
-    openDesktopNav();
-  } else {
-    closeMobileMenu();
-  }
-
-  /* ─────────────────────────────────────
-     6. サブメニュー（実測 height アニメ） PC 専用
-  ───────────────────────────────────── */
-  const BREAKPOINT_PC = 1024;
+  /* -------------------------------------------------
+     3. PCサブメニュー（hover & focus、heightアニメ対応）
+  ------------------------------------------------- */
   const isPC = () => window.innerWidth >= BREAKPOINT_PC;
   const parentItems = nav.querySelectorAll('.p-nav__item.has-child');
-
-  let activeLi = null; // 現在 open / opening の LI
-  let transitionMap = new WeakMap(); // panel => listener (キャンセル用)
+  let activeLi = null;
+  let transitionMap = new WeakMap();
 
   function setState(li, state) {
-    li.dataset.state = state; // デバッグしやすくする
+    li.dataset.state = state;
   }
 
   function cleanupTransition(panel) {
@@ -178,7 +111,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  /* 強制的に閉じ状態へ（即座に height:0 へ遷移させアニメに任せる） */
   function closePanel(li, instant = false) {
     const trigger = li.querySelector(':scope > .p-nav__link');
     const panel   = li.querySelector(':scope > .p-nav__sublist');
@@ -189,11 +121,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     cleanupTransition(panel);
 
-    // height:auto なら現高さを固定
     if (panel.style.height === '' || panel.style.height === 'auto') {
       panel.style.height = panel.scrollHeight + 'px';
-      // reflow
-      void panel.offsetWidth;
+      void panel.offsetWidth; // reflow
     }
 
     setState(li, 'closing');
@@ -208,11 +138,10 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     if (instant) {
-      // アニメを使わず即閉じ（リサイズ / 全閉など）
       panel.style.transition = 'none';
       doToZero();
       panel.style.visibility = 'hidden';
-      panel.offsetWidth; // reflow
+      panel.offsetWidth;
       panel.style.transition = '';
       li.classList.remove('is-animating');
       setState(li, 'closed');
@@ -233,7 +162,6 @@ document.addEventListener('DOMContentLoaded', () => {
     transitionMap.set(panel, onEnd);
   }
 
-  /* 開く */
   function openPanel(li) {
     if (!isPC()) return;
     if (li === activeLi && (li.dataset.state === 'open' || li.dataset.state === 'opening')) return;
@@ -242,10 +170,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const panel   = li.querySelector(':scope > .p-nav__sublist');
     if (!panel) return;
 
-    // 他を全部閉じる
-    if (activeLi && activeLi !== li) {
-      closePanel(activeLi);
-    }
+    if (activeLi && activeLi !== li) closePanel(activeLi);
 
     cleanupTransition(panel);
 
@@ -254,21 +179,17 @@ document.addEventListener('DOMContentLoaded', () => {
     trigger?.setAttribute('aria-expanded', 'true');
     activeLi = li;
 
-    // 初期値セット
     panel.style.visibility = 'visible';
     panel.style.opacity    = '1';
     panel.style.transform  = 'translateY(0)';
-    panel.style.height     = '0px'; // まず0確定（再オープンの残骸防止）
-    // 1フレーム後に実高セット
+    panel.style.height     = '0px';
     requestAnimationFrame(() => {
-      const targetH = panel.scrollHeight;
-      panel.style.height = targetH + 'px';
+      panel.style.height = panel.scrollHeight + 'px';
     });
 
     const onEnd = (e) => {
       if (e.propertyName !== 'height') return;
       cleanupTransition(panel);
-      // 最終状態へ
       if (li.dataset.state === 'opening') {
         panel.style.height = 'auto';
         li.classList.remove('is-animating');
@@ -279,24 +200,21 @@ document.addEventListener('DOMContentLoaded', () => {
     transitionMap.set(panel, onEnd);
   }
 
-  /* 全閉（instant=true で一気に） */
   function closeAll(instant = false) {
     parentItems.forEach(li => closePanel(li, instant));
     activeLi = null;
   }
 
-  /* イベント登録 */
   parentItems.forEach(li => {
     setState(li, 'closed');
-
     const trigger = li.querySelector(':scope > .p-nav__link');
     const panel   = li.querySelector(':scope > .p-nav__sublist');
     if (!trigger || !panel) return;
 
-    /* フォーカスで開く */
+    // Focus
     trigger.addEventListener('focus', () => openPanel(li));
 
-    /* 親リンクキーボード */
+    // Keyboard
     trigger.addEventListener('keydown', e => {
       if (!isPC()) return;
       if (e.key === 'ArrowDown') {
@@ -312,7 +230,6 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
 
-    /* サブ内部 */
     panel.addEventListener('keydown', e => {
       if (!isPC()) return;
       if (e.key === 'Escape') {
@@ -327,63 +244,48 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
 
-      li.addEventListener('focusout', e => {
-        if (!isPC()) return;
-        if (!li.classList.contains('is-open')) return;
-
-        // 次のフォーカス先確定を待ってから判定
-        setTimeout(() => {
-          const now = document.activeElement;
-          if (li.contains(now)) return;           // まだ li 内にいる
-          if (!nav.contains(now)) {
-            // nav 外 → document の focusin ハンドラが全閉するので任意
-            closePanel(li);
-            return;
-          }
-          // nav 内の別要素（他の親でない）へ移ったので閉じる
+    li.addEventListener('focusout', e => {
+      if (!isPC()) return;
+      if (!li.classList.contains('is-open')) return;
+      setTimeout(() => {
+        const now = document.activeElement;
+        if (li.contains(now)) return;
+        if (!nav.contains(now)) {
           closePanel(li);
-        }, 0);
-      });
+          return;
+        }
+        closePanel(li);
+      }, 0);
+    });
 
-    /* Hover: pointerenter / pointerleave */
+    // Hover
     li.addEventListener('pointerenter', () => {
       if (!isPC()) return;
       openPanel(li);
     });
-
-    li.addEventListener('pointerleave', (e) => {
+    li.addEventListener('pointerleave', () => {
       if (!isPC()) return;
-      // すぐ他 LI に入るならその LI の pointerenter で openPanel → こちらは閉じるだけ
-      // 少し猶予欲しければ setTimeout 追加
       closePanel(li);
     });
   });
 
-  /* Nav 外へフォーカス移動で全閉 */
   document.addEventListener('focusin', e => {
-    if (isPC() && !nav.contains(e.target)) {
-      closeAll();
-    }
+    if (isPC() && !nav.contains(e.target)) closeAll();
   });
 
-  /* Esc グローバル */
   document.addEventListener('keydown', e => {
-    if (isPC() && e.key === 'Escape') {
-      closeAll();
-    }
+    if (isPC() && e.key === 'Escape') closeAll();
   });
 
-  /* リサイズ */
   window.addEventListener('resize', () => {
     if (!isPC()) {
-      // SP: サブは常時展開
       parentItems.forEach(li => {
         const trigger = li.querySelector(':scope > .p-nav__link');
         const panel   = li.querySelector(':scope > .p-nav__sublist');
         cleanupTransition(panel);
         li.classList.remove('is-open','is-animating');
-        setState(li, 'open'); // SPでは開き扱い
-        trigger?.setAttribute('aria-expanded', 'false'); // SPは視覚開なので任意
+        setState(li, 'open');
+        trigger?.setAttribute('aria-expanded', 'false');
         if (panel) {
           panel.style.height     = 'auto';
           panel.style.visibility = 'visible';
@@ -393,7 +295,7 @@ document.addEventListener('DOMContentLoaded', () => {
       });
       activeLi = null;
     } else {
-      closeAll(true); // instant
+      closeAll(true);
     }
   });
 });

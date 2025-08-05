@@ -84,9 +84,3 @@ a {
   scroll-margin-top: var(--header-h);
 }
 
-[id] {
-  scroll-margin-top: var(--header-h);
-  @include mq("pc") {
-    scroll-margin-top:0;
-  }
-}
