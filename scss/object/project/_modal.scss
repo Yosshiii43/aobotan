@@ -42,7 +42,7 @@
       width: 90%;
       max-width: rem(656);
       max-height: calc(100dvh - rem(80) * 2);;
-      padding-block: rem(10) rem(24);
+      padding-block: rem(16) rem(24);
       margin-inline: auto;
       overflow-y: scroll;
       @include mq("tab") {
