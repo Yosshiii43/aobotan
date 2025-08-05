@@ -3,14 +3,14 @@
  * ハンバーガーメニュー制御 + スムーススクロール安定化 + ヘッダーずれ対策 + フェードイン即時表示
  *************************************************************************/
 
-// リロード時や戻る進むでブラウザが勝手に位置復元しないように
+// ブラウザの位置復元を無効化
 if ('scrollRestoration' in history) {
   history.scrollRestoration = 'manual';
 }
 
 document.addEventListener('DOMContentLoaded', () => {
   const BREAKPOINT_PC = 1024;
-  const HEADER_H = 79; // SP 固定ヘッダーの見込み高さ（px）
+  const HEADER_H = 79; // SP固定ヘッダー
   const isPC = () => window.innerWidth >= BREAKPOINT_PC;
 
   const body = document.body;
@@ -18,9 +18,12 @@ document.addEventListener('DOMContentLoaded', () => {
   const hamburger = document.querySelector('.c-hamburger');
   if (!nav) return;
 
-  /* -------------------------------------------------
+  // クリック時は Reduce Motion を無視してスムースさせたい場合は true（必要なければ false）
+  const FORCE_SMOOTH_ON_CLICK = true;
+
+  /* ---------------------------
      1) モバイルメニュー開閉
-  ------------------------------------------------- */
+  --------------------------- */
   const openMobileMenu = () => {
     nav.classList.add('is-open');
     body.classList.add('is-scrollLock');
@@ -28,7 +31,6 @@ document.addEventListener('DOMContentLoaded', () => {
     nav.setAttribute('aria-hidden', 'false');
     nav.removeAttribute('inert');
   };
-
   const closeMobileMenu = () => {
     nav.classList.remove('is-open');
     body.classList.remove('is-scrollLock');
@@ -36,110 +38,156 @@ document.addEventListener('DOMContentLoaded', () => {
     nav.setAttribute('aria-hidden', 'true');
     nav.setAttribute('inert', '');
   };
-
   hamburger?.addEventListener('click', () => {
-    if (nav.classList.contains('is-open')) {
-      closeMobileMenu();
-    } else {
-      openMobileMenu();
-    }
+    nav.classList.contains('is-open') ? closeMobileMenu() : openMobileMenu();
   });
 
-  /* -------------------------------------------------
-     2) オフセット計算 & スクロール（補正付き）
-     - SP時は固定ヘッダー分(79px)を引く
-     - iOS Safari 初回ズレを軽減するため、再補正を数回だけ実施
-  ------------------------------------------------- */
+  /* ---------------------------
+     2) スクロール制御（自前アニメ＋微小差分スムース補正）
+  --------------------------- */
   const computeOffsetTop = (el) => {
     const rect = el.getBoundingClientRect();
     const targetTop = window.scrollY + rect.top;
     return isPC() ? targetTop : (targetTop - HEADER_H);
   };
 
-  // クリック時などユーザー操作のスクロール（基本は smooth）
-  function scrollToElement(el, smooth = true) {
-    if (!el) return;
+  let _animFrame = null;
+  const cancelPending = () => {
+    if (_animFrame) { cancelAnimationFrame(_animFrame); _animFrame = null; }
+  };
 
-    // まず目的位置へ（スムース）
-    const firstY = computeOffsetTop(el);
-    window.scrollTo({ top: firstY, behavior: smooth ? 'smooth' : 'auto' });
+  const easeOut = t => t * (2 - t);
 
-    // その後 2～3フレームだけ描画に合わせて再補正（瞬間移動）し、誤差を消す
-    let attempts = 0;
-    const maxAttempts = 3;
-    const rafAdjust = () => {
-      attempts++;
-      const y = computeOffsetTop(el);
-      const diff = y - window.scrollY;
-      if (Math.abs(diff) > 1 && attempts <= maxAttempts) {
-        window.scrollTo({ top: y, behavior: 'auto' });
-        requestAnimationFrame(rafAdjust);
+  function animateScrollTo(targetY, duration = 450) {
+    return new Promise(resolve => {
+      const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (reduce || duration <= 0) {
+        window.scrollTo({ top: targetY, behavior: 'auto' });
+        resolve();
+        return;
       }
-    };
-    requestAnimationFrame(rafAdjust);
-  }
+      const startY = window.scrollY;
+      const dist = targetY - startY;
+      const startT = performance.now();
 
-  // 初回直アクセス（URLに #id あり）のときのスクロール（正確さ優先）
-  function initialHashScroll() {
-    const hash = location.hash;
-    if (!hash || hash === '#') return;
-    const target = document.querySelector(hash);
-    if (!target) return;
-
-    // 画像/フォント後の描画安定に少し猶予
-    setTimeout(() => {
-      // まず瞬間移動で位置合わせ
-      const firstY = computeOffsetTop(target);
-      window.scrollTo({ top: firstY, behavior: 'auto' });
-
-      // アドレスバー縮み等に追従（数フレームだけ）
-      let attempts = 0;
-      const maxAttempts = 5;
-      const rafAdjust = () => {
-        attempts++;
-        const y = computeOffsetTop(target);
-        const diff = y - window.scrollY;
-        if (Math.abs(diff) > 1 && attempts <= maxAttempts) {
-          window.scrollTo({ top: y, behavior: 'auto' });
-          requestAnimationFrame(rafAdjust);
+      const step = (now) => {
+        const t = Math.min(1, (now - startT) / duration);
+        window.scrollTo(0, startY + dist * easeOut(t));
+        if (t < 1) {
+          _animFrame = requestAnimationFrame(step);
+        } else {
+          _animFrame = null;
+          resolve();
         }
       };
-      requestAnimationFrame(rafAdjust);
-    }, 80);
+      _animFrame = requestAnimationFrame(step);
+    });
   }
 
-  /* -------------------------------------------------
-     3) ナビ内リンクのクリック
-     - # のとき：スムーズ + SPはメニュー閉じてから
-     - 通常リンク：SPは閉じてから遷移（デフォルト動作のままでOK）
-     - 「ハッシュなしでスムーススクロール」要件に合わせ、クリック時はURLにハッシュを残さない
-  ------------------------------------------------- */
-  nav.addEventListener('click', (e) => {
+  async function scrollToElement(el, wantSmooth = true) {
+    if (!el) return;
+    cancelPending();
+
+    const reduceActive = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const useSmooth = wantSmooth && (!reduceActive || FORCE_SMOOTH_ON_CLICK);
+
+    const firstY = computeOffsetTop(el);
+
+    if (useSmooth) {
+      // 距離に応じて時間可変
+      const dist = Math.abs(firstY - window.scrollY);
+      const duration = Math.max(350, Math.min(900, 300 + dist * 0.35));
+      await animateScrollTo(firstY, duration);
+
+      // 微小差分は短いスムースで仕上げ
+      const finalY = computeOffsetTop(el);
+      const diff = Math.abs(finalY - window.scrollY);
+      if (diff > 6) {
+        const microDur = Math.max(120, Math.min(220, diff * 0.9));
+        await animateScrollTo(finalY, microDur);
+      }
+    } else {
+      window.scrollTo({ top: firstY, behavior: 'auto' });
+    }
+  }
+
+  /* ---------------------------
+     2.5) 到着時の“延期スムース”処理（別ページ→ # のため）
+     - クリック時に sessionStorage へ記録したターゲットを到着後にスムース
+  --------------------------- */
+  (function handleDeferredSmooth() {
+    try {
+      const raw = sessionStorage.getItem('DEFER_SMOOTH_TARGET');
+      if (!raw) return;
+      const data = JSON.parse(raw);
+      // 到着ページが一致しているときだけ実行
+      const arrivedPath = location.pathname + location.search;
+      if (data && data.path === arrivedPath && data.hash) {
+        const el = document.querySelector(data.hash);
+        // 実行したら消す（再読込で二重にならないように）
+        sessionStorage.removeItem('DEFER_SMOOTH_TARGET');
+        if (el) {
+          // 画像/フォントを少し待ってからスムース開始
+          window.addEventListener('load', () => {
+            setTimeout(() => scrollToElement(el, true), 60);
+          }, { once: true });
+        }
+      }
+    } catch (e) {
+      // 破損していたら削除
+      sessionStorage.removeItem('DEFER_SMOOTH_TARGET');
+    }
+  })();
+
+  /* ---------------------------
+     3) クリック捕捉（キャプチャ）：
+        - 同一ページの # は自前スムース
+        - 別ページの # は「延期スムース」方式に差し替え
+  --------------------------- */
+  document.addEventListener('click', (e) => {
     const a = e.target.closest('a[href]');
     if (!a) return;
 
-    const href = a.getAttribute('href');
-    if (!href) return;
+    const raw = a.getAttribute('href');
+    if (!raw) return;
 
-    // ダミーリンクは閉じるだけ
-    if (href === '#') {
-      if (!isPC()) closeMobileMenu();
+    // 1) ダミー #
+    if (raw === '#') {
+      if (!isPC() && nav.classList.contains('is-open')) closeMobileMenu();
       e.preventDefault();
       return;
     }
 
-    // ページ内リンク
-    if (href.startsWith('#')) {
-      e.preventDefault();
-      const target = document.querySelector(href);
+    let urlObj = null;
+    try { urlObj = new URL(raw, location.href); } catch {}
+
+    const hasHash = raw.startsWith('#') || (urlObj && urlObj.hash);
+    if (!hasHash) {
+      // 通常リンク：SPは閉じてから遷移
+      if (!isPC() && nav.classList.contains('is-open')) closeMobileMenu();
+      return; // デフォルト遷移
+    }
+
+    // 同一ページの # ？
+    let samePage = false, hash = null;
+    if (raw.startsWith('#')) {
+      samePage = true;
+      hash = raw;
+    } else if (urlObj) {
+      samePage = (urlObj.origin === location.origin && urlObj.pathname === location.pathname);
+      hash = urlObj.hash;
+    }
+
+    if (samePage) {
+      // ---- 同一ページ：その場でスムース ----
+      const target = document.querySelector(hash);
       if (!target) return;
+      e.preventDefault();
 
       if (!isPC() && nav.classList.contains('is-open')) {
-        // SP: 閉じアニメーション後にスクロール
         closeMobileMenu();
         setTimeout(() => {
           scrollToElement(target, true);
-          // ハッシュをURLに残さない
           history.replaceState(null, '', location.pathname + location.search);
         }, 310);
       } else {
@@ -149,16 +197,32 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
 
-    // 通常リンク：SPは閉じる（遷移はブラウザに任せる）
-    if (!isPC()) {
-      closeMobileMenu();
-    }
-  });
+    // ---- 別ページ：延期スムースに差し替え ----
+    // 例: /about#initiatives → /about へ遷移し、到着後にスムースで hash 位置へ
+    if (urlObj) {
+      e.preventDefault();
+      // 目標を保存（同一オリジンのみ）
+      sessionStorage.setItem(
+        'DEFER_SMOOTH_TARGET',
+        JSON.stringify({ path: urlObj.pathname + urlObj.search, hash: urlObj.hash, ts: Date.now() })
+      );
 
-  /* -------------------------------------------------
+      // SP は閉じてから遷移
+      if (!isPC() && nav.classList.contains('is-open')) {
+        closeMobileMenu();
+        setTimeout(() => { location.assign(urlObj.pathname + urlObj.search); }, 310);
+      } else {
+        location.assign(urlObj.pathname + urlObj.search);
+      }
+      return;
+    }
+
+  }, { capture: true });
+
+  /* ---------------------------
      4) PCサブメニュー（hover / focus / Esc / 矢印）
-     - 以前の「実測 height アニメ」実装を踏襲
-  ------------------------------------------------- */
+     ※あなたの既存実装を踏襲
+  --------------------------- */
   const parentItems = nav.querySelectorAll('.p-nav__item.has-child');
   let activeLi = null;
   let transitionMap = new WeakMap();
@@ -176,7 +240,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const trigger = li.querySelector(':scope > .p-nav__link');
     const panel   = li.querySelector(':scope > .p-nav__sublist');
     if (!panel) return;
-
     const state = li.dataset.state;
     if (state === 'closed' || state === 'closing') return;
 
@@ -184,7 +247,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (panel.style.height === '' || panel.style.height === 'auto') {
       panel.style.height = panel.scrollHeight + 'px';
-      void panel.offsetWidth; // reflow
+      void panel.offsetWidth;
     }
 
     setState(li, 'closing');
@@ -265,18 +328,14 @@ document.addEventListener('DOMContentLoaded', () => {
     activeLi = null;
   }
 
-  // イベント登録（PC）
   parentItems.forEach(li => {
     setState(li, 'closed');
-
     const trigger = li.querySelector(':scope > .p-nav__link');
     const panel   = li.querySelector(':scope > .p-nav__sublist');
     if (!trigger || !panel) return;
 
-    // Focusで開く
     trigger.addEventListener('focus', () => openPanel(li));
 
-    // 親リンクキーボード
     trigger.addEventListener('keydown', e => {
       if (!isPC()) return;
       if (e.key === 'ArrowDown') {
@@ -292,7 +351,6 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
 
-    // サブ内部
     panel.addEventListener('keydown', e => {
       if (!isPC()) return;
       if (e.key === 'Escape') {
@@ -307,7 +365,6 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
 
-    // フォーカス外れで閉じ
     li.addEventListener('focusout', () => {
       if (!isPC() || !li.classList.contains('is-open')) return;
       setTimeout(() => {
@@ -321,22 +378,18 @@ document.addEventListener('DOMContentLoaded', () => {
       }, 0);
     });
 
-    // Hover
     li.addEventListener('pointerenter', () => { if (isPC()) openPanel(li); });
     li.addEventListener('pointerleave', () => { if (isPC()) closePanel(li); });
   });
 
-  // Nav外へフォーカス移動で全閉
   document.addEventListener('focusin', e => {
     if (isPC() && !nav.contains(e.target)) closeAll();
   });
 
-  // Escで全閉
   document.addEventListener('keydown', e => {
     if (isPC() && e.key === 'Escape') closeAll();
   });
 
-  // 幅切り替え
   window.addEventListener('resize', () => {
     if (!isPC()) {
       parentItems.forEach(li => {
@@ -344,7 +397,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const panel   = li.querySelector(':scope > .p-nav__sublist');
         cleanupTransition(panel);
         li.classList.remove('is-open','is-animating');
-        setState(li, 'open'); // SPでは開き扱い（リスト縦並び）
+        setState(li, 'open'); // SPでは常時展開扱い
         trigger?.setAttribute('aria-expanded', 'false');
         if (panel) {
           panel.style.height     = 'auto';
@@ -359,11 +412,37 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  /* -------------------------------------------------
-     5) 初回 # 直アクセスの補正（1回だけ）
-  ------------------------------------------------- */
+  /* ---------------------------
+     5) 直URLで # が付いて来た場合（ユーザー直打ち）
+        → 正確さ最優先の補正（従来通り）
+  --------------------------- */
+  function initialHashScroll() {
+    const hash = location.hash;
+    if (!hash || hash === '#') return;
+    const target = document.querySelector(hash);
+    if (!target) return;
+
+    setTimeout(() => {
+      const y0 = computeOffsetTop(target);
+      window.scrollTo({ top: y0, behavior: 'auto' });
+
+      let attempts = 0;
+      const maxAttempts = 5;
+      const rafAdjust = () => {
+        attempts++;
+        const y = computeOffsetTop(target);
+        if (Math.abs(y - window.scrollY) > 1 && attempts <= maxAttempts) {
+          window.scrollTo({ top: y, behavior: 'auto' });
+          _animFrame = requestAnimationFrame(rafAdjust);
+        } else {
+          _animFrame = null;
+        }
+      };
+      _animFrame = requestAnimationFrame(rafAdjust);
+    }, 80);
+  }
   window.addEventListener('load', () => {
-    initialHashScroll(); // 上で定義した正確さ優先の補正を実行
+    initialHashScroll();
   });
 });
 
