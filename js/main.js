@@ -94,16 +94,17 @@ document.addEventListener('DOMContentLoaded', () => {
     const firstY = computeOffsetTop(el);
 
     if (useSmooth) {
-      // 距離に応じて時間可変
+      // 距離に応じて時間可変（速め）
       const dist = Math.abs(firstY - window.scrollY);
-      const duration = Math.max(350, Math.min(900, 300 + dist * 0.35));
+      // 例：最短 220ms ～ 最長 650ms、係数も軽めに
+      const duration = Math.max(220, Math.min(650, 220 + dist * 0.22));
       await animateScrollTo(firstY, duration);
 
-      // 微小差分は短いスムースで仕上げ
+      // 微小差分も短めで仕上げ（ジャンプなし）
       const finalY = computeOffsetTop(el);
       const diff = Math.abs(finalY - window.scrollY);
       if (diff > 6) {
-        const microDur = Math.max(120, Math.min(220, diff * 0.9));
+        const microDur = Math.max(80, Math.min(140, diff * 0.6));
         await animateScrollTo(finalY, microDur);
       }
     } else {
