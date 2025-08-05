@@ -9,10 +9,10 @@ footer
     margin-bottom: rem(26);
     > div {
       grid-template-columns: (rem(340) 1fr);
-      column-gap: rclamp(24, 109, 744, 1440);;
+      column-gap: rclamp(24, 105, 744, 1440);
       align-items: start;
       @media (min-width: 1200px) {
-        grid-template-columns: (rem(441) 1fr);
+        grid-template-columns: (rem(445) 1fr);
       }
       .p-footer__head {
         padding-top: rem(33);
@@ -29,7 +29,7 @@ footer
           p {
             font-size: rem(16);
             text-align: start;
-            width: rem(441);
+            width: rem(445);
           }
 
           .p-footer__address {
