@@ -110,7 +110,7 @@ contactForm
               -moz-appearance: none;
                     appearance: none;
           }
-          input:checked:before {
+          input:checked::before {
             position: absolute;
             top: 50%;
             left: 50%;
