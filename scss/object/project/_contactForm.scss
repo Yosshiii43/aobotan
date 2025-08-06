@@ -152,22 +152,33 @@ contactForm
         margin-bottom: rem(69) - rem(6.4);
         line-height: 1.8;
         
-        input {
+        input[type="checkbox"] {
+          position: relative;
           width: 16px;
           height: 16px;
           border: 1px solid $color-main;
+          border-radius: 0;
           -webkit-appearance: none;
-            -moz-appearance: none;
-                  appearance: none;
+          -moz-appearance: none;
+          -o-appearance: none;
+          appearance: none;
         }
-        input:checked {
-          -webkit-appearance: auto;
-          -moz-appearance: auto;
-                appearance: auto;
-          width: 16px;
-          height: 16px;
-          accent-color: $color-main;
+        input[type="checkbox"]:checked {
+          background-color: $color-main;
         }
+        input[type="checkbox"]:checked::after {
+          content: "";
+          display: block;
+          position: absolute;
+          left: 2px;
+          top: 2px;
+          width: 10px;
+          height: 6px;
+          border-left: 2px solid #fff;
+          border-bottom: 2px solid #fff;
+          transform: rotate(-45deg);
+        }
+
         .p-contactForm__label {
           margin-bottom: 0;
         }
