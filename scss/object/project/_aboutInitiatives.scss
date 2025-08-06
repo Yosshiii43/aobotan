@@ -12,7 +12,7 @@ page about initiatives
 
 
   .c-aboutH2 {
-    @include mq("tab") {
+    @include mq("pc") {
       margin-bottom: rem(86);
     }
   }

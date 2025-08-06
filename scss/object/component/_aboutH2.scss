@@ -10,6 +10,8 @@ aboutページ h2
   margin-bottom: rem(40);
   @include mq("tab") {
     font-size: rem(32);
+  }
+  @include mq("pc") {
     margin-bottom: rem(64);
   }
 }

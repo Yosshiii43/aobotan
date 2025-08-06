@@ -5,8 +5,8 @@ page about profile
 @use "sass:math";
 .p-aboutProfile {
   padding-top: rem(40);
-  padding-bottom: rem(40);
-  @include mq("tab") {
+  padding-bottom: rem(50);
+  @include mq("pc") {
     padding-bottom: rem(16);
   }
   &__greeting {
