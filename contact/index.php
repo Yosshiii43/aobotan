@@ -40,7 +40,7 @@ include $_SERVER['DOCUMENT_ROOT'] . '/inc/head.php';
 
       <div class="p-contact__wrapper l-inner--880">
         <div class="l-inner--470">
-          <article class="p-contactForm">
+          <div class="p-contactForm">
             <div class="p-contactForm__progress">
               <div class="p-contactForm__progressItem is-current"><span>01</span><span>入力</span></div>
               <div class="p-contactForm__progressItem"><span>02</span><span>送信完了</span></div>
@@ -84,7 +84,7 @@ include $_SERVER['DOCUMENT_ROOT'] . '/inc/head.php';
                   <legend class="p-contactForm__label">お名前<span>&#9733;必須</span></legend>
                   <div>
                     <label>
-                      <input name="姓" type="text" required autocomplete="family-name" placeholder="青牡丹" aria-label="姓" required>
+                      <input name="姓" type="text" autocomplete="family-name" placeholder="青牡丹" aria-label="姓" required>
                     </label>
                     <label>
                       <input name="名" type="text" autocomplete="given-name" placeholder="幸太郎" aria-label="名" required>
@@ -121,14 +121,14 @@ include $_SERVER['DOCUMENT_ROOT'] . '/inc/head.php';
 
               </div><!-- .p-contactForm__formBody -->
             </form><!-- .p-contactForm__form -->
-          </article><!-- .p-contactForm -->
+          </div><!-- .p-contactForm -->
         </div><!-- .l-inner--470 -->
 
-        <article class="p-contact__tel">
+        <div class="p-contact__tel">
           <p>お電話も受け付けています。</p>
           <p><a href="tel:0000-000-0000">0000-000-0000</a></p>
           <p>営業時間10:00-20:00</p>
-        </article>
+        </div>
 
       </div><!-- .p-contact_wrapper -->
 

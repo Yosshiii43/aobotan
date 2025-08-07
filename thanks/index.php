@@ -41,20 +41,20 @@ include $_SERVER['DOCUMENT_ROOT'] . '/inc/head.php';
 
       <div class="p-contact__wrapper l-inner--880">
         <div class="l-inner--470">
-          <article class="p-contactForm">
+          <div class="p-contactForm">
             <div class="p-contactForm__progress">
               <div class="p-contactForm__progressItem"><span>01</span><span>入力</span></div>
               <div class="p-contactForm__progressItem is-current"><span>02</span><span>送信完了</span></div>
             </div><!-- .p-contactForm__progress -->
             <a class="c-button--a p-contactForm__button" href="/">トップページに戻る</a>
-          </article><!-- .p-contactForm -->
+          </div><!-- .p-contactForm -->
         </div><!-- .l-inner--470 -->
 
-        <article class="p-contact__tel">
+        <div class="p-contact__tel">
           <p>お電話も受け付けています。</p>
           <p><a href="tel:0000-000-0000">0000-000-0000</a></p>
           <p>営業時間10:00-20:00</p>
-        </article>
+        </div>
 
       </div><!-- .p-contact_wrapper -->
 
