@@ -1,8 +1,9 @@
 <?php
 $pageTitle = '私達について | 青牡丹工務店';
 $pageDescription = '大阪府大阪市に拠点をおく青牡丹工務店が、丁寧な家造りで理想を現実にするために行なっていることをご紹介します。';
-$ogImage = '/img/img_ogp.png';
+$ogImage = 'https://aobotan.yosshiii.site/img/img_ogp.png';
 $ogUrl = 'https://aobotan.yosshiii.site/about/';
+$ogType = 'article';
 $noIndex = true;
 $heroImage = '/img/img_aboutHero01.jpg';
 $heroImageAlt = '工務店の室内';

@@ -9,12 +9,12 @@
   <?php endif; ?>
   <title><?= htmlspecialchars($pageTitle ?? '青牡丹工務店') ?></title>
   <meta property="og:url" content="<?= htmlspecialchars($ogUrl ?? '') ?>">
-  <meta property="og:type" content="website">
+  <meta property="og:type" content="<?= htmlspecialchars($ogType ?? '') ?>">
   <meta property="og:title" content="<?= htmlspecialchars($pageTitle ?? '青牡丹工務店') ?>">
   <meta property="og:description" content="<?= htmlspecialchars($pageDescription ?? '') ?>">
   <meta property="og:site_name" content="青牡丹工務店">
   <meta property="og:image" content="<?= htmlspecialchars($ogImage ?? '') ?>">
-  <link rel="icon" href="/img/favicon.png" type="/image/png">
+  <link rel="icon" href="/img/favicon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;700&family=Zen+Kaku+Gothic+New:wght@400;700&display=swap" rel="stylesheet">

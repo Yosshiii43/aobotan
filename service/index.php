@@ -1,8 +1,9 @@
 <?php
 $pageTitle = '事業内容 | 青牡丹工務店';
 $pageDescription = '大阪府大阪市に拠点をおく青牡丹工務店の事業内容についてご説明いたします。';
-$ogImage = '/img/img_ogp.png';
+$ogImage = 'https://aobotan.yosshiii.site/img/img_ogp.png';
 $ogUrl = 'https://aobotan.yosshiii.site/service/';
+$ogType = 'article';
 $noIndex = true;
 $heroImage = '/img/img_serviceHero01.jpg';
 $heroImageAlt = '建築模型';

@@ -1,8 +1,9 @@
 <?php
 $pageTitle = '送信完了 | 青牡丹工務店';
 $pageDescription = '大阪府大阪市に拠点をおく青牡丹工務店のお問い合わせフォーム送信完了画面です。';
-$ogImage = '/img/img_ogp.png';
+$ogImage = 'https://aobotan.yosshiii.site/img/img_ogp.png';
 $ogUrl = 'https://aobotan.yosshiii.site/thanks/';
+$ogType = 'article';
 $noIndex = true;
 $heroImage = '/img/img_contactHero01.jpg';
 $heroImageAlt = '机に置かれた設計図と鉛筆';

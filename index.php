@@ -1,8 +1,9 @@
 <?php
 $pageTitle = '青牡丹工務店 | 大阪市北区の住宅建築・リフォーム・公共事業なら青牡丹工務店';
 $pageDescription = '大阪府大阪市に拠点をおく青牡丹工務店は、丁寧な家造りで理想を現実にします。住宅建築からリフォームまで、高品質なサービスと経験豊富なスタッフがお客様のニーズに応えます。お気軽にご相談ください。';
-$ogImage = '/img/img_ogp.png';
+$ogImage = 'https://aobotan.yosshiii.site/img/img_ogp.png';
 $ogUrl = 'https://aobotan.yosshiii.site/';
+$ogType = 'website';
 $noIndex = true;
 include $_SERVER['DOCUMENT_ROOT'] . '/inc/head.php';
 ?>
@@ -166,30 +167,58 @@ include $_SERVER['DOCUMENT_ROOT'] . '/inc/head.php';
           </h2>
           <ul class="p-topNews__list">
             <li class="p-topNews__item">
-              <button class="modal__btn" data-micromodal-trigger="modal-1" role="button">
-                <div class="p-topNews__btnBody">
-                  <div class="p-topNews__head c-newsHead"><span>イベント情報</span><time datetime="2024-06-03">2024.06.03</time></div>
-                  <h3 class="p-topNews__text js-lineHeight">住宅設計相談会を実施します。弊社建築士と将来の家造りを真剣に考えませんか？</h3>
-                </div>
-                <div class="p-topNews__btnIcon"><img src="/img/icon_arrow_right.svg" alt=""></div>
+              <button class="modal__btn" 
+                      data-micromodal-trigger="modal-1"
+                      aria-controls="modal-1">
+                <span class="p-topNews__body">
+                  <span class="p-topNews__head c-newsHead">
+                    <span>イベント情報</span>
+                    <time datetime="2024-06-03">2024.06.03</time>
+                  </span>
+                  <span class="p-topNews__text js-lineHeight"
+                        role="heading" aria-level="3">
+                    住宅設計相談会を実施します。弊社建築士と将来の家造りを真剣に考えませんか？
+                  </span>
+                </span>
+                <span class="p-topNews__btnIcon"  aria-hidden="true">
+                  <img src="/img/icon_arrow_right.svg" alt="">
+                </span>
               </button>
             </li>
             <li class="p-topNews__item">
-              <button class="modal__btn" data-micromodal-trigger="modal-2" role="button">
-                <div class="p-topNews__btnBody">
-                  <div class="p-topNews__head c-newsHead"><span>イベント情報</span><time datetime="2024-05-23">2024.05.23</time></div>
-                  <h3 class="p-topNews__text js-lineHeight">安全管理研修を行いました。</h3>
-                </div>
-                <div class="p-topNews__btnIcon"><img src="/img/icon_arrow_right.svg" alt=""></div>
+              <button class="modal__btn" 
+                      data-micromodal-trigger="modal-2"
+                      aria-controls="modal-2">
+                <span class="p-topNews__body">
+                  <span class="p-topNews__head c-newsHead">
+                    <span>イベント情報</span>
+                    <time datetime="2024-05-23">2024.05.23</time>
+                  </span>
+                  <span class="p-topNews__text js-lineHeight"
+                        role="heading" aria-level="3">
+                    安全管理研修を行いました。
+                  </span>
+                </span>
+                <span class="p-topNews__btnIcon"  aria-hidden="true">
+                  <img src="/img/icon_arrow_right.svg" alt="">
+                </span>
               </button>
             </li>
             <li class="p-topNews__item">
-              <button class="modal__btn" data-micromodal-trigger="modal-3" role="button">
-                <div class="p-topNews__btnBody">
-                  <div class="p-topNews__head c-newsHead"><span>更新情報</span><time datetime="2024-05-01">2024.05.01</time></div>
-                  <h3 class="p-topNews__text js-lineHeight">ホームページをリニューアルしました！！</h3>
-                </div>
-                <div class="p-topNews__btnIcon"><img src="/img/icon_arrow_right.svg" alt=""></div>
+              <button class="modal__btn" data-micromodal-trigger="modal-3" aria-controls="modal-3">
+                <span class="p-topNews__body">
+                  <span class="p-topNews__head c-newsHead">
+                    <span>更新情報</span>
+                    <time datetime="2024-05-01">2024.05.01</time>
+                  </span>
+                  <span class="p-topNews__text js-lineHeight"
+                        role="heading" aria-level="3">
+                    ホームページをリニューアルしました！！
+                  </span>
+                </span>
+                <span class="p-topNews__btnIcon" aria-hidden="true">
+                  <img src="/img/icon_arrow_right.svg" alt="">
+                </span>
               </button>
             </li>
           </ul>
@@ -275,7 +304,7 @@ include $_SERVER['DOCUMENT_ROOT'] . '/inc/head.php';
             </div><!--modal__overlay"-->
           </div><!-- #modal-3 .modal-->
         </div><!-- .p-modal -->
-      </section><!-- .-topService -->
+      </section><!-- .-topNews -->
 
       <?php include $_SERVER['DOCUMENT_ROOT'] . '/inc/contactSec.php'; ?>
 
