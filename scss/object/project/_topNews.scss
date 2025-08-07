@@ -4,32 +4,27 @@ Top news
 @use "../../foundation/forwards" as *;
 @use "sass:math";
 
-@mixin topNews-desktop(){
+@mixin topNews-tablet() {
   padding-block: rem(50) calc(rem(132) - rem(40));
-
-  &__title {
-    margin-bottom: rem(48);
-  }
 
   &__list {
     .p-topNews__item {
-      padding-block: rem(31.5) rem(31);
+      padding-block: rem(32) rem(31);
 
       .modal__btn {
-        .p-topNews__btnBody{
-          width: calc(100% - rem(21) - rem(16) - rem(27));
-          .p-topNews__head {
-            margin-bottom: rem(24);
-          }
-
-          .p-topNews__text {
-            font-size: rem(16);
-          }
-        }
-
         .p-topNews__btnIcon {
+          flex: 0 0 rem(16);
+          margin-left: rem(21);
           margin-right: rem(27);
         }
+
+        .p-topNews__head,
+        .p-topNews__text {
+          flex: 1 1 auto;// コンテンツ（ヘッド＋テキスト）を伸縮させる
+        }
+
+        .p-topNews__head { margin-bottom: rem(24); }
+        .p-topNews__text { font-size: rem(16); }
       }
     }
   }
@@ -51,38 +46,41 @@ Top news
 
       .modal__btn {
         display: flex;
-        align-items: center;
-        justify-content: space-between;
+        align-items:center;
         width: 100%;
 
-        &:focus {
-          outline: $focus-width solid $focus-color;
-          outline-offset: $focus-offset;
-        }
-        &:focus-visible {
+        &:focus,
+        &:focus-visible  {
           outline: $focus-width solid $focus-color;
           outline-offset: $focus-offset;
         }
         @supports selector(:focus-visible) {
           &:focus:not(:focus-visible) { outline: none; }
         }
-        .p-topNews__btnBody{
-          width: calc(100% - rem(21) - rem(16));
 
-          .p-topNews__head {
-            margin-bottom: rem(16);
-
-            span {
-              display: flex;
-              align-items: center;
-              justify-content: center;
-              padding-block: rem(4);
-              border: 1px solid $color-main;
-              width: rem(116);
-            }
+        .p-topNews__body {
+          display:flex;
+          flex-direction:column;
+          flex:1 1 auto;
+          min-width:0;
+        }
+        .p-topNews__head {
+          display:flex;
+          align-items: center;
+          gap: rem(16);
+          margin-bottom: rem(16);
+          
+          span {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding-block: rem(4);
+            border: 1px solid $color-main;
           }
+        }
 
           .p-topNews__text {
+            display:block;
             font-size: rem(14);
             font-weight: 700;
           }
@@ -92,10 +90,9 @@ Top news
           .p-topNews__text.lineHeight--multi {
             line-height: 1.8;
           }
-        }
+        
         .p-topNews__btnIcon {
-          width: rem(16);
-          height: rem(16);
+          flex: 0 0 rem(16);
           margin-left: rem(21);
 
           img {
@@ -110,10 +107,10 @@ Top news
 
     /* フォールバック（コンテナ未対応ブラウザ用） */
   @include mq("tab"){
-    @include topNews-desktop();
+    @include topNews-tablet();
   }
 
   @include cq(main, 744px) {
-    @include topNews-desktop();
+    @include topNews-tablet();
   }
 }
